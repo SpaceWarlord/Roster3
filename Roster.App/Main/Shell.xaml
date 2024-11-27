@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Roster.App.Main.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Roster.App.Main"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Root"
+  VerticalAlignment="Stretch"
+  HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical">
+            <StackPanel>
+                <TextBlock x:Name="currentUserTextBlock" FontSize="50"/>
+            </StackPanel>
+            <!-- Main Beef -->
+            <NavigationView x:Name="NavigationView"
+                Loaded="NavigationView_Loaded"
+                SelectionChanged="NavigationView_SelectionChanged"
+                Header="XAML Brewer WinUI TableView Sample"
+                IsBackButtonVisible="Collapsed"
+                Background="Transparent"
+                IsSettingsVisible="False"
+                Margin="0">
+                <!--<NavigationView.PaneCustomContent>
+        <HyperlinkButton NavigateUri="https://github.com/XamlBrewer/XamlBrewer.WinUI.TableView.Sample"
+                         Margin="8 0">Blog post</HyperlinkButton>
+    </NavigationView.PaneCustomContent>-->
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Content="Home" Tag="Roster.Views.HomePage" ToolTipService.ToolTip="Home">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png"
+            ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Roster" Tag="Roster.Views.RosterPage" ToolTipService.ToolTip="Roster">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Shift" Tag="Roster.Views.ShiftViews.ShiftPage" ToolTipService.ToolTip="Shift">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Workers" Tag="Roster.Views.WorkerViews.WorkerPage" ToolTipService.ToolTip="Workers">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Clients" Tag="Roster.Views.ClientViews.ClientPage" ToolTipService.ToolTip="Clients">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Addresses" Tag="Roster.Views.AddressViews.AddressPage" ToolTipService.ToolTip="Addresses">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Certificates" Tag="Roster.Views.CertificatesPage" ToolTipService.ToolTip="Certificates">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Shift Tasks" Tag="Roster.Views.ShiftTasksPage" ToolTipService.ToolTip="Shift Tasks">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Emergency Contacts" Tag="Roster.Views.EmergencyContactsPage" ToolTipService.ToolTip="Emergency Contacts">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Settings" Tag="Roster.Views.SettingsPage" ToolTipService.ToolTip="Settings">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Logout"
+            Tag="Roster.Views.AdvancedPage"
+            ToolTipService.ToolTip="Logout">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/BlackHole.png"
+            ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </NavigationView.MenuItems>
+                <NavigationView.FooterMenuItems>
+                    <NavigationViewItem Content="About"
+                            Tag="Roster.Views.AboutPage">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon UriSource="/Assets/About.png"
+                            ShowAsMonochrome="False" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </NavigationView.FooterMenuItems>
+                <Frame x:Name="ContentFrame"
+           Padding="20">
+                    <!--<Frame.ContentTransitions>
+            <TransitionCollection>
+                <NavigationThemeTransition>
+                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        <DrillInNavigationTransitionInfo />
+                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                </NavigationThemeTransition>
+            </TransitionCollection>
+        </Frame.ContentTransitions>-->
+                </Frame>
+            </NavigationView>
+
+            <!-- Theme Switcher -->
+            <Button Click="ToggleButton_Click"
+        Background="Transparent"
+        Margin="16"
+        HorizontalAlignment="Right"
+        HorizontalContentAlignment="Right"
+        VerticalAlignment="Top">
+                <FontIcon Glyph="&#xE793;"
+              FontSize="16" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

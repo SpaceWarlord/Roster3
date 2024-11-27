@@ -1,0 +1,42 @@
+﻿<ContentDialog
+    x:Class="Roster.App.Views.WorkerViews.AddWorkerDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Roster.Views.WorkerViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="FirstNameTextBox" Header="First Name" PlaceholderText="Enter First Name" PlaceholderForeground="Gray"  IsColorFontEnabled="True" Text="{x:Bind Worker.FirstName, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBox x:Name="LastNameTextBox" Header="Last Name" PlaceholderText="Enter Last Name" PlaceholderForeground="Gray"  IsColorFontEnabled="True" Text="{x:Bind Worker.LastName, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBox x:Name="NicknameTextBox" Header="Nickname" PlaceholderText="Enter Nickname" PlaceholderForeground="Gray"  IsColorFontEnabled="True" Text="{x:Bind Worker.Nickname, Mode=TwoWay}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBox x:Name="EmailTextBox" Header="Email (Optional)" PlaceholderText="Enter Email" PlaceholderForeground="Gray" Text="{x:Bind Worker.Email, Mode=TwoWay}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBox x:Name="PhoneNumberTextBox" Header="PhoneNumber (Optional)" PlaceholderText="Enter Phone Number" PlaceholderForeground="Gray" Text="{x:Bind Worker.Phone, Mode=TwoWay}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <StackPanel Visibility="{x:Bind Worker.HasErrors, Mode=OneWay}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Vertical" Margin="0 50 0 0">
+            <TextBlock FontSize="20">Errors:</TextBlock>
+            <Border Background="Gray">
+                <TextBlock x:Name="ErrorsBox"  Text="{x:Bind Worker.Errors, Mode=OneWay}" Foreground="White"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

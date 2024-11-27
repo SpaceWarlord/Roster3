@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="Roster.App.Views.WorkerViews.WorkerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Roster.App.Views.WorkerViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    
+    xmlns:models="using:Roster.Models" 
+    xmlns:viewModels="using:Roster.App.ViewModels"
+    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls" d:DataContext="{d:DesignInstance Type=models:Worker}"            
+    x:Name="ThisPage">
+
+    <Grid Margin="40 40 20 80">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Button x:Name="ForwardBtn" Content="&lt;" />
+            <Button x:Name="BackBtn" Content=">" />
+        </StackPanel>
+        <Button Content="+" FontSize="30" Grid.Row="0" Grid.Column="1" Click="ShowDialog_Click" HorizontalAlignment="Right"/>
+        <ctWinUI:DataGrid x:Name="addressTable"
+    AutoGenerateColumns="False"
+    CanUserSortColumns="True"                                        
+    SelectionMode="Single"
+    ItemsSource="{x:Bind ViewModel.Worker}"
+    IsReadOnly="True">
+            <ctWinUI:DataGrid.Columns>
+                <ctWinUI:DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Tag="FirstName" />
+                <ctWinUI:DataGridComboBoxColumn Header="Last Name" Binding="{Binding LastName}" Tag="LastName" />
+                <ctWinUI:DataGridComboBoxColumn Header="Nickname" Binding="{Binding Nickname}" Tag="Nickname" />
+                <ctWinUI:DataGridComboBoxColumn Header="Phone Number" Binding="{Binding Phone}" Tag="PhoneNumber" />
+                <ctWinUI:DataGridComboBoxColumn Header="Email" Binding="{Binding Email}" Tag="Email" />
+            </ctWinUI:DataGrid.Columns>
+        </ctWinUI:DataGrid>
+    </Grid>
+</Page>
