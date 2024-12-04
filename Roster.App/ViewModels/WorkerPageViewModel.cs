@@ -20,7 +20,7 @@ namespace Roster.App.ViewModels
         public WorkerPageViewModel()
         {
             Worker = new ObservableCollection<Worker>();
-            UpdateWorkers(context.Workers.ToList());
+            //UpdateWorkers(context.Workers.ToList());
             Worker.CollectionChanged += this.OnCollectionChanged;
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
         }
@@ -49,7 +49,7 @@ namespace Roster.App.ViewModels
                     //ModifiedItems.Add(newItem);
 
                     //Add listener for each item on PropertyChanged event
-                    context.Workers.Add(newItem);
+                    //context.Workers.Add(newItem);
                     //newItem.PropertyChanged += this.OnItemPropertyChanged;
                 }
                 //context.SaveChanges();
@@ -61,12 +61,12 @@ namespace Roster.App.ViewModels
                 {
                     //ModifiedItems.Add(oldItem);
 
-                    context.Workers.Remove(oldItem);
+                    //context.Workers.Remove(oldItem);
                     Debug.WriteLine("Deleted from db");
                     //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
                 }
             }
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         public static Worker CreateWorker(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor);

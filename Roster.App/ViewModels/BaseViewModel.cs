@@ -7,12 +7,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Roster.App.ViewModels
 {
     public abstract class BaseViewModel: ObservableValidator
     {
-        public RosterDBContext context;
+        //public RosterDBContext context;
 
 
         bool _IsModified = false;
@@ -44,7 +45,7 @@ namespace Roster.App.ViewModels
             }
         }
 
-        bool _isNew;
+        bool _isNew = true;
         /// <summary>
         /// Gets or sets a value that indicates whether this is a new customer.
         /// </summary>
@@ -60,9 +61,9 @@ namespace Roster.App.ViewModels
 
         public BaseViewModel()
         {
-            context = new RosterDBContext();
-            this.ErrorsChanged += Errors_Changed;
-            this.PropertyChanged += Property_Changed;
+            //context = new RosterDBContext();
+            //this.ErrorsChanged += Errors_Changed;
+            //this.PropertyChanged += Property_Changed;
         }
 
         ~BaseViewModel()
@@ -89,6 +90,32 @@ namespace Roster.App.ViewModels
             //Debug.WriteLine("vvv " + nameof(Errors));
             Debug.WriteLine("Errors is " + Errors);
             OnPropertyChanged(nameof(Errors)); // Update Errors on every Error change, so I can bind to it.
+        }
+       
+
+        /// <summary>
+        /// Checks if a property already matches a desired value. Sets the property and
+        /// notifies listeners only when necessary.
+        /// </summary>
+        /// <typeparam name="T">Type of the property.</typeparam>
+        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="value">Desired value for the property.</param>
+        /// <param name="propertyName">Name of the property used to notify listeners. This
+        /// value is optional and can be provided automatically when invoked from compilers that
+        /// support CallerMemberName.</param>
+        /// <returns>True if the value was changed, false if the existing value matched the
+        /// desired value.</returns>
+        protected bool Set<T>(ref T storage, T value,
+            [CallerMemberName] String propertyName = null)
+        {
+            if (Equals(storage, value))
+            {
+                return false;
+            }
+
+            storage = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

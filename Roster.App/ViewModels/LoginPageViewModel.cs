@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using Roster.App.Main;
-using Roster.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,17 +9,27 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Helpers;
+using CommunityToolkit.WinUI;
+using Roster.App.Helpers;
+using Roster.App.Main;
+using Roster.Models;
+
+
 
 namespace Roster.App.ViewModels
 {
     public partial class LoginPageViewModel:BaseViewModel
     {
         public ObservableCollection<UserViewModel> Users;
-
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        public UserViewModel NewUser { get; set; } = new();
         public LoginPageViewModel() 
         {
             Users = new ObservableCollection<UserViewModel>();
-            Users.CollectionChanged += this.OnCollectionChanged;
+            //Users.CollectionChanged += this.OnCollectionChanged;
+            Task.Run(GetUsersListAsync);
+            //dispatcherQueue.EnqueueAsync
         }
 
         [RelayCommand]
@@ -50,7 +59,7 @@ namespace Roster.App.ViewModels
                 Debug.WriteLine("User was null");
             }
         }
-
+        
         [RelayCommand]
         private void DeleteUser(UserViewModel user)
         {
@@ -88,6 +97,7 @@ namespace Roster.App.ViewModels
                     }
                     */
 
+                    /*
                     var checkUser = from g in context.Users
                                     where g.Username == username
                                     select g;
@@ -102,7 +112,7 @@ namespace Roster.App.ViewModels
                     {
                         Debug.WriteLine("Error username already exists: " + username);
                     }
-
+                    */
 
                     /*
                     using (context)
@@ -141,7 +151,7 @@ namespace Roster.App.ViewModels
                             // or
                             // context.Add<Student>(std);
 
-                            context.SaveChanges();
+                            //context.SaveChanges();
                         }
                     }
                 }
@@ -167,6 +177,17 @@ namespace Roster.App.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Saves user to database then clears fields 
+        /// </summary>
+        public async Task AddUserToDB()
+        {
+            await NewUser.SaveAsync();
+            NewUser = new();
+            await GetUsersListAsync();
+        }
+
         private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("modified collection");
@@ -180,7 +201,7 @@ namespace Roster.App.ViewModels
                     //ModifiedItems.Add(newItem);
 
                     //Add listener for each item on PropertyChanged event
-                    await newItem.SaveAsync();
+                    //await newItem.SaveAsync();
                     //context.Users.Add(newItem);
                     //newItem.PropertyChanged += this.OnItemPropertyChanged;
                 }
@@ -192,14 +213,56 @@ namespace Roster.App.ViewModels
                 foreach (UserViewModel oldItem in e.OldItems)
                 {
                     //ModifiedItems.Add(oldItem);
-                    await oldItem.DeleteAsync();
+                    //await oldItem.DeleteAsync();
                     //context.Users.Remove(oldItem);
                     Debug.WriteLine("Deleted from db");
                     //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
                 }
             }
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
+        private bool _isLoading = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Users list is currently being updated. 
+        /// </summary>
+        public bool IsLoading
+        {
+            get => _isLoading;
+            //set => Set(ref _isLoading, value);
+            set => Set(ref _isLoading, value);
+        }
+
+
+        /// <summary>
+        /// Gets the complete list of customers from the database.
+        /// </summary>
+        //public void GetUsersListAsync()
+        public async Task GetUsersListAsync()
+        {
+            await dispatcherQueue.EnqueueAsync(() => IsLoading = true);
+            var users = await App.Repository.Users.GetAsync();
+            //List<User> users = new List<User>();
+            //users = await App.Repository.Users.GetAsync();
+            if (users == null)
+            {
+                Debug.WriteLine("users was null");
+                return;
+            }
+
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                Users.Clear();
+                Debug.WriteLine("total users:" + users.Count());
+                foreach (var u in users)
+                {
+                    Debug.WriteLine("adding " + u.Username);
+                    Users.Add(new UserViewModel(u));
+                }
+                Debug.WriteLine("hiiii");
+                IsLoading = false;
+            });            
+        }
     }
 }

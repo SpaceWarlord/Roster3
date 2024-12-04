@@ -2,6 +2,7 @@
 using Roster.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +24,14 @@ namespace Roster.Repository.Sql
 
         public async Task<IEnumerable<User>> GetAsync()
         {
+            Debug.WriteLine("in get async");
             return await _db.Users
                 .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<User> GetAsync(int id)
-        {
+        {            
             return await _db.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(user => user.Id == id);
@@ -41,10 +43,10 @@ namespace Roster.Repository.Sql
             return await _db.Users
                 .Where(user =>
                     parameters.Any(parameter =>
-                        user.Username.StartsWith(parameter)))                        
+                        user.Username.StartsWith(parameter)))
                 .OrderByDescending(user =>
                     parameters.Count(parameter =>
-                        user.Username.StartsWith(parameter)))                      
+                        user.Username.StartsWith(parameter)))
                 .AsNoTracking()
                 .ToListAsync();
         }

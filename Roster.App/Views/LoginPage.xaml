@@ -27,7 +27,7 @@
         </Grid.ColumnDefinitions>
         <Border BorderThickness="1" BorderBrush="Black" />
         <TextBlock FontSize="30" Grid.Row="0" Grid.Column="0">LOGIN</TextBlock>
-        <ListView x:Name="usersListView" Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind ViewModel.Users, Mode=TwoWay}">
+        <!-- <ListView x:Name="usersListView" Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind ViewModel.Users, Mode=TwoWay}">         
             <ListView.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -61,10 +61,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        -->
         <Button x:Name="loginBtn" Content="Login" Grid.Row="3" Grid.Column="2" Command="{x:Bind ViewModel.LoginCommand}" CommandParameter="{Binding SelectedItem, ElementName=usersListView}"/>
         <TextBlock Grid.Row="4" Grid.Column="0" FontSize="30">New User</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="0">Name</TextBlock>
-        <TextBox x:Name="newUserName" Grid.Row="5" Grid.Column="1"></TextBox>
-        <Button x:Name="addUserBtn" Command="{x:Bind ViewModel.AddUserCommand}" CommandParameter="{Binding Text, ElementName=newUserName}" Grid.Row="5" Grid.Column="2">Add User</Button>
+        <TextBox x:Name="newUserName" Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.NewUser.Username, Mode=TwoWay}"></TextBox>
+        <!-- <Button x:Name="addUserBtn" Command="{x:Bind ViewModel.AddUserCommand}" CommandParameter="{Binding Text, ElementName=newUserName}" Grid.Row="5" Grid.Column="2">Add User</Button> -->
+        <Button x:Name="addUserBtn" Click="{x:Bind ViewModel.AddUserToDB}" Grid.Row="5" Grid.Column="2">Add User</Button>
     </Grid>
 </Page>

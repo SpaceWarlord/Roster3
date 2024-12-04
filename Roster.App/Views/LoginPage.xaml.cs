@@ -1,3 +1,4 @@
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -11,8 +12,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Microsoft.UI.Dispatching;
+using CommunityToolkit.Helpers;
+using CommunityToolkit.Common.Extensions;
+using CommunityToolkit.WinUI;
+using Roster.App.Helpers;
+using System.Diagnostics;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,18 +33,59 @@ namespace Roster.App.Views
     /// </summary>
     public sealed partial class LoginPage : Page
     {
-        RosterDBContext context;
+        //RosterDBContext context;
         public LoginPageViewModel ViewModel { get; } = new();
+
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         public LoginPage()
         {
             this.InitializeComponent();
-            context = new RosterDBContext();
+            //context = new RosterDBContext();
 
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.UpdateUsers(context.Users.ToList());
+            Debug.WriteLine("Grid Loaded");
+            ResetUserList();
+            //ViewModel.UpdateUsers(context.Users.ToList());
+            //ResetUserList();
+        }
+
+        /// <summary>
+        /// Resets the user list.
+        /// </summary>
+        //private async Task ResetUserList()
+        private async Task ResetUserList()
+        {
+            await dispatcherQueue.EnqueueAsync(async () =>
+                await ViewModel.GetUsersListAsync());
+
+            //await ViewModel.GetUsersListAsync();
+            //dispatcherQueue.TryEnqueue(async () => {
+
+            //await Task.Delay();
+
+            //dispatcherQueue.
+
+            //dispatcherQueue.TryEnqueue
+            //dispatcherQueue.EnqueueAsync
+
+            /*
+            await dispatcherQueue.TryEnqueue(async () =>
+            {
+                await ViewModel.GetUsersListAsync();
+            });
+            */
+
+            //await dispatcherQueue.EnqueueAsync(async () =>
+
+
+        }
+
+        private void addUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

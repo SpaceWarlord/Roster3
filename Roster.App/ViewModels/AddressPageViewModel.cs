@@ -19,7 +19,8 @@ namespace Roster.App.ViewModels
         public AddressPageViewModel()
         {
             Addresses = new ObservableCollection<Address>();
-            UpdateAddresses(context.Addresses.ToList());
+            //App.Repository.Users.GetAsync();
+            //UpdateAddresses(context.Addresses.ToList());
             Addresses.CollectionChanged += this.OnCollectionChanged;
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
         }
@@ -48,7 +49,7 @@ namespace Roster.App.ViewModels
                     //ModifiedItems.Add(newItem);
 
                     //Add listener for each item on PropertyChanged event
-                    context.Addresses.Add(newItem);
+                    //context.Addresses.Add(newItem);
                     //newItem.PropertyChanged += this.OnItemPropertyChanged;
                 }
                 //context.SaveChanges();
@@ -60,12 +61,12 @@ namespace Roster.App.ViewModels
                 {
                     //ModifiedItems.Add(oldItem);
 
-                    context.Addresses.Remove(oldItem);
+                    //context.Addresses.Remove(oldItem);
                     Debug.WriteLine("Deleted from db");
                     //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
                 }
             }
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         public static AddressViewModel CreateAddress(string name, string unitNum, string streetNum, string streetName, string streetType, SuburbViewModel suburb, string city) => new(name, unitNum, streetNum, streetName, streetType, suburb, city);

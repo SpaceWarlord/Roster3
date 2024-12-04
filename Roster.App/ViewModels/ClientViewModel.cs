@@ -104,7 +104,7 @@ namespace Roster.App.ViewModels
                     //ModifiedItems.Add(newItem);
 
                     //Add listener for each item on PropertyChanged event
-                    context.Clients.Add(newItem);
+                    //context.Clients.Add(newItem);
                     //newItem.PropertyChanged += this.OnItemPropertyChanged;
                 }
                 //context.SaveChanges();
@@ -116,12 +116,12 @@ namespace Roster.App.ViewModels
                 {
                     //ModifiedItems.Add(oldItem);
 
-                    context.Clients.Remove(oldItem);
+                    //context.Clients.Remove(oldItem);
                     Debug.WriteLine("Deleted from db");
                     //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
                 }
             }
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         //public static Client CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, IAddress address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);

@@ -29,7 +29,7 @@ namespace Roster.App.ViewModels
 
         public void Loaded()
         {
-            UpdateShifts(context.Shifts.ToList());
+            //UpdateShifts(context.Shifts.ToList());
         }
         public void UpdateShifts(List<Shift> shift)
         {
@@ -53,9 +53,9 @@ namespace Roster.App.ViewModels
                 {
                     //Debug.WriteLine("New User: Id: " + newItem.Id + " First Name " + newItem.FirstName);
                     //ModifiedItems.Add(newItem);
-                    Debug.WriteLine("zzzoop " + context.Shifts.Count());
+                    //Debug.WriteLine("zzzoop " + context.Shifts.Count());
                     //Add listener for each item on PropertyChanged event
-                    context.Shifts.Add(newItem);
+                    //context.Shifts.Add(newItem);
                     //newItem.PropertyChanged += this.OnItemPropertyChanged;
                 }
                 //context.SaveChanges();
@@ -67,12 +67,12 @@ namespace Roster.App.ViewModels
                 {
                     //ModifiedItems.Add(oldItem);
 
-                    context.Shifts.Remove(oldItem);
+                    //context.Shifts.Remove(oldItem);
                     Debug.WriteLine("Deleted from db");
                     //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
                 }
             }
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         /*

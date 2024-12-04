@@ -27,7 +27,7 @@ namespace Roster.App.Views.AddressViews
     /// </summary>
     public sealed partial class AddAddressDialog : ContentDialog
     {
-        public RosterDBContext context;
+        //public RosterDBContext context;
         //public Address Address { get; } = new();
 
         // public BaseViewModel
@@ -39,7 +39,7 @@ namespace Roster.App.Views.AddressViews
         public AddAddressDialog()
         {
             this.InitializeComponent();
-            context = new RosterDBContext();
+            //context = new RosterDBContext();
             //currentSuburbs = new List<Suburb>(context.Suburbs.ToList());
 
 

@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml;
 using ABI.System;
 using Roster.App.ViewModels;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace Roster.App.ViewModels
 {
@@ -22,11 +23,36 @@ namespace Roster.App.ViewModels
 
         public int Id { get; set; }
 
+        /*
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "Username is Required")]
         [MinLength(2, ErrorMessage = "Name should be longer than one character")]
         private string _username = string.Empty;
+
+        partial void OnUsernameChanged(string value)
+        {
+            //Console.WriteLine($"Name has changed to {value}");
+            IsModified = true;
+        }
+        */
+
+        /// <summary>
+        /// Gets or sets the username.
+        /// </summary>
+        public string Username
+        {
+            get => _model.Username;
+            set
+            {
+                if (value != _model.Username)
+                {
+                    _model.Username = value;
+                    IsModified = true;
+                    OnPropertyChanged();                    
+                }
+            }
+        }
 
 
         public UserViewModel(User model = null)
@@ -40,16 +66,22 @@ namespace Roster.App.ViewModels
         /// <summary>
         /// Saves user data that has been edited.
         /// </summary>
+        //public async Task<bool> SaveAsync()
         public async Task SaveAsync()
-        {            
+        {
+            Debug.WriteLine("Called Save Async. Username: " + Username);
             IsModified = false;
             if (IsNew)
             {
-                IsNew = false;
-                await App.Repository.Users.UpsertAsync(_model);
-                //App.ViewModel.Customers.Add(this);
-            }
+                Debug.WriteLine("its new");
 
+               IsNew = false;
+
+                //App.ViewModel.Customers.Add(this);
+                //return true;
+            }
+            await App.Repository.Users.UpsertAsync(_model);
+            //return false;
             //await App.Repository.Customers.UpsertAsync(Model);
         }
 
