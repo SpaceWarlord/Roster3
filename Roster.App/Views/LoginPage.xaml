@@ -9,7 +9,8 @@
     mc:Ignorable="d"
     xmlns:vm="using:Roster.App.ViewModels"
     xmlns:m="using:Roster.Models"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    x:Name="Root">
 
     <Grid Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
@@ -27,8 +28,9 @@
         </Grid.ColumnDefinitions>
         <Border BorderThickness="1" BorderBrush="Black" />
         <TextBlock FontSize="30" Grid.Row="0" Grid.Column="0">LOGIN</TextBlock>
-        <!-- <ListView x:Name="usersListView" Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind ViewModel.Users, Mode=TwoWay}">         
-            <ListView.Header>
+        <!-- <ListView x:Name="usersListView" Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind ViewModel.Users, Mode=TwoWay}"> -->
+        <ListView x:Name="usersListView" Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind ViewModel.Users, Mode=TwoWay}">
+                <ListView.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -45,7 +47,7 @@
             </ListView.Header>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="m:User">
+                <DataTemplate x:DataType="vm:UserViewModel">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -53,15 +55,29 @@
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{x:Bind Username}" Grid.Column="0"></TextBlock>
+                        <!-- <Button Grid.Column="2" Content="X" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TestCommand}" 
+                                CommandParameter="{x:Bind}" /> -->
+
+                        <Button Grid.Column="2" Content="X" Command="{Binding DataContext.TestCommand, ElementName=Root}" 
+                                CommandParameter="{x:Bind}" />
+
+
+                        <!-- <Button Grid.Column="2" Content="X" Command="{Binding ElementName=Root, Path=DataContext.TestCommand}" 
+        CommandParameter="{x:Bind}" /> -->
+                        <!-- CommandParameter="{x:Bind Id}"/> -->
+                        <!-- <Button Grid.Column="2"  Click="{x:Bind }"  Content="X"/>-->
+                            <!-- <Button Grid.Column="2" Content="X" Command="{Binding DataContext.ViewModel.DeleteAsync, RelativeSource={RelativeSource }}"/> -->                        
+                        <!-- 
                         <Button Grid.Column="2" 
-                        Command="{Binding ElementName=ThisPage, Path=ViewModel.DeleteUserCommand}"
-                        CommandParameter="{x:Bind}" 
-                        Content="X"/>
+                        Command="{Binding }"
+                        CommandParameter="{x:Bind Id}" 
+                        Content="X"/> -->
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            
         </ListView>
-        -->
+        
         <Button x:Name="loginBtn" Content="Login" Grid.Row="3" Grid.Column="2" Command="{x:Bind ViewModel.LoginCommand}" CommandParameter="{Binding SelectedItem, ElementName=usersListView}"/>
         <TextBlock Grid.Row="4" Grid.Column="0" FontSize="30">New User</TextBlock>
         <TextBlock Grid.Row="5" Grid.Column="0">Name</TextBlock>

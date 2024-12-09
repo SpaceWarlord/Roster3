@@ -21,7 +21,19 @@ namespace Roster.App.ViewModels
     {       
         private User _model { get; }       
 
-        public int Id { get; set; }
+        public int Id 
+        {
+            get => _model.Id;
+            set
+            {
+                if (value != _model.Id)
+                {
+                    _model.Id = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         /*
         [ObservableProperty]
@@ -90,7 +102,15 @@ namespace Roster.App.ViewModels
         /// </summary>
         public async Task DeleteAsync()
         {
-            await App.Repository.Users.UpsertAsync(_model);
+            await App.Repository.Users.DeleteAsync(Id);
+        }
+
+        [RelayCommand]
+        private void DeleteUser(int id)
+        {
+            Debug.WriteLine("called delete user");
+            //Debug.WriteLine("id: " + id);
+            //Users.Remove(user);
         }
 
         /*

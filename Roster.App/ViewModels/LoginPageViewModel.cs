@@ -21,14 +21,14 @@ namespace Roster.App.ViewModels
 {
     public partial class LoginPageViewModel:BaseViewModel
     {
-        public ObservableCollection<UserViewModel> Users;
+        public ObservableCollection<UserViewModel> Users;        
         private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         public UserViewModel NewUser { get; set; } = new();
         public LoginPageViewModel() 
         {
-            Users = new ObservableCollection<UserViewModel>();
+            Users = new ObservableCollection<UserViewModel>();            
             //Users.CollectionChanged += this.OnCollectionChanged;
-            Task.Run(GetUsersListAsync);
+            //Task.Run(GetUsersListAsync);
             //dispatcherQueue.EnqueueAsync
         }
 
@@ -59,11 +59,23 @@ namespace Roster.App.ViewModels
                 Debug.WriteLine("User was null");
             }
         }
+
         
+        /*
         [RelayCommand]
         private void DeleteUser(UserViewModel user)
         {
+            Debug.WriteLine("called delete user");
+            Debug.WriteLine("username: " + user.Username);
             Users.Remove(user);
+        }
+        */
+        [RelayCommand]
+        private void DeleteUser(int id)
+        {
+            Debug.WriteLine("called delete user");
+            Debug.WriteLine("id: " + id);
+            //Users.Remove(user);
         }
 
         [RelayCommand]
@@ -188,6 +200,19 @@ namespace Roster.App.ViewModels
             await GetUsersListAsync();
         }
 
+
+        [RelayCommand]
+        private void Test(UserViewModel u)
+        {
+            Debug.WriteLine("Called test");
+        }
+
+        /*
+        public async Task Test()
+        {
+            await GetUsersListAsync();
+        }
+        */
         private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("modified collection");
@@ -241,27 +266,39 @@ namespace Roster.App.ViewModels
         //public void GetUsersListAsync()
         public async Task GetUsersListAsync()
         {
-            await dispatcherQueue.EnqueueAsync(() => IsLoading = true);
-            var users = await App.Repository.Users.GetAsync();
-            //List<User> users = new List<User>();
-            //users = await App.Repository.Users.GetAsync();
+            Debug.WriteLine("-- Get Users List Async --");
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                IsLoading = true;
+            });
+            var users = await App.Repository.Users.GetAsync();            
             if (users == null)
             {
                 Debug.WriteLine("users was null");
                 return;
             }
-
+            Debug.WriteLine("Total users:" + users.Count());
+                       
             await dispatcherQueue.EnqueueAsync(() =>
             {
                 Users.Clear();
-                Debug.WriteLine("total users:" + users.Count());
+                
                 foreach (var u in users)
                 {
-                    Debug.WriteLine("adding " + u.Username);
-                    Users.Add(new UserViewModel(u));
-                }
-                Debug.WriteLine("hiiii");
-                IsLoading = false;
+                    Debug.WriteLine("adding " + u.Username);                    
+                    UserViewModel userViewModel = new UserViewModel(u);
+                    if (userViewModel.Username != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + userViewModel.Id + " name: " + userViewModel.Username);
+                        Users.Add(userViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }                                        
+                }                
+                IsLoading = false;               
             });            
         }
     }

@@ -21,6 +21,7 @@ using CommunityToolkit.Common.Extensions;
 using CommunityToolkit.WinUI;
 using Roster.App.Helpers;
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.Input;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -40,48 +41,37 @@ namespace Roster.App.Views
         public LoginPage()
         {
             this.InitializeComponent();
+            DataContext = ViewModel;
             //context = new RosterDBContext();
 
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Grid Loaded");
-            ResetUserList();
-            //ViewModel.UpdateUsers(context.Users.ToList());
-            //ResetUserList();
+            await ResetUserList();            
         }
 
         /// <summary>
         /// Resets the user list.
-        /// </summary>
-        //private async Task ResetUserList()
+        /// </summary>        
         private async Task ResetUserList()
         {
             await dispatcherQueue.EnqueueAsync(async () =>
-                await ViewModel.GetUsersListAsync());
-
-            //await ViewModel.GetUsersListAsync();
-            //dispatcherQueue.TryEnqueue(async () => {
-
-            //await Task.Delay();
-
-            //dispatcherQueue.
-
-            //dispatcherQueue.TryEnqueue
-            //dispatcherQueue.EnqueueAsync
-
-            /*
-            await dispatcherQueue.TryEnqueue(async () =>
-            {
-                await ViewModel.GetUsersListAsync();
-            });
-            */
-
-            //await dispatcherQueue.EnqueueAsync(async () =>
-
+                await ViewModel.GetUsersListAsync());            
 
         }
+
+
+        //public string Hello = "hi";
+
+        
+        [RelayCommand]
+        public void Test(int id)
+        {
+            Debug.WriteLine("Called test");
+        }
+        
 
         private void addUserBtn_Click(object sender, RoutedEventArgs e)
         {

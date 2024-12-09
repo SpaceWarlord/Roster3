@@ -69,7 +69,7 @@ namespace Roster.Repository.Sql
         public async Task DeleteAsync(int id)
         {
             var user = await _db.Users.FirstOrDefaultAsync(_user => _user.Id == id);
-            if (null != user)
+            if (user != null)
             {
                 /*
                 var orders = await _db.Orders.Where(order => order.UserId == id).ToListAsync();

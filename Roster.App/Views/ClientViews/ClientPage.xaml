@@ -10,7 +10,8 @@
     xmlns:models="using:Roster.Models" 
     xmlns:viewModels="using:Roster.App.ViewModels"
     xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls" d:DataContext="{d:DesignInstance Type=models:Client}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    x:Name="ThisPage">
 
     <Grid Margin="40 40 20 80">
         <Grid.ColumnDefinitions>
