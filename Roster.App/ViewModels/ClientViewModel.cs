@@ -12,26 +12,119 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Xml.Linq;
 using Windows.Networking;
+using Windows.Media.Audio;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Roster.App.ViewModels
 {
     public partial class ClientViewModel: PersonViewModel
     {        
-        public ObservableCollection<ClientPageViewModel> Clients;
-        public Client Model { get; }
+        /// <summary>
+        /// Gets or sets the client's risk category.
+        /// </summary>
+
+        public byte RiskCategory
+        {
+            get => _model.RiskCategory;
+            set
+            {
+                if (value != _model.RiskCategory)
+                {
+                    _model.RiskCategory = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
 
-        [ObservableProperty]
-        private byte _riskCategory;
+        /// <summary>
+        /// Gets or sets the client's gender preference.
+        /// </summary>
 
-        [ObservableProperty]
-        private string? _genderPreference;
+        public string? GenderPreference
+        {
+            get => _model.GenderPreference;
+            set
+            {
+                if (value != _model.GenderPreference)
+                {
+                    _model.GenderPreference = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ObservableCollection<Shift> Shifts { get; set; }
 
-        public ClientViewModel(Client model = null):base(model)
+        protected override Client _model => new();
+
+        /// <summary>
+        /// Saves client data that has been edited.
+        /// </summary>
+        //public async Task<bool> SaveAsync()
+        public async Task SaveAsync()
         {
-            Model = model ?? new Client();
+            Debug.WriteLine("Called Save Async. Name: " + FirstName);
+            IsModified = false;
+            if (IsNew)
+            {
+                Debug.WriteLine("its new");
+
+                IsNew = false;
+
+                //App.ViewModel.Customers.Add(this);
+                //return true;
+            }
+            await App.Repository.Clients.UpsertAsync(_model);
+            //return false;
+            //await App.Repository.Customers.UpsertAsync(Model);
+        }
+
+
+        /// <summary>
+        /// Deletes a client
+        /// </summary>
+        public async Task DeleteAsync()
+        {
+            await App.Repository.Clients.DeleteAsync(Id);
+        }
+
+        //public ClientViewModel(Client model = null):base(model)
+
+        /*
+        public ClientViewModel(Client model = null) : base(model)
+        {
+            _model = model ?? new Client();
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            Nickname = string.Empty;
+            Gender = string.Empty;
+        }
+        */
+
+        /*
+        public static ClientViewModel Create(Client model=null)
+        {
+            ClientViewModel clientViewModel = null;
+            if (model == null)
+            {
+                //clientViewModel = new ClientViewModel();
+            }
+            else
+            {
+
+            }
+            return null;
+        }*/
+
+#nullable enable
+        public ClientViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, Address? address, byte riskCategory, string? genderPreference) 
+            : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor, address)
+        {
+            Debug.WriteLine("-- ClientViewModel Constructor--");
+            //_model= new ClientViewModel
         }
 
         /*
@@ -54,7 +147,7 @@ namespace Roster.App.ViewModels
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();            
         }               
         */
-             
+
 
 
         /*
@@ -77,7 +170,7 @@ namespace Roster.App.ViewModels
             set => Set(ref _isNewCustomer, value);
         }
         */
-        
+
 
         /*
         public void UpdateClients(List<ClientPageViewModel> client)

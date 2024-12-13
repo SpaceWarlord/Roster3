@@ -10,7 +10,7 @@
     xmlns:vm="using:Roster.App.ViewModels"
     xmlns:m="using:Roster.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    x:Name="Root">
+    x:Name="root">
 
     <Grid Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
@@ -55,27 +55,11 @@
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{x:Bind Username}" Grid.Column="0"></TextBlock>
-                        <!-- <Button Grid.Column="2" Content="X" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TestCommand}" 
-                                CommandParameter="{x:Bind}" /> -->
-
-                        <Button Grid.Column="2" Content="X" Command="{Binding DataContext.TestCommand, ElementName=Root}" 
-                                CommandParameter="{x:Bind}" />
-
-
-                        <!-- <Button Grid.Column="2" Content="X" Command="{Binding ElementName=Root, Path=DataContext.TestCommand}" 
-        CommandParameter="{x:Bind}" /> -->
-                        <!-- CommandParameter="{x:Bind Id}"/> -->
-                        <!-- <Button Grid.Column="2"  Click="{x:Bind }"  Content="X"/>-->
-                            <!-- <Button Grid.Column="2" Content="X" Command="{Binding DataContext.ViewModel.DeleteAsync, RelativeSource={RelativeSource }}"/> -->                        
-                        <!-- 
-                        <Button Grid.Column="2" 
-                        Command="{Binding }"
-                        CommandParameter="{x:Bind Id}" 
-                        Content="X"/> -->
+                        <Button Grid.Column="2" Content="X" Command="{Binding DataContext.DeleteUserCommand, Mode=OneWay, ElementName=root}" 
+                        CommandParameter="{x:Bind Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            
         </ListView>
         
         <Button x:Name="loginBtn" Content="Login" Grid.Row="3" Grid.Column="2" Command="{x:Bind ViewModel.LoginCommand}" CommandParameter="{Binding SelectedItem, ElementName=usersListView}"/>

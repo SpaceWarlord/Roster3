@@ -27,6 +27,7 @@ using Roster.Repository;
 using Roster.App.Main;
 using Roster.Repository.Sql;
 using Windows.Storage;
+using Roster.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,7 +41,7 @@ namespace Roster.App
     {       
         public Window LoginWindow;
         public Window MainWindow;
-        public User CurrentUser { get; set; } = null;
+        public UserViewModel CurrentUser { get; set; } = null;
 
         public static Window Window { get { return m_window; } }
         private static Window m_window;

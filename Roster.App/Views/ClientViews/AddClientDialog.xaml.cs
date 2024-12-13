@@ -26,18 +26,24 @@ namespace Roster.App.Views.ClientViews
     /// </summary>
     public sealed partial class AddClientDialog : ContentDialog
     {
-        public ClientViewModel ClientVM { get; } = new();
-        public AddClientDialog()
+        public ClientPageViewModel ClientPageVM { get; set;}
+        public AddClientDialog(ClientPageViewModel clientPageVM)
         {
             this.InitializeComponent();
+
+            ClientPageVM = clientPageVM;
+            //ClientVM = new ClientViewModel("", "", "", "", "", "", "", "", null, 0, "");
+            /*
             ClientVM.FullName = string.Empty;
             ClientVM.Gender = "M";
             ClientVM.GenderPreference = string.Empty;
             ClientVM.Phone = "555555";
+            */
         }
 
         private void gender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Debug.WriteLine("--Gender Selection--");
             RadioButton radioButton = gender.SelectedItem as RadioButton;
             if (radioButton != null)
             {

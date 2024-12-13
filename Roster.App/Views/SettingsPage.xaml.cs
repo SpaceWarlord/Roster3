@@ -29,11 +29,13 @@ namespace Roster.App.Views
         public SettingsPage()
         {
             this.InitializeComponent();
+            /*
             ViewModel = new ClientViewModel();
             if (ViewModel == null)
             {
                 Debug.WriteLine("view model was null");
             }
+            */
         }
     }
 }

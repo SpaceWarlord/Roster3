@@ -71,8 +71,8 @@ namespace Roster.Models
             Address == other.Address;
 
         public Person(string firstName, string lastName, string nickname, string gender)
-        {
-            Debug.WriteLine("Adding person");
+        {            
+            Debug.WriteLine("--Person Constructor 1");
 
             FirstName = firstName;
             LastName = lastName;
@@ -82,13 +82,14 @@ namespace Roster.Models
 
         public Person(string firstName, string lastName, string nickname, string gender, string dob, string phone, string email, Color? highlightColor)
         {
+            Debug.WriteLine("--Person Constructor 2");
             if (highlightColor == null) //https://stackoverflow.com/questions/4454336/can-i-specify-a-default-color-parameter-in-c-sharp-4-0
             {
                 highlightColor = Color.Black;
             }
-
-            Debug.WriteLine("Adding person");
-
+            
+            //Debug.WriteLine("id is: " + Id);
+            //Debug.WriteLine("first name is: '" + firstName + "'");
             FirstName = firstName;
             LastName = lastName;
             Nickname = nickname;

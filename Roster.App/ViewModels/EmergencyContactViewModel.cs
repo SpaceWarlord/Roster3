@@ -12,9 +12,14 @@ namespace Roster.App.ViewModels
     {
         [ObservableProperty]
         private Person _contactFor;
+
+        /*
         public EmergencyContactViewModel(string firstName, string lastName, string nickname, string gender, Person contactFor) : base(firstName, lastName, nickname, gender)
         {
             _contactFor = contactFor;
         }
+        */
+
+        protected override Person _model => throw new NotImplementedException();
     }
 }

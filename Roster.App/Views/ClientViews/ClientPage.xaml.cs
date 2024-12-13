@@ -29,14 +29,13 @@ namespace Roster.App.Views.ClientViews
         public ClientPage()
         {
             this.InitializeComponent();
-            ViewModel = new ClientPageViewModel();
-            //ViewModel = null;
+            ViewModel = new ClientPageViewModel();            
         }
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
 
-            AddClientDialog dialog = new AddClientDialog();
+            AddClientDialog dialog = new AddClientDialog(ViewModel);
 
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
@@ -56,13 +55,14 @@ namespace Roster.App.Views.ClientViews
 
             if (result == ContentDialogResult.Primary)
             {
-
+                Debug.WriteLine("Primary clicked");
                 //DialogResult.Text = "User saved their work";
-                if (dialog.ClientVM != null)
+                //if (dialog.ClientVM != null)
+                if(ViewModel.NewClient!=null)
                 {
-                    Debug.WriteLine("zzName: " + dialog.ClientVM.FullName);
-                    Debug.WriteLine("Selected gender: " + dialog.ClientVM.Gender);
-                    ViewModel.AddClientCommand.Execute(dialog.ClientVM);
+                    Debug.WriteLine("zzName: " + ViewModel.NewClient.FirstName);
+                    Debug.WriteLine("Selected gender: " + ViewModel.NewClient.Gender);
+                    //ViewModel.AddClientCommand.Execute(dialog.ClientVM);
                 }
 
             }

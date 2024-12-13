@@ -14,7 +14,7 @@ namespace Roster.App.Main
     {
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            SetCurrentNavigationViewItem(GetNavigationViewItems(typeof(HomePage)).First());
+            SetCurrentNavigationViewItem(GetNavigationViewItems(typeof(HomePage)).First());            
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

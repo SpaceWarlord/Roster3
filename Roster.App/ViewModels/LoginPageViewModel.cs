@@ -22,7 +22,7 @@ namespace Roster.App.ViewModels
     public partial class LoginPageViewModel:BaseViewModel
     {
         public ObservableCollection<UserViewModel> Users;        
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        
         public UserViewModel NewUser { get; set; } = new();
         public LoginPageViewModel() 
         {
@@ -60,7 +60,7 @@ namespace Roster.App.ViewModels
             }
         }
 
-        
+
         /*
         [RelayCommand]
         private void DeleteUser(UserViewModel user)
@@ -70,11 +70,18 @@ namespace Roster.App.ViewModels
             Users.Remove(user);
         }
         */
+
+        /// <summary>
+        /// Deletes user from database, then refreshes user list
+        /// </summary>
+
         [RelayCommand]
-        private void DeleteUser(int id)
+        private async Task DeleteUser(UserViewModel user)
         {
-            Debug.WriteLine("called delete user");
-            Debug.WriteLine("id: " + id);
+            Debug.WriteLine("Called delete user");
+            await user.DeleteAsync();
+            await GetUsersListAsync();
+
             //Users.Remove(user);
         }
 
@@ -198,21 +205,8 @@ namespace Roster.App.ViewModels
             await NewUser.SaveAsync();
             NewUser = new();
             await GetUsersListAsync();
-        }
-
-
-        [RelayCommand]
-        private void Test(UserViewModel u)
-        {
-            Debug.WriteLine("Called test");
-        }
-
-        /*
-        public async Task Test()
-        {
-            await GetUsersListAsync();
-        }
-        */
+        }               
+        
         private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("modified collection");
@@ -246,20 +240,7 @@ namespace Roster.App.ViewModels
             }
             //context.SaveChanges();
         }
-
-        private bool _isLoading = false;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the Users list is currently being updated. 
-        /// </summary>
-        public bool IsLoading
-        {
-            get => _isLoading;
-            //set => Set(ref _isLoading, value);
-            set => Set(ref _isLoading, value);
-        }
-
-
+       
         /// <summary>
         /// Gets the complete list of customers from the database.
         /// </summary>

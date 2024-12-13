@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Roster.App.ViewModels;
 using Roster.Models;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Roster.App.Views
         public HomePage()
         {
             this.InitializeComponent();
-            welcomeBox.Text = "Hello " + (Application.Current.Resources["currentUser"] as User).Username;
+            welcomeBox.Text = "Hello " + (Application.Current.Resources["currentUser"] as UserViewModel).Username;
         }
     }
 }

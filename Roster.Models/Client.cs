@@ -9,6 +9,7 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace Roster.Models
 {
@@ -29,11 +30,12 @@ namespace Roster.Models
         
         public Client(): base(string.Empty, string.Empty, string.Empty, "", string.Empty, string.Empty, null, Color.Black)
         {
-            
+            Debug.WriteLine("--Client Constructor 1");
         }
 
         public Client(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, Address clientAddress, byte riskCategory, string genderPreference) : base(firstName, lastName, nickname, gender, dob, email, phone, highlightColor)
         {
+            Debug.WriteLine("--Client Constructor 2");
             Address = clientAddress;
             RiskCategory = riskCategory;
             GenderPreference = genderPreference;

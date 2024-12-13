@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Microsoft.UI.Dispatching;
 
 namespace Roster.App.ViewModels
 {
@@ -15,6 +16,19 @@ namespace Roster.App.ViewModels
     {
         //public RosterDBContext context;
 
+        protected DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+        protected bool _isLoading = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Users list is currently being updated. 
+        /// </summary>
+        public bool IsLoading
+        {
+            get => _isLoading;
+            //set => Set(ref _isLoading, value);
+            set => Set(ref _isLoading, value);
+        }
 
         bool _IsModified = false;
 

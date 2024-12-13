@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Roster.App.ViewModels;
 using Roster.Models;
 using Roster.Services;
 using System;
@@ -26,6 +27,7 @@ namespace Roster.App.Main
     public sealed partial class Shell : Window, INavigation
     {
         RosterDBContext context;
+        public string pagePath = "Roster.App.Views.";
         public Shell()
         {
             //  Title = App.Title;
@@ -37,7 +39,7 @@ namespace Roster.App.Main
 
             Root.RequestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
             //currentUserTextBlock.Text = (Application.Current as App)?.CurrentUser.Username;
-            currentUserTextBlock.Text = (Application.Current.Resources["currentUser"] as User).Username;
+            currentUserTextBlock.Text = (Application.Current.Resources["currentUser"] as UserViewModel).Username;
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)

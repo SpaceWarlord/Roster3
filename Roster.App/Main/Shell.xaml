@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    
     <Grid x:Name="Root"
   VerticalAlignment="Stretch"
   HorizontalAlignment="Stretch">
@@ -29,53 +29,53 @@
                          Margin="8 0">Blog post</HyperlinkButton>
     </NavigationView.PaneCustomContent>-->
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Home" Tag="Roster.Views.HomePage" ToolTipService.ToolTip="Home">
+                    <NavigationViewItem Content="Home" Tag="{x:Bind x:String.Format('{0}HomePage', pagePath)}" ToolTipService.ToolTip="Home">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png"
             ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Roster" Tag="Roster.Views.RosterPage" ToolTipService.ToolTip="Roster">
+                    <NavigationViewItem Content="Roster" Tag="{x:Bind x:String.Format('{0}RosterPage', pagePath)}" ToolTipService.ToolTip="Roster">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Shift" Tag="Roster.Views.ShiftViews.ShiftPage" ToolTipService.ToolTip="Shift">
+                    <NavigationViewItem Content="Shift" Tag="{x:Bind x:String.Format('{0}ShiftPage', pagePath)}" ToolTipService.ToolTip="Shift">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Workers" Tag="Roster.Views.WorkerViews.WorkerPage" ToolTipService.ToolTip="Workers">
+                    <NavigationViewItem Content="Workers" Tag="{x:Bind x:String.Format('{0}WorkersPage', pagePath)}" ToolTipService.ToolTip="Workers">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Clients" Tag="Roster.Views.ClientViews.ClientPage" ToolTipService.ToolTip="Clients">
+                    <NavigationViewItem Content="Clients" Tag="{x:Bind x:String.Format('{0}ClientViews.ClientPage', pagePath)}" ToolTipService.ToolTip="Clients">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Addresses" Tag="Roster.Views.AddressViews.AddressPage" ToolTipService.ToolTip="Addresses">
+                    <NavigationViewItem Content="Addresses" Tag="{x:Bind x:String.Format('{0}AddressesPage', pagePath)}" ToolTipService.ToolTip="Addresses">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Certificates" Tag="Roster.Views.CertificatesPage" ToolTipService.ToolTip="Certificates">
+                    <NavigationViewItem Content="Certificates" Tag="{x:Bind x:String.Format('{0}CertificatesPage', pagePath)}" ToolTipService.ToolTip="Certificates">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Shift Tasks" Tag="Roster.Views.ShiftTasksPage" ToolTipService.ToolTip="Shift Tasks">
+                    <NavigationViewItem Content="Shift Tasks" Tag="{x:Bind x:String.Format('{0}ShiftTasksPage', pagePath)}" ToolTipService.ToolTip="Shift Tasks">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Emergency Contacts" Tag="Roster.Views.EmergencyContactsPage" ToolTipService.ToolTip="Emergency Contacts">
+                    <NavigationViewItem Content="Emergency Contacts" Tag="{x:Bind x:String.Format('{0}EmergencyContactsPage', pagePath)}" ToolTipService.ToolTip="Emergency Contacts">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem Content="Settings" Tag="Roster.Views.SettingsPage" ToolTipService.ToolTip="Settings">
+                    <NavigationViewItem Content="Settings" Tag="{x:Bind x:String.Format('{0}SettingsPage', pagePath)}" ToolTipService.ToolTip="Settings">
                         <NavigationViewItem.Icon>
                             <BitmapIcon UriSource="/Assets/Galaxy.png" ShowAsMonochrome="False" />
                         </NavigationViewItem.Icon>
