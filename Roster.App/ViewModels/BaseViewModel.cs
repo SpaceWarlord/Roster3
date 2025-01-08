@@ -13,8 +13,7 @@ using Microsoft.UI.Dispatching;
 namespace Roster.App.ViewModels
 {
     public abstract class BaseViewModel: ObservableValidator
-    {
-        //public RosterDBContext context;
+    {        
 
         protected DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -74,8 +73,7 @@ namespace Roster.App.ViewModels
         }
 
         public BaseViewModel()
-        {
-            //context = new RosterDBContext();
+        {            
             //this.ErrorsChanged += Errors_Changed;
             //this.PropertyChanged += Property_Changed;
         }

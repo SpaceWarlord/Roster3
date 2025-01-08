@@ -69,7 +69,7 @@ namespace Roster.App.ViewModels
             //context.SaveChanges();
         }
 
-        public static Worker CreateWorker(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor);
+        //public static Worker CreateWorker(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor);
 
         [RelayCommand]
         public void AddWorker(Worker worker)
@@ -80,9 +80,11 @@ namespace Roster.App.ViewModels
             {
                 Worker i = new Worker()
                 {
+                    Id = worker.Id,
                     FirstName = worker.FirstName,
                     LastName = worker.LastName,
                     Nickname = worker.Nickname,
+                    Gender = worker.Gender,
                     Email = worker.Email,
                     Phone = worker.Phone,
                     FullName = worker.FullName,                    

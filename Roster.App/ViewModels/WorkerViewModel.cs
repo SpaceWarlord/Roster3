@@ -14,12 +14,12 @@ namespace Roster.App.ViewModels
     {
         public int WorkerId { get; protected set; }
 
-        protected override Person _model => throw new NotImplementedException();
+        //protected override Person _model => throw new NotImplementedException();
 
 #nullable enable
 
         [ObservableProperty]
-        private List<CertificateViewModel> _certificates;
+        private List<CertificateViewModel> _certificates = new List<CertificateViewModel>();
 
 
         /*

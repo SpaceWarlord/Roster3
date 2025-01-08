@@ -81,7 +81,7 @@ namespace Roster.App.ViewModels
             Debug.WriteLine("name is " + client.FullName);
             if (client != null)
             {
-                ClientViewModel c = new ClientViewModel(client.FirstName, client.LastName, client.Nickname, client.Gender, client.DOB, client.Phone, client.Email, client.HighlightColor, client.Address, client.RiskCategory, client.GenderPreference);
+                ClientViewModel c = new ClientViewModel(client.FirstName, client.LastName, client.Nickname, client.Gender, client.Dob, client.Phone, client.Email, client.HighlightColor, client.Address, client.RiskCategory, client.GenderPreference);
                 /*
                 ClientViewModel c = new ClientViewModel()
                 {

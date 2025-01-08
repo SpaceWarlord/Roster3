@@ -18,47 +18,28 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace Roster.App.ViewModels
 {
     public partial class ClientViewModel: PersonViewModel
-    {        
+    {
         /// <summary>
         /// Gets or sets the client's risk category.
         /// </summary>
 
-        public byte RiskCategory
-        {
-            get => _model.RiskCategory;
-            set
-            {
-                if (value != _model.RiskCategory)
-                {
-                    _model.RiskCategory = value;
-                    IsModified = true;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        private byte _riskCategory;
 
+#nullable enable
 
         /// <summary>
         /// Gets or sets the client's gender preference.
         /// </summary>
 
-        public string? GenderPreference
-        {
-            get => _model.GenderPreference;
-            set
-            {
-                if (value != _model.GenderPreference)
-                {
-                    _model.GenderPreference = value;
-                    IsModified = true;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        private string? _genderPreference;        
+      
 
-        public ObservableCollection<Shift> Shifts { get; set; }
+        public ObservableCollection<Shift?> Shifts { get; set; }
 
-        protected override Client _model => new();
+        //protected override Client _model => new();
+        //protected Client _model => new();
 
         /// <summary>
         /// Saves client data that has been edited.
@@ -77,7 +58,7 @@ namespace Roster.App.ViewModels
                 //App.ViewModel.Customers.Add(this);
                 //return true;
             }
-            await App.Repository.Clients.UpsertAsync(_model);
+            //await App.Repository.Clients.UpsertAsync(_model);
             //return false;
             //await App.Repository.Customers.UpsertAsync(Model);
         }

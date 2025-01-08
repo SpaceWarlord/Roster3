@@ -27,20 +27,24 @@ namespace Roster.Models
 
         //public ObservableCollection<Shift> Shifts { get; set; }
 
-        
-        public Client(): base(string.Empty, string.Empty, string.Empty, "", string.Empty, string.Empty, null, Color.Black)
+        public Client(): base()
         {
-            Debug.WriteLine("--Client Constructor 1");
+
+        }
+        /*
+        public Client(): base("", "", "", "", "", "", null, Color.Black)
+        {
+            Debug.WriteLine("--Client Constructor 1--");
         }
 
         public Client(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, Address clientAddress, byte riskCategory, string genderPreference) : base(firstName, lastName, nickname, gender, dob, email, phone, highlightColor)
         {
-            Debug.WriteLine("--Client Constructor 2");
+            Debug.WriteLine("--Client Constructor 2--");
             Address = clientAddress;
             RiskCategory = riskCategory;
             GenderPreference = genderPreference;
         }
-        
+        */
         /*
         public Client(string firstName, string lastName, string nickname, string gender, string dob, string email,  string phone, Color highlightColor, IAddress clientAddress, byte riskCategory, string genderPreference) : base(firstName, lastName, nickname, gender, dob, email, phone, highlightColor)
         {

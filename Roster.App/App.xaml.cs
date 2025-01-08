@@ -28,6 +28,7 @@ using Roster.App.Main;
 using Roster.Repository.Sql;
 using Windows.Storage;
 using Roster.App.ViewModels;
+using Roster.App.Views.ClientViews;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -53,6 +54,8 @@ namespace Roster.App
         /// </summary>
         public static IRosterRepository Repository { get; private set; }
 
+        public IServiceProvider Services { get; }
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -60,9 +63,26 @@ namespace Roster.App
         /// </summary>
         public App()
         {
-            this.InitializeComponent();                      
+            Services = ConfigureServices();
+            this.InitializeComponent();             
+            
         }
-        
+
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            //services.AddSingleton<IThemeService, ThemeService>();
+            //services.AddSingleton<IJsonNavigationService, JsonNavigationService>();
+
+            //services.AddTransient<MainViewModel>();
+            services.AddSingleton<ClientPage>(serviceProvider => new ClientPage()
+            {
+                DataContext = serviceProvider.GetRequiredService<ClientViewModel>()
+            });
+
+            return services.BuildServiceProvider();
+        }
+
         /// <summary>
         /// Configures settings for a first time run.        
         /// </summary>

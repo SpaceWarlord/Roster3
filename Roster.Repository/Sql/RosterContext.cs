@@ -42,15 +42,11 @@ namespace Roster.Repository.Sql
         /// </summary>
         public DbSet<Suburb> Suburbs { get; set; }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
             optionsBuilder.UseExceptionProcessor();            
             optionsBuilder.UseSqlite("Data Source=database.db");
-            optionsBuilder.EnableSensitiveDataLogging(true);            
-            
+            optionsBuilder.EnableSensitiveDataLogging(true);                        
 
             //await ApplicationData.Current.LocalFolder.CreateFileAsync("sqliteSample.db", CreationCollisionOption.OpenIfExists);
 

@@ -22,17 +22,19 @@ namespace Roster.Models
         
         private List<Certificate> _certificates;
 
-
-        public Worker(): base(string.Empty, string.Empty, string.Empty, string.Empty)
+        
+        public Worker(): base()
         {
 
         }
 
         //bool hasManualHandlingCert = true;
 
+        /*
         public Worker(string firstName, string lastName, string nickname, string gender, string dob, string phone, string email, Color highlightColor) : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor)
         {           
             
         }
+        */
     }
 }

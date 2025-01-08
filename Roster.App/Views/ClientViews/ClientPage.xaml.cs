@@ -29,7 +29,7 @@ namespace Roster.App.Views.ClientViews
         public ClientPage()
         {
             this.InitializeComponent();
-            ViewModel = new ClientPageViewModel();            
+            ViewModel = new ClientPageViewModel();                
         }
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)

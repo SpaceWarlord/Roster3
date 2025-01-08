@@ -12,11 +12,11 @@ namespace Roster.Repository.Sql
     /// Contains methods for interacting with the users backend using 
     /// SQL via Entity Framework Core 2.0.
     /// </summary>
-    public class SqlPersonRepository : IPersonRepository
+    public class SqlClientRepository : IClientRepository
     {
         private readonly RosterContext _db;
 
-        public SqlPersonRepository(RosterContext db)
+        public SqlClientRepository(RosterContext db)
         {
             _db = db;
         }

@@ -9,11 +9,11 @@ namespace Roster.Models
     public class EmergencyContact : Person
     {        
         public Person ContactFor;
-
-        public EmergencyContact(string firstName, string lastName, string nickname, string gender, Person contactFor) : base(firstName, lastName, nickname, gender)
+        
+        public EmergencyContact(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, Address? address, Person contactFor) : base()
         {
             ContactFor = contactFor;
         }
-
+        
     }
 }
