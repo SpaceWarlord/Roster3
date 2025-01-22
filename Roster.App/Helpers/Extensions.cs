@@ -3,6 +3,7 @@ using Roster.App.ViewModels;
 using Roster.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,21 @@ namespace Roster.App.Helpers
     {
         public static List<ClientDTO> ToClientDTO(this List<Client> source)
         {
-            return [.. source.Select(x => new ClientDTO
+            return [.. source.Select(x => new ClientDTO(x.Id, x.FirstName, x.LastName, x.Nickname, x.Gender))];
+        }        
+
+        public static Client ToClient(this Client dto)
         {
-            Id = x.Id,
-            FirstName = x.FirstName,
-            LastName = x.LastName,
-            Nickname = x.Nickname,
-            Gender = x.Gender,
-        })];
+
+            var client = new Client()
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Nickname = dto.Nickname,
+                Gender = dto.Gender,
+            };
+            return client;
         }
 
         /*

@@ -11,10 +11,10 @@ namespace Roster.App.DTO
     public class ClientDTO
     {
         public int Id { get; set; }
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-        public required string Nickname { get; set; }
-        public required string Gender { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Nickname { get; set; }
+        public string Gender { get; set; }
         public string? DOB { get; set; }
 
         public string? Phone { get; set; }
@@ -24,6 +24,15 @@ namespace Roster.App.DTO
         public Address? Address { get; set; }
 
         public string? HighlightColor { get; set; }
+
+        public ClientDTO(int id, string firstName, string lastName, string nickname, string gender)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Nickname = nickname;
+            Gender = gender;
+        }
 
     }
 }

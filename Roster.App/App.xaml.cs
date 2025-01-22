@@ -29,6 +29,7 @@ using Roster.Repository.Sql;
 using Windows.Storage;
 using Roster.App.ViewModels;
 using Roster.App.Views.ClientViews;
+using Roster.App.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -79,7 +80,10 @@ namespace Roster.App
             {
                 DataContext = serviceProvider.GetRequiredService<ClientViewModel>()
             });
-
+            services.AddSingleton<ClientViewModel>(serviceProvider => new ClientViewModel()
+            {
+                //DataContext = serviceProvider.GetRequiredService<ClientViewModel>()
+            });
             return services.BuildServiceProvider();
         }
 
