@@ -23,9 +23,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using System.Reflection;
-using Roster.Repository;
 using Roster.App.Main;
-using Roster.Repository.Sql;
 using Windows.Storage;
 using Roster.App.ViewModels;
 using Roster.App.Views.ClientViews;
@@ -52,8 +50,7 @@ namespace Roster.App
 
         /// <summary>
         /// Pipeline for interacting with backend service or database.
-        /// </summary>
-        public static IRosterRepository Repository { get; private set; }
+        /// </summary>        
 
         public IServiceProvider Services { get; }
 
@@ -80,10 +77,18 @@ namespace Roster.App
             {
                 DataContext = serviceProvider.GetRequiredService<ClientViewModel>()
             });
+            services.AddSingleton<ClientService>(serviceProvider => new ClientService(new RosterDBContext())
+            {
+                
+            });
+
+
+            /*
             services.AddSingleton<ClientViewModel>(serviceProvider => new ClientViewModel()
             {
                 //DataContext = serviceProvider.GetRequiredService<ClientViewModel>()
             });
+            */
             return services.BuildServiceProvider();
         }
 
@@ -147,8 +152,7 @@ namespace Roster.App
                 //File.Copy(demoDatabasePath, databasePath);
             }
             //var dbOptions = new DbContextOptionsBuilder<RosterContext>().UseSqlite("Data Source=" + databasePath);
-            var dbOptions = new DbContextOptionsBuilder<RosterContext>().UseSqlite("Data Source=" + "database27.db"); 
-            Repository = new SqlRosterRepository(dbOptions);
+            var dbOptions = new DbContextOptionsBuilder<RosterDBContext>().UseSqlite("Data Source=" + "database27.db");             
         }
 
         /// <summary>

@@ -91,7 +91,10 @@ namespace Roster.Models
 
         public List<Route> Routes { get; set; }
 
-        
+        public Shift()
+        {
+
+        }
         public Shift(string startTime, string endTime, byte travelTime, short maxTravelDistance, ShiftAddress startLocation, ShiftAddress endLocation, char shiftType, bool reocurring, Client client)
         {
             StartTime = startTime;

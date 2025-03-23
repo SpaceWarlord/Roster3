@@ -12,11 +12,12 @@ namespace Roster.App.Helpers
 {
     public static class Extensions
     {
+        /*
         public static List<ClientDTO> ToClientDTO(this List<Client> source)
         {
             return [.. source.Select(x => new ClientDTO(x.Id, x.FirstName, x.LastName, x.Nickname, x.Gender))];
         }        
-
+        */
         public static Client ToClient(this Client dto)
         {
 

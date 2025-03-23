@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Roster.App.DTO;
 using Roster.Models;
-using Roster.Repository.Sql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +20,8 @@ namespace Roster.App.Services
 
         public async Task<List<ClientDTO>> GetAll()
         {
-            return await _db.Clients.Select(c => new ClientDTO(c.Id, c.FirstName, c.LastName, c.Nickname, c.Gender)).ToListAsync();
+            return await _db.Clients.Select(c => new ClientDTO(c.Id, c.FirstName, c.LastName, c.Nickname, c.Gender, c.DOB, c.Phone, c.Email, c.HighlightColor,
+                new AddressDTO(c.Address.Id, c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.SuburbId), c.RiskCategory, c.GenderPreference)).ToListAsync();
         }
 
         public async Task<bool> Update(ClientDTO client)

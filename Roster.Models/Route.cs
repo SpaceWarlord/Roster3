@@ -15,6 +15,7 @@ namespace Roster.Models
         string Name {  get; set; }
         [ForeignKey("StartAddressId")] // Shadow FK
         public virtual Address StartAddress { get; set; }
+
         [ForeignKey("EndAddressId")] // Shadow FK
         public virtual Address EndAddress { get; set; }
         public float Distance {  get; set; }       

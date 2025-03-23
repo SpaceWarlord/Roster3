@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Dispatching;
+using Roster.App.DTO;
 
 namespace Roster.App.ViewModels
 {
@@ -128,6 +129,6 @@ namespace Roster.App.ViewModels
             storage = value;
             OnPropertyChanged(propertyName);
             return true;
-        }
+        }                
     }
 }

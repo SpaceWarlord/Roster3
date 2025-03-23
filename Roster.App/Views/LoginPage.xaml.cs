@@ -58,7 +58,7 @@ namespace Roster.App.Views
         private async Task ResetUserList()
         {
             await dispatcherQueue.EnqueueAsync(async () =>
-                await ViewModel.GetUsersListAsync());            
+                await ViewModel.GetAll());            
 
         }
 

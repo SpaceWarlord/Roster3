@@ -62,6 +62,8 @@ namespace Roster.App.Views.ClientViews
                 {
                     Debug.WriteLine("zzName: " + ViewModel.NewClient.FirstName);
                     Debug.WriteLine("Selected gender: " + ViewModel.NewClient.Gender);
+                    await ViewModel.AddClientToDB();
+                    //await ViewModel.AddClientToDB();
                     //ViewModel.AddClientCommand.Execute(dialog.ClientVM);
                 }
 

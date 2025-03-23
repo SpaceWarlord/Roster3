@@ -34,5 +34,10 @@ namespace Roster.App.ViewModels
         {
 
         }
+
+        public override T ToDTO<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

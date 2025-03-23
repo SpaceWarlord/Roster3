@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Roster.App.ViewModels
 {
-    public abstract partial class PersonViewModel: BaseViewModel
+    public abstract partial class PersonViewModel: DataViewModel
     {        
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
-        private int _id;
+        private string _id;
 
         /// <summary>
         /// Gets or sets the person's first name.
@@ -106,7 +106,7 @@ namespace Roster.App.ViewModels
 
 
         [ObservableProperty]
-        private Address? _address;             
+        private AddressViewModel? _address;             
 
         public PersonViewModel():base()
         {
@@ -139,7 +139,7 @@ namespace Roster.App.ViewModels
             }                        
         }
 
-        public PersonViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, Address? address):base()
+        public PersonViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
         {
             Debug.WriteLine("--PersonViewModel Constructor 1--");            
             FirstName = firstName;

@@ -15,7 +15,7 @@ namespace Roster.Models
     [Index(nameof(Nickname), IsUnique = true)]
     public class Person: IEquatable<Person>
     {
-        public required int Id { get; set; }
+        public required string Id { get; set; }
         
         public required string FirstName { get; set; }
         

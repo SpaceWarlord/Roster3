@@ -13,7 +13,7 @@ namespace Roster.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AddressId { get; protected set; }
+        public string Id { get; protected set; }
         
         public string Name { get; set; }
 
@@ -27,7 +27,7 @@ namespace Roster.Models
         
         public string StreetType { get; set; }
 
-        public int SuburbId {  get; set; }
+        public string SuburbId {  get; set; }
         
         public Suburb Suburb { get; set; }
         

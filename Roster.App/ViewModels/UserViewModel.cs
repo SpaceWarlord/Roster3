@@ -18,61 +18,20 @@ using System.Xml.Linq;
 namespace Roster.App.ViewModels
 {
     public partial class UserViewModel : BaseViewModel
-    {       
-        private User _model { get; }       
+    {
+        [ObservableProperty]
+        private string _id;
 
-        public int Id 
-        {
-            get => _model.Id;
-            set
-            {
-                if (value != _model.Id)
-                {
-                    _model.Id = value;
-                    IsModified = true;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /*
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "Username is Required")]
         [MinLength(2, ErrorMessage = "Name should be longer than one character")]
-        private string _username = string.Empty;
-
-        partial void OnUsernameChanged(string value)
-        {
-            //Console.WriteLine($"Name has changed to {value}");
-            IsModified = true;
-        }
-        */
-
-        /// <summary>
-        /// Gets or sets the username.
-        /// </summary>
-        public string Username
-        {
-            get => _model.Username;
-            set
-            {
-                if (value != _model.Username)
-                {
-                    _model.Username = value;
-                    IsModified = true;
-                    OnPropertyChanged();                    
-                }
-            }
-        }
-
-
-        public UserViewModel(User model = null)
-        {
-            _model = model ?? new User();
-
-            //UpdateUsers(context.Users.ToList());
-            //Users.CollectionChanged += this.OnCollectionChanged;            
+        private string _username;
+                    
+        public UserViewModel(string id, string username)
+        {    
+            Id= id;
+            Username= username;
         }
 
         /// <summary>
@@ -92,7 +51,7 @@ namespace Roster.App.ViewModels
                 //App.ViewModel.Customers.Add(this);
                 //return true;
             }
-            await App.Repository.Users.UpsertAsync(_model);
+           // await App.Repository.Users.UpsertAsync(_model);
             //return false;
             //await App.Repository.Customers.UpsertAsync(Model);
         }
@@ -102,7 +61,7 @@ namespace Roster.App.ViewModels
         /// </summary>
         public async Task DeleteAsync()
         {
-            await App.Repository.Users.DeleteAsync(Id);
+            //await App.Repository.Users.DeleteAsync(Id);
         }
 
         [RelayCommand]

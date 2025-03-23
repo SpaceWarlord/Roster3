@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Roster.App.Helpers;
+using Roster.App.Services;
 using Roster.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Roster.App.ViewModels
 {
     public partial class ClientPageViewModel:BaseViewModel
     {
+
+        private ClientService ClientService { get; set; }
         public ObservableCollection<ClientViewModel> Clients;
 
         public ClientViewModel NewClient { get; set; }
@@ -22,6 +25,8 @@ namespace Roster.App.ViewModels
         public ClientPageViewModel()
         { 
             Debug.WriteLine("-- ClientPageViewModel Constructor--");
+            Clients = new ObservableCollection<ClientViewModel>();
+            ClientService = new ClientService(new RosterDBContext());
             NewClient = new ClientViewModel("", "", "", "", "", "", "", "", null, 0, "");
         }
 
@@ -31,7 +36,7 @@ namespace Roster.App.ViewModels
         public async Task AddClientToDB()
         {
             Debug.WriteLine("--AddClientToDb--");
-            await NewClient.SaveAsync();
+            await NewClient.SaveAsync(ClientService);
             NewClient = new ClientViewModel("", "", "", "", "", "", "", "", null, 0, "");
             await GetClientsListAsync();
         }
@@ -43,13 +48,17 @@ namespace Roster.App.ViewModels
             {
                 IsLoading = true;
             });
+            var clients = await ClientService.GetAll();
+
+            /*
             var clients = await App.Repository.Clients.GetAsync();
             if (clients == null)
             {
                 Debug.WriteLine("clients was null");
                 return;
             }
-            Debug.WriteLine("Total users:" + clients.Count());
+            */
+            Debug.WriteLine("Total clients: " + clients.Count());
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -57,8 +66,9 @@ namespace Roster.App.ViewModels
 
                 foreach (var c in clients)
                 {
-                    Debug.WriteLine("adding " + c.FullName);
-                    ClientViewModel clientViewModel = new ClientViewModel(c.FirstName, c.LastName, c.Nickname, c.Gender, c.DOB, c.Phone, c.Email, c.HighlightColor, c.Address, c.RiskCategory, c.GenderPreference);
+                    Debug.WriteLine("adding " + c.FirstName + " " + c.LastName);
+                    AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    ClientViewModel clientViewModel = new ClientViewModel(c.FirstName, c.LastName, c.Nickname, c.Gender, c.DOB, c.Phone, c.Email, c.HighlightColor, aVM, c.RiskCategory, c.GenderPreference);
                     if (clientViewModel.FirstName != null)
                     {
                         Debug.WriteLine("Not null: Id" + clientViewModel.Id + " name: " + clientViewModel.FullName);
@@ -70,6 +80,7 @@ namespace Roster.App.ViewModels
                         Debug.WriteLine("Was null");
                     }
                 }
+                Debug.WriteLine("Total clients after: " + clients.Count());
                 IsLoading = false;
             });
         }

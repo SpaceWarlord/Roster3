@@ -34,6 +34,8 @@ namespace Roster.Models
 #nullable disable
         public List<Route> Routes { get; set; }
 
+        public ShiftWorker() { }
+
         public ShiftWorker(Shift shift, Worker worker, DateOnly startDateTime, DateOnly endDateTime)
         {
             Shift = shift;

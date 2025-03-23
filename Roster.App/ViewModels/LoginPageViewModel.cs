@@ -14,6 +14,8 @@ using CommunityToolkit.WinUI;
 using Roster.App.Helpers;
 using Roster.App.Main;
 using Roster.Models;
+using Roster.App.Services;
+using Roster.App.DTO;
 
 
 
@@ -21,12 +23,15 @@ namespace Roster.App.ViewModels
 {
     public partial class LoginPageViewModel:BaseViewModel
     {
-        public ObservableCollection<UserViewModel> Users;        
-        
-        public UserViewModel NewUser { get; set; } = new();
+        public ObservableCollection<UserViewModel> Users;
+
+        public UserService UserService { get; set; }
+        public UserViewModel NewUser { get; set; }
         public LoginPageViewModel() 
         {
-            Users = new ObservableCollection<UserViewModel>();            
+            UserService = new UserService(new RosterDBContext());
+            Users = new ObservableCollection<UserViewModel>();
+            NewUser = new UserViewModel("", "");
             //Users.CollectionChanged += this.OnCollectionChanged;
             //Task.Run(GetUsersListAsync);
             //dispatcherQueue.EnqueueAsync
@@ -80,7 +85,7 @@ namespace Roster.App.ViewModels
         {
             Debug.WriteLine("Called delete user");
             await user.DeleteAsync();
-            await GetUsersListAsync();
+            await GetAll();
 
             //Users.Remove(user);
         }
@@ -96,7 +101,7 @@ namespace Roster.App.ViewModels
                 Debug.WriteLine("string is " + username);
                 if (username != String.Empty)
                 {
-                    UserViewModel user = new UserViewModel();
+                    UserViewModel user = new UserViewModel(Guid.NewGuid().ToString(), username);
                     user.Username= username;
                     /*
                     var user = new User()
@@ -189,7 +194,7 @@ namespace Roster.App.ViewModels
             UserViewModel u;
             foreach (User user in users)
             {
-                u = new UserViewModel();
+                u = new UserViewModel(user.Id, user.Username);
                 u.Username = user.Username;
                 Debug.WriteLine("User: " + u.Username);
                 Users.Add(u);
@@ -203,8 +208,8 @@ namespace Roster.App.ViewModels
         public async Task AddUserToDB()
         {
             await NewUser.SaveAsync();
-            NewUser = new();
-            await GetUsersListAsync();
+            NewUser = new("","");
+            await GetAll();
         }               
         
         private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -240,11 +245,31 @@ namespace Roster.App.ViewModels
             }
             //context.SaveChanges();
         }
-       
+
+        public async Task GetAll()
+        {
+            List<UserDTO> userDTOList = await UserService.GetAll();
+            Debug.WriteLine("Total clients found: " + userDTOList.Count);
+            /*
+            List<TestViewModel> tList = TestViewModel.ToViewModelList(testDTOList);
+            Tests = new ObservableCollection<TestViewModel>(tList as List<TestViewModel>);
+            */
+
+            Users.Clear();
+            foreach (UserDTO userDTO in userDTOList)
+            {
+                Debug.WriteLine("Adding: " + userDTO.Id + " username: " + userDTO.Username);
+                Users.Add(new UserViewModel(userDTO.Id, userDTO.Username));
+                
+            }
+        }
+
         /// <summary>
         /// Gets the complete list of customers from the database.
         /// </summary>
         //public void GetUsersListAsync()
+
+        /*
         public async Task GetUsersListAsync()
         {
             Debug.WriteLine("-- Get Users List Async --");
@@ -252,7 +277,8 @@ namespace Roster.App.ViewModels
             {
                 IsLoading = true;
             });
-            var users = await App.Repository.Users.GetAsync();            
+            //var users = await App.Repository.Users.GetAsync();            
+            var users = UserService.GetAll();
             if (users == null)
             {
                 Debug.WriteLine("users was null");
@@ -282,5 +308,6 @@ namespace Roster.App.ViewModels
                 IsLoading = false;               
             });            
         }
+        */
     }
 }

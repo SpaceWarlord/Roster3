@@ -14,12 +14,17 @@ namespace Roster.App.ViewModels
         private Person _contactFor;
 
         
-        public EmergencyContactViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, Address? address, Person contactFor) 
+        public EmergencyContactViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address, Person contactFor) 
             : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor, address)
         {
             _contactFor = contactFor;
         }
-        
+
+        public override T ToDTO<T>()
+        {
+            throw new NotImplementedException();
+        }
+
 
         //protected override Person _model => throw new NotImplementedException();
     }

@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Roster.App.DTO;
+using System.Reflection;
+using Windows.Networking;
 
 namespace Roster.App.ViewModels
 {
-    public partial class AddressViewModel: BaseViewModel
+    public partial class AddressViewModel: DataViewModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AddressId { get; protected set; }
+        public string Id { get; protected set; }
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -44,7 +47,7 @@ namespace Roster.App.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "Suburb is Required")]
-        public SuburbViewModel _suburb;
+        public string _suburb;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -53,7 +56,7 @@ namespace Roster.App.ViewModels
 
         public AddressViewModel() { }
 
-        public AddressViewModel(string name, string? unitNum, string streetNum, string streetName, string streetType, SuburbViewModel suburb, string city)
+        public AddressViewModel(string name, string? unitNum, string streetNum, string streetName, string streetType, string suburb, string city)
         {
             Name = name;
             UnitNum = unitNum;
@@ -62,6 +65,12 @@ namespace Roster.App.ViewModels
             StreetType = streetType;
             Suburb = suburb;
             City = "Adelaide";            
+        }
+
+        public override T ToDTO<T>()
+        {
+            //return new AddressDTO(Id, Name, UnitNum, StreetNum, StreetName, StreetType, Suburb);
+            return (T)Convert.ChangeType(new AddressDTO(Id, Name, UnitNum, StreetNum, StreetName, StreetType, Suburb), typeof(T));
         }
     }
 }

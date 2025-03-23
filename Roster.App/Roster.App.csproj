@@ -76,7 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Roster.Models\Roster.Models.csproj" />
-    <ProjectReference Include="..\Roster.Repository\Roster.Repository.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Windows\Shell.xaml">
@@ -139,5 +138,9 @@
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\RosterPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Data\" />
+    <Folder Include="ViewModels\Page\" />
   </ItemGroup>
 </Project>

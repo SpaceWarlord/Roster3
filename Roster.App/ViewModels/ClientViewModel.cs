@@ -14,6 +14,10 @@ using System.Xml.Linq;
 using Windows.Networking;
 using Windows.Media.Audio;
 using Microsoft.Extensions.Logging.Abstractions;
+using Roster.App.Services;
+using Microsoft.UI.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using Roster.App.DTO;
 
 namespace Roster.App.ViewModels
 {
@@ -33,10 +37,10 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
-        private string? _genderPreference;        
-      
+        private string? _genderPreference;
 
-        public ObservableCollection<Shift?> Shifts { get; set; }
+
+        public ObservableCollection<Shift?>? Shifts { get; set; }
 
         //protected override Client _model => new();
         //protected Client _model => new();
@@ -45,7 +49,7 @@ namespace Roster.App.ViewModels
         /// Saves client data that has been edited.
         /// </summary>
         //public async Task<bool> SaveAsync()
-        public async Task SaveAsync()
+        public async Task SaveAsync(ClientService clientService)
         {
             Debug.WriteLine("Called Save Async. Name: " + FirstName);
             IsModified = false;
@@ -54,7 +58,20 @@ namespace Roster.App.ViewModels
                 Debug.WriteLine("its new");
 
                 IsNew = false;
-
+                //await clientService.Add(new ClientDTO(Id, FirstName, LastName, Nickname, Gender));
+                await clientService.Add(ToDTO<ClientDTO>());
+                /*
+                var clientService = ((App)Application.Current).Services.GetService<ClientService>();
+                if (clientService!=null)
+                {
+                    await clientService.Add(new DTO.ClientDTO(Id, FirstName, LastName, Nickname, Gender));
+                }
+                */
+                //var myApp = Application.Current;
+                //myApp.s
+                //App.Services.
+                //Roster.App.Services.
+                //Roster.App.Services.ClientService.
                 //App.ViewModel.Customers.Add(this);
                 //return true;
             }
@@ -69,7 +86,7 @@ namespace Roster.App.ViewModels
         /// </summary>
         public async Task DeleteAsync()
         {
-            await App.Repository.Clients.DeleteAsync(Id);
+            //await App.Repository.Clients.DeleteAsync(Id);
         }
 
         //public ClientViewModel(Client model = null):base(model)
@@ -101,10 +118,12 @@ namespace Roster.App.ViewModels
         }*/
 
 #nullable enable
-        public ClientViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, Address? address, byte riskCategory, string? genderPreference) 
+        public ClientViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address, byte riskCategory, string? genderPreference) 
             : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor, address)
         {
             Debug.WriteLine("-- ClientViewModel Constructor--");
+            _riskCategory = riskCategory;
+            _genderPreference = genderPreference;
             //_model= new ClientViewModel
         }
 
@@ -198,8 +217,16 @@ namespace Roster.App.ViewModels
             //context.SaveChanges();
         }
 
+        public override T ToDTO<T>()
+        {
+            AddressDTO aDTO = Address.ToDTO<AddressDTO>();
+            //return new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference);
+            //return (T) Convert.ChangeType(PlayerStats[type], typeof(T));
+            return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference), typeof(T));
+        }
+
         //public static Client CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, IAddress address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);
         //public static ClientPageViewModel CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, AddressModel address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);
-        
+
     }
 }

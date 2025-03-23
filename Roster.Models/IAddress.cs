@@ -9,9 +9,7 @@ namespace Roster.Models
 {
     public interface IAddress
     {
-        public int Id { get; }
-
-        int AddressId { get; }
+        public string Id { get; }        
         string AddressType { get; }
         string Name { get; set; }
         string? UnitNum { get; set; }

@@ -75,9 +75,9 @@ namespace Roster.App.Views.AddressViews
         {
             if (SuburbListView.SelectedItem != null)
             {
-                AddressVM.Suburb = (SuburbViewModel)SuburbListView.SelectedItem;
-                Debug.WriteLine((string)("selected suburb is " + AddressVM.Suburb.Name));
-                Debug.WriteLine((string)("selected client ID IS " + AddressVM.Suburb.Id));
+                //AddressVM.Suburb = (SuburbViewModel)SuburbListView.SelectedItem;
+                //Debug.WriteLine((string)("selected suburb is " + AddressVM.Suburb.Name));
+                //Debug.WriteLine((string)("selected client ID IS " + AddressVM.Suburb.Id));
             }
             else
             {
