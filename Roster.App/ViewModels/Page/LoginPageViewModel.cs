@@ -91,18 +91,23 @@ namespace Roster.App.ViewModels
         }
 
         [RelayCommand]
-        public void AddUser(object o)
+        public async Task AddUser(object o)
         {
             Debug.WriteLine("Called Add user");
             if (o != null)
             {
                 Debug.WriteLine("not null");
-                string username = o as string;
+                string? username = o as string;
                 Debug.WriteLine("string is " + username);
-                if (username != String.Empty)
+                if (!string.IsNullOrWhiteSpace(username))
                 {
                     UserViewModel user = new UserViewModel(Guid.NewGuid().ToString(), username);
-                    user.Username= username;
+                    Users.Clear();
+                    List<UserDTO> userDTOList = await UserService.GetAll();
+                    foreach (UserDTO userDTO in userDTOList)
+                    {
+                        Users.Add(new UserViewModel(userDTO.Id, userDTO.Username));
+                    }
                     /*
                     var user = new User()
                     {
@@ -147,6 +152,10 @@ namespace Roster.App.ViewModels
                         };
                         Users.Add(user);                                                
                     }*/
+                }
+                else
+                {
+                    Debug.WriteLine("Username was empty or blank");
                 }
             }
         }
@@ -207,7 +216,9 @@ namespace Roster.App.ViewModels
         /// </summary>
         public async Task AddUserToDB()
         {
-            await NewUser.SaveAsync();
+            Debug.WriteLine("--AddUserToDb--");
+            NewUser.Id = Guid.NewGuid().ToString();
+            await NewUser.SaveAsync(UserService);
             NewUser = new("","");
             await GetAll();
         }               
@@ -249,7 +260,7 @@ namespace Roster.App.ViewModels
         public async Task GetAll()
         {
             List<UserDTO> userDTOList = await UserService.GetAll();
-            Debug.WriteLine("Total clients found: " + userDTOList.Count);
+            Debug.WriteLine("Total users found: " + userDTOList.Count);
             /*
             List<TestViewModel> tList = TestViewModel.ToViewModelList(testDTOList);
             Tests = new ObservableCollection<TestViewModel>(tList as List<TestViewModel>);

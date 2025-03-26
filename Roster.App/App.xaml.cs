@@ -143,8 +143,8 @@ namespace Roster.App
         /// </summary>
         public static void UseSqlite()
         {
-            string demoDatabasePath = Package.Current.InstalledLocation.Path + @"\Data\Roster.db";
-            string databasePath = ApplicationData.Current.LocalFolder.Path + @"\Roster.db";                        
+            string demoDatabasePath = Package.Current.InstalledLocation.Path + @"\Data\Roster1.db";
+            string databasePath = ApplicationData.Current.LocalFolder.Path + @"\Roster1.db";                        
 
             
             if (!File.Exists(databasePath))
@@ -152,7 +152,7 @@ namespace Roster.App
                 //File.Copy(demoDatabasePath, databasePath);
             }
             //var dbOptions = new DbContextOptionsBuilder<RosterContext>().UseSqlite("Data Source=" + databasePath);
-            var dbOptions = new DbContextOptionsBuilder<RosterDBContext>().UseSqlite("Data Source=" + "database27.db");             
+            var dbOptions = new DbContextOptionsBuilder<RosterDBContext>().UseSqlite("Data Source=" + "database28.db");             
         }
 
         /// <summary>

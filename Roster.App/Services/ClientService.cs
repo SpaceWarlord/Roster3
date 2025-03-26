@@ -38,7 +38,7 @@ namespace Roster.App.Services
         public async Task<bool> Add(ClientDTO client)
         {
             var found = await _db.Clients.FirstOrDefaultAsync(x => x.Id == client.Id);
-            if (found is null) return false;            
+            if (found is not null) return false;            
             var c = new Client()
             {
                 Id = client.Id,

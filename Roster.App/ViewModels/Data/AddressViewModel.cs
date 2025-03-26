@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using Roster.App.DTO;
 using System.Reflection;
 using Windows.Networking;
+using Roster.App.ViewModels.Data;
 
 namespace Roster.App.ViewModels
 {

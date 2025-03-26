@@ -3,6 +3,7 @@ using Roster.App.DTO;
 using Roster.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,18 +35,53 @@ namespace Roster.App.Services
         public async Task<bool> Add(UserDTO user)
         {
             var found = await _db.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
-            if (found is null) return false;
-            var u = new User()
+            if (found is not null)
             {
-                Id = user.Id,
-                Username = user.Username,
-                
-            };
-            _db.Users.Add(u);
+                return false;
+            }
+            else
+            {
+                Debug.WriteLine("User doesnt yet exist");
+                Debug.WriteLine("id is " + user.Id);
+                Debug.WriteLine("name is " + user.Username);
+                User u = new User()
+                {
+                    Id = user.Id,
+                    Username = user.Username,
 
-            //if more then 0 something was added to database
-            //https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.dbcontext.savechangesasync?view=efcore-9.0
-            return (await _db.SaveChangesAsync()) > 0;
+                };
+                using (var db = new RosterDBContext())
+                {
+                    db.Users.Add(u);
+                    Debug.WriteLine("Added the user");
+                    //if more then 0 something was added to database
+                    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.dbcontext.savechangesasync?view=efcore-9.0
+                    try
+                    {
+
+                        return (await db.SaveChangesAsync()) > 0;
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        Debug.WriteLine($"Unique constraint {ex.ToString()} violated. Duplicate value for {ex.InnerException.ToString()}");
+
+                        var failedEntries = ex.Entries;
+                        foreach (var entry in failedEntries)
+                        {
+                            var entityName = entry.Metadata.Name;
+                            var properties = entry.Properties.Where(p => p.IsModified && !p.IsTemporary);
+                            foreach (var property in properties)
+                            {
+                                var propertyName = property.Metadata.Name;
+                                Debug.WriteLine($"Failed to update field: {propertyName} in entity: {entityName}");
+                            }
+                        }
+                        return false;
+                    }
+                }
+                    
+            }
+                
         }
     }
 }

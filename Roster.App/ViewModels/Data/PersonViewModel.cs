@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using System.Drawing;
 using System.Reflection;
+using Roster.App.ViewModels.Data;
 
 namespace Roster.App.ViewModels
 {

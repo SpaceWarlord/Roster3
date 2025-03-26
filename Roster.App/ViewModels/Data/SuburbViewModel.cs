@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public class SuburbViewModel
     {

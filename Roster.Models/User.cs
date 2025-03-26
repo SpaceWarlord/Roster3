@@ -17,29 +17,19 @@ using Microsoft.EntityFrameworkCore;
 namespace Roster.Models
 {
     [Index(nameof(Username), IsUnique = true)]
-    public partial class User
+    public class User
     {        
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
-        public string Username { get; set; }
-
-       
-
-        public User()
-        {
-
-        }
+        public required string Username { get; set; }
+              
         /*
         public User(Entities.User userEntity)
         {            
             Id = userEntity.Id;
            _username = userEntity.Username;
         }
-        */
-        public User(string username)
-        {            
-            Username = username;           
-        }
+        */        
 
                       
 

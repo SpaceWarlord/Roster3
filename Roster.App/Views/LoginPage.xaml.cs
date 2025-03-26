@@ -70,12 +70,6 @@ namespace Roster.App.Views
         public void Test(int id)
         {
             Debug.WriteLine("Called test");
-        }
-        
-
-        private void addUserBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }                
     }
 }

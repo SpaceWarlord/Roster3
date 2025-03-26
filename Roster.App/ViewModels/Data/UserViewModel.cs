@@ -14,10 +14,15 @@ using ABI.System;
 using Roster.App.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using Roster.App.DTO;
+using Roster.App.Services;
+using Roster.App.ViewModels.Data;
+using Roster.App.Main;
+using Windows.Networking;
 
 namespace Roster.App.ViewModels
 {
-    public partial class UserViewModel : BaseViewModel
+    public partial class UserViewModel : DataViewModel
     {
         [ObservableProperty]
         private string _id;
@@ -38,7 +43,7 @@ namespace Roster.App.ViewModels
         /// Saves user data that has been edited.
         /// </summary>
         //public async Task<bool> SaveAsync()
-        public async Task SaveAsync()
+        public async Task SaveAsync(UserService userService)
         {
             Debug.WriteLine("Called Save Async. Username: " + Username);
             IsModified = false;
@@ -46,7 +51,8 @@ namespace Roster.App.ViewModels
             {
                 Debug.WriteLine("its new");
 
-               IsNew = false;
+                IsNew = false;
+                await userService.Add(ToDTO<UserDTO>());
 
                 //App.ViewModel.Customers.Add(this);
                 //return true;
@@ -70,6 +76,11 @@ namespace Roster.App.ViewModels
             Debug.WriteLine("called delete user");
             //Debug.WriteLine("id: " + id);
             //Users.Remove(user);
+        }
+
+        public override T ToDTO<T>()
+        {                        
+            return (T)Convert.ChangeType(new UserDTO(Id, Username), typeof(T));
         }
 
         /*
