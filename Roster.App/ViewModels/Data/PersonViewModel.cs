@@ -32,6 +32,14 @@ namespace Roster.App.ViewModels
         [ObservableProperty]
         private string _firstName;
 
+
+        /// <summary>
+        /// Gets or sets the person's middle name.
+        /// </summary>
+
+        [ObservableProperty]
+        private string? _middleName;
+
         /// <summary>
         /// Gets or sets the person's last name.
         /// </summary>
@@ -55,6 +63,10 @@ namespace Roster.App.ViewModels
             set { }
         }
 
+        [NotMapped]
+        public static string[] GenderTypes = ["M", "F"];
+        
+
 
 
         /// <summary>
@@ -70,14 +82,14 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
-        private string _gender;
+        private string? _gender;
 
         /// <summary>
         /// Gets or sets the person's date of birth.
         /// </summary>
 
         [ObservableProperty]
-        private string _dob;
+        private string? _dateOfBirth;
 
 
         /// <summary>
@@ -112,11 +124,13 @@ namespace Roster.App.ViewModels
         public PersonViewModel():base()
         {
             Debug.WriteLine("-- PersonViewModel Constructor Blank--");
+            Id = Guid.NewGuid().ToString();
             FirstName = "";
+            MiddleName = "";
             LastName = "";
             Nickname = "";
             Gender = "M";
-            Dob = "";
+            DateOfBirth = "";
         }        
 
         public PersonViewModel(PersonViewModel person):base()
@@ -124,51 +138,59 @@ namespace Roster.App.ViewModels
             Debug.WriteLine("-- PersonViewModel Constructor with param--");
             if (person != null)
             {
+                Id = person.Id;
                 FirstName = person.FirstName;
+                MiddleName = person.MiddleName;
                 LastName = person.LastName;
                 Nickname = person.Nickname;
                 Gender = person.Gender;
-                Dob = person.Dob;
+                DateOfBirth = person.DateOfBirth;
             }
             else
             {
+                Id = Guid.NewGuid().ToString();
                 FirstName = "";
+                MiddleName = "";
                 LastName = "";
                 Nickname = "";
                 Gender = "M";
-                Dob = "";
+                DateOfBirth = "";
             }                        
         }
 
-        public PersonViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
+        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string? gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
         {
-            Debug.WriteLine("--PersonViewModel Constructor 1--");            
+            Debug.WriteLine("--PersonViewModel Constructor 1--");     
+            Id = id;
             FirstName = firstName;
+            MiddleName = middleName;
             LastName = lastName;
             Nickname = nickname;
             Gender = gender;
-            Dob = dob;
+            DateOfBirth = dateOfBirth;
             Phone = phone;
             Email = email;
             HighlightColor = highlightColor;
             Address = address;
         }
 
-        public PersonViewModel(string firstName, string lastName, string nickname, string gender, string dob, string phone, string email, Color? highlightColor)
+        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string? gender, string? dateOfBirth, string? phone, string? email, Color? highlightColor)
         {
             Debug.WriteLine("--PersonViewModel Constructor 2--");
-            if (highlightColor == null) //https://stackoverflow.com/questions/4454336/can-i-specify-a-default-color-parameter-in-c-sharp-4-0
-            {
-                highlightColor = Color.Black;
-            }            
-
+                  
+            Id = id;
             FirstName = firstName;
+            MiddleName = middleName;
             LastName = lastName;
             Nickname = nickname;
             Gender = gender;
-            Dob = dob;
+            DateOfBirth = dateOfBirth;
             Phone = phone;
             Email = email;
+            if (highlightColor == null) //https://stackoverflow.com/questions/4454336/can-i-specify-a-default-color-parameter-in-c-sharp-4-0
+            {
+                highlightColor = Color.Black;
+            }
             HighlightColor = highlightColor.ToString();
             //_userId = userId;
         }

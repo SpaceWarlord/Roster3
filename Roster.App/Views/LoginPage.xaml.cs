@@ -57,13 +57,14 @@ namespace Roster.App.Views
         /// </summary>        
         private async Task ResetUserList()
         {
+            //await ViewModel.GetAll();
+            
             await dispatcherQueue.EnqueueAsync(async () =>
-                await ViewModel.GetAll());            
+                await ViewModel.GetAll());                        
+        }      
 
-        }
 
 
-        //public string Hello = "hi";
 
         
         [RelayCommand]

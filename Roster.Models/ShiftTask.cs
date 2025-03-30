@@ -9,7 +9,7 @@ namespace Roster.Models
 {
     public class ShiftTask
     {        
-        public int ShiftTaskId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         
         public string Description { get; set; }

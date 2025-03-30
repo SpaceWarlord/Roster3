@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Dispatching;
-using Roster.App.DTO;
+
 
 namespace Roster.App.ViewModels
 {
@@ -74,9 +74,10 @@ namespace Roster.App.ViewModels
         }
 
         public BaseViewModel()
-        {            
+        {
             //this.ErrorsChanged += Errors_Changed;
             //this.PropertyChanged += Property_Changed;
+            //await dispatcherQueue.EnqueueAsync()
         }
 
         ~BaseViewModel()

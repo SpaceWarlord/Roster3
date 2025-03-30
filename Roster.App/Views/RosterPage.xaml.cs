@@ -5,6 +5,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Roster.App.ViewModels;
+using Roster.App.ViewModels.Page;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +25,12 @@ namespace Roster.App.Views
     /// </summary>
     public sealed partial class RosterPage : Page
     {
+        public RosterPageViewModel ViewModel { get; set; }
         public RosterPage()
         {
             this.InitializeComponent();
+            ViewModel = new RosterPageViewModel();
+            Schedule.ItemsSource = ViewModel.Shifts;
         }
     }
 }

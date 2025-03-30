@@ -14,8 +14,8 @@ namespace Roster.App.ViewModels
         private Person _contactFor;
 
         
-        public EmergencyContactViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address, Person contactFor) 
-            : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor, address)
+        public EmergencyContactViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address, Person contactFor) 
+            : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
         {
             _contactFor = contactFor;
         }

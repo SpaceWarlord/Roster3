@@ -9,8 +9,10 @@ using Microsoft.UI.Dispatching;
 
 namespace Roster.App.Helpers
 {
+    /*
     public static class DispatcherQueueExtensions
     {
+        
         /// <summary>
         /// Invokes a given function on the target <see cref="DispatcherQueue"/> and returns a
         /// <see cref="Task"/> that completes when the invocation of the function is completed.
@@ -254,5 +256,7 @@ namespace Roster.App.Helpers
         {
             return new InvalidOperationException(message);
         }
-    }
+        
+}
+    */
 }

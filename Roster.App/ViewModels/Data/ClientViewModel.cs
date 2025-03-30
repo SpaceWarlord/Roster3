@@ -118,8 +118,8 @@ namespace Roster.App.ViewModels
         }*/
 
 #nullable enable
-        public ClientViewModel(string firstName, string lastName, string nickname, string gender, string? dob, string? phone, string? email, string? highlightColor, AddressViewModel? address, byte riskCategory, string? genderPreference) 
-            : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor, address)
+        public ClientViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address, byte riskCategory, string? genderPreference) 
+            : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
         {
             Debug.WriteLine("-- ClientViewModel Constructor--");
             _riskCategory = riskCategory;
@@ -219,10 +219,20 @@ namespace Roster.App.ViewModels
 
         public override T ToDTO<T>()
         {
-            AddressDTO aDTO = Address.ToDTO<AddressDTO>();
+            AddressDTO aDTO = null;
+            if (Address == null)
+            {
+                Debug.WriteLine("Address is null");
+            }
+            else
+            {
+                aDTO = Address.ToDTO<AddressDTO>();
+            }
+            Debug.WriteLine("client id is " + Id);
+
             //return new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference);
             //return (T) Convert.ChangeType(PlayerStats[type], typeof(T));
-            return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference), typeof(T));
+            return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, MiddleName, LastName, Nickname, Gender, DateOfBirth, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference), typeof(T));
         }
 
         //public static Client CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, IAddress address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);

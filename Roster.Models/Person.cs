@@ -13,11 +13,14 @@ using Windows.Networking;
 namespace Roster.Models
 {
     [Index(nameof(Nickname), IsUnique = true)]
-    public class Person: IEquatable<Person>
+    //public class Person: IEquatable<Person>
+    public class Person
     {
         public required string Id { get; set; }
         
         public required string FirstName { get; set; }
+
+        public string? MiddleName { get; set; }
         
         public required string LastName { get; set; }
         
@@ -36,22 +39,25 @@ namespace Roster.Models
 
         public required string Gender { get; set; }
         
-        public string? DOB { get; set; }
+        public string? DateOfBirth { get; set; }
         
         public string? Phone { get; set; }
         
         public string? Email { get; set; }        
 
         [ForeignKey("AddressId")] // for a shadow property to the Address ID FK
-        public virtual Address Address { get; set; }
+        public virtual Address? Address { get; set; }
 
         public string? HighlightColor { get; set; }
+
+        public string? Avatar { get; set; }
 
         /// <summary>
         /// Returns the person's full name.
         /// </summary>
         public override string ToString() => $"{FirstName} {LastName}";
 
+        /*
         public bool Equals(Person other) =>
             FirstName == other.FirstName &&
             LastName == other.LastName &&
@@ -61,12 +67,14 @@ namespace Roster.Models
             Phone == other.Phone &&
             Email == other.Email &&
             Address == other.Address;
+        
+        
 
         public override bool Equals(object obj)
         {
             return Equals(obj as Person);
         }
-
+        */
         public override int GetHashCode()
         {
             throw new NotImplementedException();

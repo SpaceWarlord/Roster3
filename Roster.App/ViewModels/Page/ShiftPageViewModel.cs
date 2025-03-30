@@ -80,8 +80,9 @@ namespace Roster.App.ViewModels
             => new(startDate, endDate, startTime, endTime, travelTime, staff, client, location, caseNoteCompleted);
         */
 
+        /*
         public static Shift CreateShift(string startTime, string endTime, byte travelTime, short maxTravelDistance, ShiftAddress startLocation, ShiftAddress endLocation, char shiftType, bool reoccuring, Client client)
-            => new(startTime, endTime, travelTime, maxTravelDistance, startLocation, endLocation, shiftType,  reoccuring, client);
+            => new(startTime, endTime, travelTime, maxTravelDistance, startLocation, endLocation, shiftType,  reoccuring, client);*/
 
         [RelayCommand]
         public void AddShift(Shift shift)

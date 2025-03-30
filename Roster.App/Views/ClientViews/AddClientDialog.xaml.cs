@@ -41,18 +41,30 @@ namespace Roster.App.Views.ClientViews
             */
         }
 
-        private void gender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Gender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Debug.WriteLine("--Gender Selection--");
-            RadioButton radioButton = gender.SelectedItem as RadioButton;
-            if (radioButton != null)
+            if (Gender.SelectedItem != null) 
             {
-                Debug.WriteLine("Gender set to: " + radioButton.Content);
-            }
+                RadioButton? radioButton = Gender.SelectedItem as RadioButton;
+                if (radioButton != null)
+                {
+                    if (radioButton.Content != null)
+                    {
+                        Debug.WriteLine("Gender set to: " + radioButton.Content);
+                        ClientPageVM.NewClient.Gender = radioButton.Content.ToString();                                                
+                    }                    
+                }                
+            }            
+        }
+
+        private void GenderPreference_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 
-    public class GenderConverter : IValueConverter
+    public partial class GenderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -8,37 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roster.Models;
+using Microsoft.UI.Xaml.Media;
 
 namespace Roster.App.ViewModels
 {
     public partial class ShiftViewModel:BaseViewModel
     {
-        [Key]
-        public int ShiftId { get; protected set; }
+        [ObservableProperty]
+        [Required]
+        private string _id;
 
-        /*
-        private string startDate;
-        public string StartDate
-        {
-            get
-            {
-                if (startDate == string.Empty)
-                {
-                    return DateTimeOffset.Now;
-                }
-                return DateTimeOffset.Parse(StartDate);
-
-            }
-            set => SetProperty(ref startDate, value);
-        }*/
+        [ObservableProperty]
+        [Required]
+        private string _name = string.Empty;
 
         [ObservableProperty]
         private string day = string.Empty;
 
         [ObservableProperty]
+        [Required]
         private string _startTime = string.Empty;
 
         [ObservableProperty]
+        [Required]
         private string _endTime = string.Empty;
 
         //public virtual ShiftAddress StartLocation { get; set; }
@@ -85,12 +77,24 @@ namespace Roster.App.ViewModels
         [ObservableProperty]
         private bool _caseNoteCompleted;
 
-        private ObservableCollection<ShiftWorkerViewModel> _shiftWorkers;
+        private ObservableCollection<ShiftWorkerViewModel>? _shiftWorkers;
 
-        public int ClientId { get; set; } //1 client per shift
-        public ClientViewModel Client { get; set; } = null;
+        //public int ClientId { get; set; } //1 client per shift
 
-        public ObservableCollection<RouteViewModel> Routes { get; set; }
+        [ObservableProperty]
+        [Required]
+        private ClientViewModel _client;
+
+        [ObservableProperty]
+        public bool _isAllDay;
+
+        [ObservableProperty]
+        public Brush? _backgroundColor;
+
+        [ObservableProperty]
+        public Brush? _foregroundColor;
+
+        public ObservableCollection<RouteViewModel>? Routes { get; set; }
         /*
         [NotMapped]
         public DateTimeOffset StartDateTemp
@@ -163,8 +167,10 @@ namespace Roster.App.ViewModels
         public ShiftViewModel() { }
 
         //public Shift(string startDate, string endDate, string startTime, string endTime, int travelTime, Staff staff, Client client, Location location, bool caseNoteCompleted)
-        public ShiftViewModel(string startTime, string endTime, byte travelTime, short maxTravelDistance, AddressViewModel startLocation, AddressViewModel endLocation, char shiftType, bool reocurring, ClientViewModel client)
+        public ShiftViewModel(string id, string name, string startTime, string endTime, byte travelTime, short maxTravelDistance, AddressViewModel startLocation, AddressViewModel endLocation, char shiftType, bool reocurring, ClientViewModel client)
         {
+            Id = id;
+            Name = name;
             StartTime = startTime;
             EndTime = endTime;
             TravelTime = travelTime;

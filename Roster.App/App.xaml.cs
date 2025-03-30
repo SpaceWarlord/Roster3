@@ -61,6 +61,7 @@ namespace Roster.App
         /// </summary>
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzc4NDgxNEAzMjM5MmUzMDJlMzAzYjMyMzkzYm1JQ2pCdTQwc0VxU1E4S2VuY29BZmMrRVJqRXRiWWRBQjF1ejFaRGViVDQ9");
             Services = ConfigureServices();
             this.InitializeComponent();             
             

@@ -30,7 +30,8 @@ namespace Roster.App.ViewModels
         */
         //bool hasManualHandlingCert = true;
 
-        public WorkerViewModel(string firstName, string lastName, string nickname, string gender, string dob, string phone, string email, Color highlightColor) : base(firstName, lastName, nickname, gender, dob, phone, email, highlightColor)
+        public WorkerViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string dateOfBirth, string phone, string email, Color highlightColor)
+            : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor)
         {
 
         }

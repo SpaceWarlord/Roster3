@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
+using Syncfusion.UI.Xaml.DataGrid;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,19 @@ namespace Roster.App.Views.ClientViews
         public ClientPage()
         {
             this.InitializeComponent();
-            ViewModel = new ClientPageViewModel();                
+            ViewModel = new ClientPageViewModel();                                      
+        }
+
+        public async void OnLoad(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.GetClientsListAsync();
+            clientsDataGrid.ItemsSource = ViewModel.Clients;
+
+            GridComboBoxColumn? column = clientsDataGrid.Columns["Gender"] as GridComboBoxColumn;
+            if (column != null)
+            {
+                column.ItemsSource = PersonViewModel.GenderTypes;
+            }                                  
         }
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
@@ -48,7 +61,11 @@ namespace Roster.App.Views.ClientViews
             //dialog.Content = new TestDialog();
             dialog.Width = 2000;
             dialog.MinWidth = 2000;
-            dialog.Height = 1000;
+            dialog.Height = 2000;
+            dialog.CanBeScrollAnchor = true;
+            dialog.CanDrag = true;
+            dialog.FullSizeDesired = true;
+            //dialog.Scale=
             //dialog.RequestedTheme = (VisualTreeHelper.GetParent(sender as Button) as StackPanel).ActualTheme;
 
             var result = await dialog.ShowAsync();
@@ -59,9 +76,11 @@ namespace Roster.App.Views.ClientViews
                 //DialogResult.Text = "User saved their work";
                 //if (dialog.ClientVM != null)
                 if(ViewModel.NewClient!=null)
-                {
+                {                    
                     Debug.WriteLine("zzName: " + ViewModel.NewClient.FirstName);
+                    Debug.WriteLine("zzNickname: " + ViewModel.NewClient.Nickname);
                     Debug.WriteLine("Selected gender: " + ViewModel.NewClient.Gender);
+                    ViewModel.NewClient.Id = Guid.NewGuid().ToString();
                     await ViewModel.AddClientToDB();
                     //await ViewModel.AddClientToDB();
                     //ViewModel.AddClientCommand.Execute(dialog.ClientVM);

@@ -45,7 +45,7 @@ namespace Roster.App
         {
             
             optionsBuilder.UseExceptionProcessor();            
-            optionsBuilder.UseSqlite("Data Source=database28.db");
+            optionsBuilder.UseSqlite("Data Source=database31.db");
             optionsBuilder.EnableSensitiveDataLogging(true);
 
             //optionsBuilder.UseSqlite("Data Source=recipe.db");
