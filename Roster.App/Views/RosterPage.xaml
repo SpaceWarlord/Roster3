@@ -15,6 +15,7 @@
             x:Name="Schedule"
             FirstDayOfWeek="Monday"
             ViewType="TimelineWeek">
+            <!--
             <scheduler:SfScheduler.AppointmentMapping>
                 <scheduler:AppointmentMapping
                     AppointmentBackground="BackgroundColor"
@@ -24,6 +25,7 @@
                     StartTime="StartTime"
                     Subject="EventName" />
             </scheduler:SfScheduler.AppointmentMapping>
+            -->
             <scheduler:SfScheduler.TimelineViewSettings>
                 <scheduler:TimelineViewSettings CellBottomPadding="30" />
             </scheduler:SfScheduler.TimelineViewSettings>
