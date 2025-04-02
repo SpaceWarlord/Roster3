@@ -14,13 +14,10 @@ namespace Roster.Models
 
     [Table("Worker", Schema = "TPT")]
     public partial class Worker: Person
-    {
-
-        public int WorkerId { get; protected set; }
-
+    {    
 #nullable enable
         
-        private List<Certificate> _certificates;
+        //public List<Certificate>? Certificates { get; set; }
 
         
         public Worker(): base()

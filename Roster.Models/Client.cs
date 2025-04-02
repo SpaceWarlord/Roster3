@@ -19,10 +19,15 @@ namespace Roster.Models
     {                
         //public virtual ClientAddress ClientAddress { get; set; }       
         
+        public string? NDISNumber { get; set; }
         public byte RiskCategory { get; set; }
 
 #nullable enable
         public string? GenderPreference { get; set; }
+
+        public Worker? PrimaryWorker { get; set; }
+
+        public Worker? SecondaryWorker { get; set; }
 #nullable disable
 
         //public ObservableCollection<Shift> Shifts { get; set; }

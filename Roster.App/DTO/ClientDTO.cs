@@ -22,10 +22,12 @@ namespace Roster.App.DTO
         public string? Email { get; set; }
         public AddressDTO? Address { get; set; }
         public string? HighlightColor { get; set; }
+
+        public string NDISNumber { get; set; }
         public byte RiskCategory { get; set; }
         public string? GenderPreference { get; set; }
 
-        public ClientDTO(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressDTO? address, byte riskCategory, string? genderPreference)
+        public ClientDTO(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressDTO? address, string ndisNumber, byte riskCategory, string? genderPreference)
         {
             Id = id;
             FirstName = firstName;
@@ -38,7 +40,9 @@ namespace Roster.App.DTO
             Email = email;
             HighlightColor = highlightColor;
             Address = address;
+            NDISNumber = ndisNumber;
             RiskCategory = riskCategory;
+            GenderPreference = genderPreference;
         }        
     }
 }

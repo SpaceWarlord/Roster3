@@ -52,6 +52,7 @@
             AutoGenerateColumns="False">
             <dataGrid:SfDataGrid.Columns>
                 <dataGrid:GridTextColumn HeaderText="First Name" MappingName="FirstName" />
+                <dataGrid:GridTextColumn HeaderText="Middle Name" MappingName="MiddleName" />
                 <dataGrid:GridTextColumn HeaderText="Last Name" MappingName="LastName" />
                 <dataGrid:GridTextColumn MappingName="Nickname" />
                 <dataGrid:GridComboBoxColumn HeaderText="Gender" MappingName="Gender" />
@@ -84,6 +85,7 @@
                         </DataTemplate>
                     </dataGrid:GridTextColumn.CellTemplate>
                 </dataGrid:GridTextColumn>
+                <dataGrid:GridTextColumn HeaderText="NDIS Number" MappingName="NDISNumber" />
                 <dataGrid:GridTextColumn HeaderText="Unit Number" MappingName="Address.UnitNum" />
                 <dataGrid:GridTextColumn HeaderText="Street Number" MappingName="Address.StreetNum" />
                 <dataGrid:GridTextColumn HeaderText="Street Name" MappingName="Address.StreetName" />

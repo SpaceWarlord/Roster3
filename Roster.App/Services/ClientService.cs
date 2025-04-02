@@ -22,7 +22,7 @@ namespace Roster.App.Services
         public async Task<List<ClientDTO>> GetAll()
         {
             return await _db.Clients.Select(c => new ClientDTO(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email, c.HighlightColor,
-                new AddressDTO(c.Address.Id, c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.SuburbId), c.RiskCategory, c.GenderPreference)).ToListAsync();
+                new AddressDTO(c.Address.Id, c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.SuburbId), c.NDISNumber, c.RiskCategory, c.GenderPreference)).ToListAsync();
         }
 
         public async Task<bool> Update(ClientDTO client)

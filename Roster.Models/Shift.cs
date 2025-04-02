@@ -17,18 +17,25 @@ namespace Roster.Models
         
         public required string Name { get; set; }
         
-        public string Day {  get; set; }
+        public string? Day {  get; set; }
         
         public required string StartTime {  get; set; }
         
-        public required string EndTime {  get; set; }        
+        public required string EndTime {  get; set; }
 
+        /*
         [ForeignKey("StartAddressId")] // Shadow FK
         public virtual Address StartLocation { get; set; }
+        */
 
+        public Address? StartLocation { get; set; }
+
+        /*
         [ForeignKey("EndAddressId")] // Shadow FK
         public virtual Address EndLocation { get; set; }
-        
+        */
+
+        public Address? EndLocation { get; set; }
         public byte TravelTime { get; set; }
         
         public short MaxTravelDistance { get; set; }        
@@ -39,16 +46,21 @@ namespace Roster.Models
         
         public bool CaseNoteCompleted {  get; set; }
         
-        public List<ShiftWorker> ShiftWorkers { get; set; }
-        
+        public List<ShiftWorker>? ShiftWorkers { get; set; }
+
+        /*
         public int ClientId { get; set; } //1 client per shift
         public Client Client { get; set; } = null;
+        */
 
+        public Client? Client { get; set; }
         public string? BackgroundColor { get; set; }
         public string? ForegroundColor { get; set; }
 
-        public List<Route> Routes { get; set; }
+        public List<Route>? Routes { get; set; }
 
+
+        /*
         public Shift()
         {
 
@@ -67,5 +79,6 @@ namespace Roster.Models
             //Location = location;
             //CaseNoteCompleted = caseNoteCompleted;            
         }        
+        */
     }
 }

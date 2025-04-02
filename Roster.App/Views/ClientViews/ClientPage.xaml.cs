@@ -30,13 +30,76 @@ namespace Roster.App.Views.ClientViews
         public ClientPage()
         {
             this.InitializeComponent();
-            ViewModel = new ClientPageViewModel();                                      
+            ViewModel = new ClientPageViewModel();
+            clientsDataGrid.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
+            clientsDataGrid.RowValidating += SfDataGrid_RowValidating;
+            clientsDataGrid.CurrentCellValueChanged += SfDataGrid_CurrentCellValueChanged;
+            clientsDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+        }
+
+
+        
+
+        private async void SfDataGrid_AddNewRowInitiating(object sender, AddNewRowInitiatingEventArgs e)
+        {
+            var client = e.NewObject as ClientViewModel;
+            if (client != null)
+            {
+                Debug.WriteLine("name is " + client.FirstName);
+                await ViewModel.AddClientToDB();
+            }
+            else
+            {
+                Debug.WriteLine("client was null");
+            }
+        }
+
+        
+
+        private void SfDataGrid_RowValidating(object sender, RowValidatingEventArgs e)
+        {
+            if (this.clientsDataGrid.IsAddNewIndex(e.RowIndex))
+            {
+                ClientViewModel? client = e.RowData as ClientViewModel;
+                if (client != null)
+                {
+                    if (string.IsNullOrWhiteSpace(client.FirstName) || string.IsNullOrWhiteSpace(client.LastName))
+                    {
+                        e.IsValid = false;
+                        e.ErrorMessages.Add("OrderID", "OrderID should not exceed 1010.");
+                    }
+                }
+                
+            }
+        }
+
+
+        
+
+        private void SfDataGrid_CurrentCellValueChanged(object sender, CurrentCellValueChangedEventArgs e)
+        {
+            ClientViewModel c = e.Record as ClientViewModel;
+
+            //e.Column.GetValue();
+            if (c!=null)
+            {
+                Debug.WriteLine("val is " + c.FirstName);
+                if (string.IsNullOrWhiteSpace(c.Nickname))
+                {
+                    Debug.WriteLine("Error: Nickname was blank");
+                }
+                else
+                {
+                    Debug.WriteLine("Nickname is " + c.Nickname);
+                }
+            }
         }
 
         public async void OnLoad(object sender, RoutedEventArgs e)
         {
             await ViewModel.GetClientsListAsync();
             clientsDataGrid.ItemsSource = ViewModel.Clients;
+            Debug.WriteLine("total clients: " + ViewModel.Clients.Count);
 
             GridComboBoxColumn? column = clientsDataGrid.Columns["Gender"] as GridComboBoxColumn;
             if (column != null)

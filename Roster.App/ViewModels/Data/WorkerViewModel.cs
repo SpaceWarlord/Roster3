@@ -12,15 +12,16 @@ namespace Roster.App.ViewModels
 {
     public partial class WorkerViewModel : PersonViewModel
     {
-        public int WorkerId { get; protected set; }
+
 
         //protected override Person _model => throw new NotImplementedException();
 
 #nullable enable
 
+        /*
         [ObservableProperty]
-        private List<CertificateViewModel> _certificates = new List<CertificateViewModel>();
-
+        private List<CertificateViewModel>? _certificates = new List<CertificateViewModel>();
+        */
 
         /*
         public WorkerViewModel() : base(string.Empty, string.Empty, string.Empty, string.Empty)
@@ -30,15 +31,17 @@ namespace Roster.App.ViewModels
         */
         //bool hasManualHandlingCert = true;
 
+        //public WorkerViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string dateOfBirth, string phone, string email, Color highlightColor, List<CertificateViewModel>? certificates)
         public WorkerViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string dateOfBirth, string phone, string email, Color highlightColor)
             : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor)
         {
-
+            //Certificates = certificates;            
         }
 
         public override T ToDTO<T>()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return null;
         }
     }
 }

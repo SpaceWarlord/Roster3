@@ -28,6 +28,9 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
+        private string? _nDISNumber;
+
+        [ObservableProperty]
         private byte _riskCategory;
 
 #nullable enable
@@ -118,12 +121,19 @@ namespace Roster.App.ViewModels
         }*/
 
 #nullable enable
-        public ClientViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address, byte riskCategory, string? genderPreference) 
+
+        public ClientViewModel()
+        {
+
+        }
+        public ClientViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address, 
+            string? ndisNumber, byte riskCategory, string? genderPreference) 
             : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
         {
             Debug.WriteLine("-- ClientViewModel Constructor--");
-            _riskCategory = riskCategory;
-            _genderPreference = genderPreference;
+            NDISNumber = ndisNumber;
+            RiskCategory = riskCategory;
+            GenderPreference = genderPreference;
             //_model= new ClientViewModel
         }
 
@@ -232,7 +242,7 @@ namespace Roster.App.ViewModels
 
             //return new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference);
             //return (T) Convert.ChangeType(PlayerStats[type], typeof(T));
-            return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, MiddleName, LastName, Nickname, Gender, DateOfBirth, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference), typeof(T));
+            return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, MiddleName, LastName, Nickname, Gender, DateOfBirth, Phone, Email, HighlightColor, aDTO, NDISNumber, RiskCategory, GenderPreference), typeof(T));
         }
 
         //public static Client CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, IAddress address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);

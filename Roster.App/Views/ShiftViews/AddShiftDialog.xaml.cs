@@ -18,6 +18,7 @@ using System.Xml.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Diagnostics;
 using Roster.App.ViewModels;
+using Roster.App.ViewModels.Data;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,10 +32,10 @@ namespace Roster.App.Views.ShiftViews
     {
         public RosterDBContext context;
         //public Shift Shift { get; } = new();
-        public Shift Shift { get; }
+        public ShiftViewModel Shift { get; }
 
-        public List<Worker> currentWorkers;
-        public List<Client> currentClients;
+        public List<WorkerViewModel> currentWorkers;
+        public List<ClientViewModel> currentClients;
         public AddShiftDialog()
         {
 
@@ -77,8 +78,13 @@ namespace Roster.App.Views.ShiftViews
             endTimeBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             BindingOperations.SetBinding(EndTimePicker, TimePicker.TimeProperty, endTimeBinding);
             */
-            currentClients = new List<Client>(context.Clients.ToList());
-            currentWorkers = new List<Worker>(context.Workers.ToList());    
+
+
+            //currentClients = new List<ClientViewModel>(context.Clients.ToList());
+            //currentWorkers = new List<WorkerViewModel>(context.Workers.ToList());    
+
+
+
             //StaffListView.DataContext = staff;
             //StaffDropDown.
             //Debug.WriteLine("total staff is " + staff.Count);
@@ -109,7 +115,7 @@ namespace Roster.App.Views.ShiftViews
         {
             if (ClientListView.SelectedItem != null)
             {
-                Shift.Client = (Client)ClientListView.SelectedItem;
+                Shift.Client = (ClientViewModel)ClientListView.SelectedItem;
                 Debug.WriteLine("selected client is " + Shift.Client.FullName);
                 Debug.WriteLine("selected client ID IS " + Shift.Client.Id);
             }

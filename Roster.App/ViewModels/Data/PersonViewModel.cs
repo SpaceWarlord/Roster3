@@ -12,6 +12,7 @@ using Windows.Networking;
 using System.Drawing;
 using System.Reflection;
 using Roster.App.ViewModels.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Roster.App.ViewModels
 {
@@ -74,6 +75,7 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
+        [NotNull]
         private string _nickname;
 
 

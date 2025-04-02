@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.Models;
+using Roster.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,7 +25,7 @@ namespace Roster.App.Views.WorkerViews
     /// </summary>
     public sealed partial class AddWorkerDialog : ContentDialog
     {
-        public Worker Worker { get; } = new();
+        public WorkerViewModel Worker { get; set; }
         public AddWorkerDialog()
         {
             this.InitializeComponent();                        

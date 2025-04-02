@@ -14,16 +14,6 @@
     <Nullable>enable</Nullable>
     <SupportedOSPlatformVersion>10.0.26100.0</SupportedOSPlatformVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Views\ShiftViews\**" />
-    <Compile Remove="Views\WorkerViews\**" />
-    <EmbeddedResource Remove="Views\ShiftViews\**" />
-    <EmbeddedResource Remove="Views\WorkerViews\**" />
-    <None Remove="Views\ShiftViews\**" />
-    <None Remove="Views\WorkerViews\**" />
-    <Page Remove="Views\ShiftViews\**" />
-    <Page Remove="Views\WorkerViews\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -129,12 +119,6 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
-  <ItemGroup>
-    <PRIResource Remove="Views\WorkerViews\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Remove="Views\ShiftViews\**" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Data\RosterDB.sql" />
     <None Remove="Data\street_types.csv" />

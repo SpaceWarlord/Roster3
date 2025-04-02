@@ -15,27 +15,28 @@ namespace Roster.App.ViewModels
 {
     public partial class WorkerPageViewModel: BaseViewModel
     {        
-        public ObservableCollection<Worker> Worker;
+        public ObservableCollection<WorkerViewModel> Workers;
 
         public WorkerPageViewModel()
         {
-            Worker = new ObservableCollection<Worker>();
+            Workers = new ObservableCollection<WorkerViewModel>();
             //UpdateWorkers(context.Workers.ToList());
-            Worker.CollectionChanged += this.OnCollectionChanged;
+            //Workers.CollectionChanged += this.OnCollectionChanged;
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
         }
-
-        public void UpdateWorkers(List<Worker> worker)
+        /*
+        public void UpdateWorkers(List<WorkerViewModel> worker)
         {
-            Worker.Clear();
+            Workers.Clear();
             //Debug.WriteLine("TTotal users: " + users.Count);
-            foreach (Worker w in worker)
+            foreach (WorkerViewModel w in worker)
             {
                 Debug.WriteLine("Worker: " + w.FirstName +  " " + w.LastName);
-                Worker.Add(w);
+                Workers.Add(w);
             }
         }
-
+        */
+        /*
         void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("modified collection");
@@ -68,9 +69,11 @@ namespace Roster.App.ViewModels
             }
             //context.SaveChanges();
         }
-
+        */
         //public static Worker CreateWorker(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor);
 
+
+        /*
         [RelayCommand]
         public void AddWorker(Worker worker)
         {
@@ -78,7 +81,7 @@ namespace Roster.App.ViewModels
             Debug.WriteLine("name is " + worker.FullName);
             if (worker != null)
             {
-                Worker i = new Worker()
+                WorkerViewModel i = new WorkerViewModel()
                 {
                     Id = worker.Id,
                     FirstName = worker.FirstName,
@@ -89,7 +92,7 @@ namespace Roster.App.ViewModels
                     Phone = worker.Phone,
                     FullName = worker.FullName,                    
                 };
-                Worker.Add(i);
+                Workers.Add(i);
                 //i.Name = string.Empty;
                 //i.RemoveErrors();
 
@@ -99,5 +102,6 @@ namespace Roster.App.ViewModels
                 Debug.WriteLine("Error: Worker was null");
             }
         }
+        */
     }
 }

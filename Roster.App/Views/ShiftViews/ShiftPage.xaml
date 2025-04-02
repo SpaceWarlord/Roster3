@@ -1,52 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="Roster.App.Views.ShiftViews.ShiftPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Roster.Views.ShiftViews"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Roster.App.Views.ShiftViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    
-    xmlns:models="using:Roster.Models" 
-    xmlns:viewModels="using:Roster.App.ViewModels"    
-    xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls" d:DataContext="{d:DesignInstance Type=models:Shift}"
+    xmlns:models="using:Roster.Models"
+    xmlns:viewModels="using:Roster.App.ViewModels"
     x:Name="ThisPage"
-    Loaded="Page_Loaded">
+    d:DataContext="{d:DesignInstance Type=models:Shift}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
 
-    <Grid Margin="40 40 20 80">
+    <Grid Margin="40,40,20,80">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
             <Button x:Name="ForwardBtn" Content="&lt;" />
-            <Button x:Name="BackBtn" Content=">" />
+            <Button x:Name="BackBtn" Content="&gt;" />
         </StackPanel>
-        <Button Content="+" FontSize="30" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
-        <ctWinUI:DataGrid x:Name="DataGrid"
-                    AutoGenerateColumns="False"
-                    CanUserSortColumns="True"                                        
-                    SelectionMode="Single"
-                    IsReadOnly="True">
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            Content="+"
+            FontSize="30" />
+        <!--
+        <ctWinUI:DataGrid
+            x:Name="DataGrid"
+            AutoGenerateColumns="False"
+            CanUserSortColumns="True"
+            IsReadOnly="True"
+            SelectionMode="Single">
             <ctWinUI:DataGrid.Columns>
-                <ctWinUI:DataGridTextColumn Header="Day"
-                                    Binding="{Binding Day}"
-                                    Tag="Day" />
-                <ctWinUI:DataGridComboBoxColumn Header="Start Time"
-                                        Binding="{Binding StartTime}"
-                                        Tag="Start Time" />
-                <ctWinUI:DataGridComboBoxColumn Header="End Time"
-                        Binding="{Binding EndTime}"
-                        Tag="End Time" />
+                <ctWinUI:DataGridTextColumn
+                    Binding="{Binding Day}"
+                    Header="Day"
+                    Tag="Day" />
+                <ctWinUI:DataGridComboBoxColumn
+                    Binding="{Binding StartTime}"
+                    Header="Start Time"
+                    Tag="Start Time" />
+                <ctWinUI:DataGridComboBoxColumn
+                    Binding="{Binding EndTime}"
+                    Header="End Time"
+                    Tag="End Time" />
 
             </ctWinUI:DataGrid.Columns>
         </ctWinUI:DataGrid>
+        -->
     </Grid>
 </Page>

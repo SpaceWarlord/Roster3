@@ -11,7 +11,8 @@ namespace Roster.App.ViewModels
 {
     public partial class CertificateViewModel: BaseViewModel
     {
-        public int Id { get; set; }
+        [ObservableProperty]
+        private string _id;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -31,8 +32,9 @@ namespace Roster.App.ViewModels
         public CertificateViewModel() { }
 
 
-        public CertificateViewModel(string name, int certLength, bool infinite)
+        public CertificateViewModel(string id, string name, int certLength, bool infinite)
         {
+            Id = id;
             Name = name;
             CertLength = certLength;
             Infinite = infinite;

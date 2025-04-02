@@ -9,16 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using Roster.App.ViewModels.Data;
 
 namespace Roster.App.ViewModels
 {
     public partial class ShiftPageViewModel: BaseViewModel
     {        
-        public ObservableCollection<Shift> Shift;
+        public ObservableCollection<ShiftViewModel> Shift;
 
         public ShiftPageViewModel()
         {
-            Shift = new ObservableCollection<Shift>();
+            Shift = new ObservableCollection<ShiftViewModel>();
             
             Debug.WriteLine("total shifts " + Shift.Count);
             Shift.CollectionChanged += this.OnCollectionChanged;
@@ -31,6 +32,8 @@ namespace Roster.App.ViewModels
         {
             //UpdateShifts(context.Shifts.ToList());
         }
+
+        /*
         public void UpdateShifts(List<Shift> shift)
         {
             Shift.Clear();
@@ -41,6 +44,7 @@ namespace Roster.App.ViewModels
                 Shift.Add(c);
             }
         }
+        */
 
         void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
