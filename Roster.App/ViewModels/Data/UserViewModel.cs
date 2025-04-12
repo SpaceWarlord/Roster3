@@ -20,7 +20,7 @@ using Roster.App.ViewModels.Data;
 using Roster.App.Main;
 using Windows.Networking;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public partial class UserViewModel : DataViewModel
     {
@@ -65,10 +65,14 @@ namespace Roster.App.ViewModels
         /// <summary>
         /// Deletes a user
         /// </summary>
+        /// 
+        
         public async Task DeleteAsync()
         {
             //await App.Repository.Users.DeleteAsync(Id);
         }
+        
+
 
         [RelayCommand]
         private void DeleteUser(int id)

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
+using Roster.App.ViewModels.Data;
 using Roster.Models;
 using System;
 using System.Collections.Generic;

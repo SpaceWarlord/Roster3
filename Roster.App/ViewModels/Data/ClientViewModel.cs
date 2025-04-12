@@ -19,7 +19,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Roster.App.DTO;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public partial class ClientViewModel: PersonViewModel
     {
@@ -43,16 +43,17 @@ namespace Roster.App.ViewModels
         private string? _genderPreference;
 
 
-        public ObservableCollection<Shift?>? Shifts { get; set; }
+        public ObservableCollection<Shift?>? Shifts { get; set; }        
+        
 
         //protected override Client _model => new();
         //protected Client _model => new();
 
         /// <summary>
-        /// Saves client data that has been edited.
+        /// Saves client data.
         /// </summary>
         //public async Task<bool> SaveAsync()
-        public async Task SaveAsync(ClientService clientService)
+        public async Task AddUpdate(ClientService clientService)
         {
             Debug.WriteLine("Called Save Async. Name: " + FirstName);
             IsModified = false;
@@ -62,7 +63,7 @@ namespace Roster.App.ViewModels
 
                 IsNew = false;
                 //await clientService.Add(new ClientDTO(Id, FirstName, LastName, Nickname, Gender));
-                await clientService.Add(ToDTO<ClientDTO>());
+                await clientService.AddUpdate(ToDTO<ClientDTO>());
                 /*
                 var clientService = ((App)Application.Current).Services.GetService<ClientService>();
                 if (clientService!=null)
@@ -87,11 +88,14 @@ namespace Roster.App.ViewModels
         /// <summary>
         /// Deletes a client
         /// </summary>
+        /// 
+
+        /*
         public async Task DeleteAsync()
         {
             //await App.Repository.Clients.DeleteAsync(Id);
         }
-
+        */
         //public ClientViewModel(Client model = null):base(model)
 
         /*
@@ -137,6 +141,12 @@ namespace Roster.App.ViewModels
             //_model= new ClientViewModel
         }
 
+
+        public static ClientViewModel Create(ClientDTO dto)
+        {
+            return new ClientViewModel(dto.Id, dto.FirstName, dto.MiddleName, dto.LastName, dto.Nickname, dto.Gender, dto.DateOfBirth, dto.Phone, dto.Email, dto.HighlightColor, AddressViewModel.Create(dto.Address),
+                dto.NDISNumber, dto.RiskCategory, dto.GenderPreference);
+        }
         /*
         public ClientViewModel(Client model):base(model.FirstName, model.LastName, model.Nickname, model.Gender)
         {

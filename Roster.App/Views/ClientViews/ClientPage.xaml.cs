@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
+using Roster.App.ViewModels.Data;
+using Roster.App.ViewModels.Page;
 using Syncfusion.UI.Xaml.DataGrid;
 using System;
 using System.Collections.Generic;
@@ -32,41 +34,91 @@ namespace Roster.App.Views.ClientViews
             this.InitializeComponent();
             ViewModel = new ClientPageViewModel();
             clientsDataGrid.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
-            clientsDataGrid.RowValidating += SfDataGrid_RowValidating;
-            clientsDataGrid.CurrentCellValueChanged += SfDataGrid_CurrentCellValueChanged;
+            //clientsDataGrid.RowValidating += SfDataGrid_RowValidating;
+            //clientsDataGrid.CurrentCellValueChanged += SfDataGrid_CurrentCellValueChanged;
             clientsDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+            clientsDataGrid.RowValidated += SfDataGrid_RowValidated;
         }
 
-
-        
-
-        private async void SfDataGrid_AddNewRowInitiating(object sender, AddNewRowInitiatingEventArgs e)
+        public async void OnLoad(object sender, RoutedEventArgs e)
         {
+            await ViewModel.GetClientsListAsync();
+            clientsDataGrid.ItemsSource = ViewModel.Clients;
+            Debug.WriteLine("total clients: " + ViewModel.Clients.Count);
+
+            GridComboBoxColumn? column = clientsDataGrid.Columns["Gender"] as GridComboBoxColumn;
+            if (column != null)
+            {
+                column.ItemsSource = PersonViewModel.GenderTypes;
+            }
+        }
+        private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)
+        {
+            Debug.WriteLine("Valid row");
+            ClientViewModel? client = e.RowData as ClientViewModel;
+            if (client != null)
+            {
+                Debug.WriteLine("Nickname is " + client.Nickname);
+                await ViewModel.AddUpdateClientToDB(client);
+            }
+        }
+
+        private void SfDataGrid_AddNewRowInitiating(object? sender, AddNewRowInitiatingEventArgs e)
+        {            
             var client = e.NewObject as ClientViewModel;
             if (client != null)
             {
-                Debug.WriteLine("name is " + client.FirstName);
-                await ViewModel.AddClientToDB();
+                var firstName = e.NewObject.GetType().GetProperty("FirstName").GetValue(e.NewObject);
+                var lastName = e.NewObject.GetType().GetProperty("LastName").GetValue(e.NewObject);
+                var nickname = e.NewObject.GetType().GetProperty("Nickname").GetValue(e.NewObject);
+                
+                if (string.IsNullOrWhiteSpace(nickname.ToString()))
+                {
+                    Debug.WriteLine("Error adding - nickname was blank");
+                }
+                else
+                {
+                    Debug.WriteLine("Adding. Nickname is " + nickname);
+                }
+                    Debug.WriteLine("name is " + client.FirstName);
+                //await ViewModel.AddClientToDB();
             }
             else
             {
                 Debug.WriteLine("client was null");
-            }
-        }
-
-        
+            }            
+        }        
 
         private void SfDataGrid_RowValidating(object sender, RowValidatingEventArgs e)
         {
             if (this.clientsDataGrid.IsAddNewIndex(e.RowIndex))
             {
+                /*
+                var data = e.RowData.GetType().GetProperty("Nickname").GetValue(e.RowData);
+                
+                if (string.IsNullOrWhiteSpace(data.ToString()))
+                {
+                    Debug.WriteLine("nickname was blank");
+                    e.IsValid = false;
+                    e.ErrorMessages.Add("Nickname", "Nickname cannot be blank");
+                }
+                else
+                {
+                    Debug.WriteLine("nickname is good: " + data.ToString());
+                }
+                */
                 ClientViewModel? client = e.RowData as ClientViewModel;
                 if (client != null)
                 {
                     if (string.IsNullOrWhiteSpace(client.FirstName) || string.IsNullOrWhiteSpace(client.LastName))
                     {
+                        Debug.WriteLine("nickname was blank");
                         e.IsValid = false;
-                        e.ErrorMessages.Add("OrderID", "OrderID should not exceed 1010.");
+                        e.ErrorMessages.Add("Nickname", "Error: Nickname cannot be blank");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("nickname is good: " + client.Nickname);
                     }
                 }
                 
@@ -75,7 +127,7 @@ namespace Roster.App.Views.ClientViews
 
 
         
-
+        /*
         private void SfDataGrid_CurrentCellValueChanged(object sender, CurrentCellValueChangedEventArgs e)
         {
             ClientViewModel c = e.Record as ClientViewModel;
@@ -94,23 +146,11 @@ namespace Roster.App.Views.ClientViews
                 }
             }
         }
-
-        public async void OnLoad(object sender, RoutedEventArgs e)
-        {
-            await ViewModel.GetClientsListAsync();
-            clientsDataGrid.ItemsSource = ViewModel.Clients;
-            Debug.WriteLine("total clients: " + ViewModel.Clients.Count);
-
-            GridComboBoxColumn? column = clientsDataGrid.Columns["Gender"] as GridComboBoxColumn;
-            if (column != null)
-            {
-                column.ItemsSource = PersonViewModel.GenderTypes;
-            }                                  
-        }
+        */
+        
 
         private async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
-
             AddClientDialog dialog = new AddClientDialog(ViewModel);
 
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
@@ -144,7 +184,7 @@ namespace Roster.App.Views.ClientViews
                     Debug.WriteLine("zzNickname: " + ViewModel.NewClient.Nickname);
                     Debug.WriteLine("Selected gender: " + ViewModel.NewClient.Gender);
                     ViewModel.NewClient.Id = Guid.NewGuid().ToString();
-                    await ViewModel.AddClientToDB();
+                    await ViewModel.AddUpdateClientToDB(ViewModel.NewClient);
                     //await ViewModel.AddClientToDB();
                     //ViewModel.AddClientCommand.Execute(dialog.ClientVM);
                 }

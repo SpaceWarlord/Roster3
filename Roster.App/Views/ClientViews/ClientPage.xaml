@@ -55,6 +55,7 @@
                 <dataGrid:GridTextColumn HeaderText="Middle Name" MappingName="MiddleName" />
                 <dataGrid:GridTextColumn HeaderText="Last Name" MappingName="LastName" />
                 <dataGrid:GridTextColumn MappingName="Nickname" />
+                <dataGrid:GridComboBoxColumn HeaderText="NDIS Number" MappingName="NDISNumber" />
                 <dataGrid:GridComboBoxColumn HeaderText="Gender" MappingName="Gender" />
                 <!--
                 <dataGrid:GridComboBoxColumn

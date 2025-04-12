@@ -6,24 +6,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Roster.Models
 {
     public class ShiftTemplate
     {
         [Key]
-        public required string Id { get; set; }       
+        public string Id { get; set; }       
 
-        public required string Name { get; set; }
-        public string Day { get; set; }
+        public string? Name { get; set; }
+
+        [ForeignKey("WorkerId")] // for a shadow property to the Address ID FK
+        public virtual Worker? Worker { get; set; }
+
+        [ForeignKey("ClientId")] // for a shadow property to the Address ID FK
+        public virtual Client? Client { get; set; }
+        public string? Day { get; set; }
 
 
-        public required string StartTime { get; set; }
+        public string? StartTime { get; set; }
 
 
-        public required string EndTime { get; set; }
+        public string? EndTime { get; set; }
         
 
+        /*
         [ForeignKey("StartAddressId")] // Shadow FK
         public virtual Address StartLocation { get; set; }
 
@@ -52,11 +60,18 @@ namespace Roster.Models
         public Client Client { get; set; } = null;
 
         public List<Route> Routes { get; set; }
-
+        */
         public ShiftTemplate()
         {
-
+            Id=Guid.NewGuid().ToString();
         }
+
+        public ShiftTemplate(string id)
+        {
+            Id = id;
+        }
+
+        /*
         public ShiftTemplate(string startTime, string endTime, byte travelTime, short maxTravelDistance, ShiftAddress startLocation, ShiftAddress endLocation, char shiftType, bool reocurring, Client client)
         {
             StartTime = startTime;
@@ -71,5 +86,6 @@ namespace Roster.Models
             //Location = location;
             //CaseNoteCompleted = caseNoteCompleted;            
         }
+        */
     }
 }

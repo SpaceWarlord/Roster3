@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
+using Roster.App.ViewModels.Data;
 using Roster.Models;
 using Roster.Services;
 using System;
@@ -25,8 +26,7 @@ namespace Roster.App.Main
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class Shell : Window, INavigation
-    {
-        RosterDBContext context;
+    {        
         public string pagePath = "Roster.App.Views.";
         public Shell()
         {

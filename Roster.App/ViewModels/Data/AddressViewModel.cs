@@ -12,7 +12,7 @@ using System.Reflection;
 using Windows.Networking;
 using Roster.App.ViewModels.Data;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public partial class AddressViewModel: DataViewModel
     {
@@ -72,6 +72,11 @@ namespace Roster.App.ViewModels
         {
             //return new AddressDTO(Id, Name, UnitNum, StreetNum, StreetName, StreetType, Suburb);
             return (T)Convert.ChangeType(new AddressDTO(Id, Name, UnitNum, StreetNum, StreetName, StreetType, Suburb), typeof(T));
+        }
+
+        public static AddressViewModel Create(AddressDTO dto)
+        {
+            return new AddressViewModel(dto.Name, dto.UnitNum, dto.StreetNum, dto.StreetName, dto.StreetType, dto.Suburb, "Adelaide");
         }
     }
 }

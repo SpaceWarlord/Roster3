@@ -14,7 +14,7 @@ using System.Reflection;
 using Roster.App.ViewModels.Data;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public abstract partial class PersonViewModel: DataViewModel
     {        
@@ -31,6 +31,8 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
+        [Required]
+        [NotNull]
         private string _firstName;
 
 
@@ -46,6 +48,8 @@ namespace Roster.App.ViewModels
         /// </summary>
 
         [ObservableProperty]
+        [Required]
+        [NotNull]
         private string _lastName;        
 
 #nullable enable
@@ -65,17 +69,15 @@ namespace Roster.App.ViewModels
         }
 
         [NotMapped]
-        public static string[] GenderTypes = ["M", "F"];
-        
-
-
+        public static string[] GenderTypes = ["M", "F"];       
 
         /// <summary>
         /// Gets or sets the person's nickname.
         /// </summary>
 
-        [ObservableProperty]
-        [NotNull]
+        [ObservableProperty]        
+        [Required]       
+        [NotNull]        
         private string _nickname;
 
 

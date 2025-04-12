@@ -16,10 +16,11 @@ using Roster.App.Main;
 using Roster.Models;
 using Roster.App.Services;
 using Roster.App.DTO;
+using Roster.App.ViewModels.Data;
 
 
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Page
 {
     public partial class LoginPageViewModel:BaseViewModel
     {
@@ -223,7 +224,7 @@ namespace Roster.App.ViewModels
             await GetAll();
         }               
         
-        private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("modified collection");
             //e.Action = NotifyCollectionChangedAction.

@@ -13,15 +13,15 @@ namespace Roster.Models
     public class Shift
     {
         [Key]
-        public required string Id { get; set; }     
+        public string Id { get; set; }     
         
-        public required string Name { get; set; }
+        public string Name { get; set; }
         
         public string? Day {  get; set; }
         
-        public required string StartTime {  get; set; }
+        public string? StartTime {  get; set; }
         
-        public required string EndTime {  get; set; }
+        public string? EndTime {  get; set; }
 
         /*
         [ForeignKey("StartAddressId")] // Shadow FK
@@ -59,12 +59,24 @@ namespace Roster.Models
 
         public List<Route>? Routes { get; set; }
 
-
-        /*
         public Shift()
         {
-
+            Id = Guid.NewGuid().ToString();
+            Name = "";
+            StartTime = "";
+            EndTime = "";
         }
+
+        public Shift(string id, string name, string startTime, string endTime)
+        {
+            Id= id;
+            Name= name;
+            StartTime= startTime;
+            EndTime= endTime;
+        }
+
+        /*
+        
         public Shift(string startTime, string endTime, byte travelTime, short maxTravelDistance, ShiftAddress startLocation, ShiftAddress endLocation, char shiftType, bool reocurring, Client client)
         {
             StartTime = startTime;

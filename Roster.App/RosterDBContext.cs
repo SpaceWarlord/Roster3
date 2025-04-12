@@ -28,9 +28,10 @@ namespace Roster.App
         
         public DbSet<User> Users { get; set; }
         //public DbSet<Person> Persons { get; set; }
-        public DbSet<Worker> Workers { get; set; }
+        public DbSet<Worker> Workers { get; set; }        
         public DbSet<Client> Clients { get; set; }
         public DbSet<Shift> Shifts { get; set; }
+        public DbSet<ShiftTemplate> ShiftTemplates { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<ShiftAddress> ShiftAddresseses { get; set; }
         public DbSet<Suburb> Suburbs { get; set; }
@@ -45,7 +46,7 @@ namespace Roster.App
         {
             
             optionsBuilder.UseExceptionProcessor();            
-            optionsBuilder.UseSqlite("Data Source=database32.db");
+            optionsBuilder.UseSqlite("Data Source=database40.db");
             optionsBuilder.EnableSensitiveDataLogging(true);
 
             //optionsBuilder.UseSqlite("Data Source=recipe.db");

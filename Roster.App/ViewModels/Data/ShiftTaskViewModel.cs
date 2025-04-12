@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public partial class ShiftTaskViewModel:BaseViewModel
     {

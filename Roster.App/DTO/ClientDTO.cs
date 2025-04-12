@@ -44,5 +44,23 @@ namespace Roster.App.DTO
             RiskCategory = riskCategory;
             GenderPreference = genderPreference;
         }        
+
+        public ClientDTO(Client client)
+        {
+            Id = client.Id;
+            FirstName = client.FirstName;
+            MiddleName = client.MiddleName;
+            LastName = client.LastName;
+            Nickname = client.Nickname;
+            Gender = client.Gender;
+            DateOfBirth = client.DateOfBirth;
+            Phone = client.Phone;
+            Email = client.Email;
+            HighlightColor = client.HighlightColor; 
+            Address = new AddressDTO(client.Address);
+            NDISNumber = client.NDISNumber;
+            RiskCategory = client.RiskCategory;
+            GenderPreference = client.GenderPreference;
+        }
     }
 }

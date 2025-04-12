@@ -16,6 +16,8 @@ using Roster.App.ViewModels;
 using System.Diagnostics;
 using Roster.App.Views.WorkerViews;
 using Syncfusion.UI.Xaml.DataGrid;
+using Roster.App.ViewModels.Page;
+using Roster.App.ViewModels.Data;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,12 +34,16 @@ namespace Roster.App.Views.WorkerViews
         {
             this.InitializeComponent();
             ViewModel=new WorkerPageViewModel();
+            workersDataGrid.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
+            workersDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+            workersDataGrid.RowValidated += SfDataGrid_RowValidated;
         }
 
         public async void OnLoad(object sender, RoutedEventArgs e)
         {
-            //await ViewModel.GetWorkersListAsync();
+            await ViewModel.GetWorkersListAsync();
             workersDataGrid.ItemsSource = ViewModel.Workers;
+            Debug.WriteLine("Total workers: " + ViewModel.Workers.Count);
 
             GridComboBoxColumn? column = workersDataGrid.Columns["Gender"] as GridComboBoxColumn;
             if (column != null)
@@ -46,7 +52,44 @@ namespace Roster.App.Views.WorkerViews
             }
         }
 
-        private async void ShowDialog_Click(object sender, RoutedEventArgs e)
+        private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)
+        {
+            Debug.WriteLine("Valid row");
+            WorkerViewModel? worker = e.RowData as WorkerViewModel;
+            if (worker != null)
+            {
+                Debug.WriteLine("Nickname is " + worker.Nickname);
+                await ViewModel.AddUpdateWorkerToDB(worker);
+            }
+        }
+
+        private void SfDataGrid_AddNewRowInitiating(object? sender, AddNewRowInitiatingEventArgs e)
+        {
+            var worker = e.NewObject as WorkerViewModel;
+            if (worker != null)
+            {
+                var firstName = e.NewObject.GetType().GetProperty("FirstName").GetValue(e.NewObject);
+                var lastName = e.NewObject.GetType().GetProperty("LastName").GetValue(e.NewObject);
+                var nickname = e.NewObject.GetType().GetProperty("Nickname").GetValue(e.NewObject);
+
+                if (string.IsNullOrWhiteSpace(nickname.ToString()))
+                {
+                    Debug.WriteLine("Error adding - nickname was blank");
+                }
+                else
+                {
+                    Debug.WriteLine("Adding. Nickname is " + nickname);
+                }
+                Debug.WriteLine("name is " + worker.FirstName);
+                //await ViewModel.AddClientToDB();
+            }
+            else
+            {
+                Debug.WriteLine("worker was null");
+            }
+        }
+
+        private void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
             /*
             AddWorkerDialog dialog = new AddWorkerDialog();            

@@ -66,7 +66,18 @@ namespace Roster.App.Main
 
         public NavigationViewItem GetCurrentNavigationViewItem()
         {
-            return NavigationView.SelectedItem as NavigationViewItem;
+            if (NavigationView!= null)
+            {
+                if (NavigationView.SelectedItem!=null)
+                {
+                    return NavigationView.SelectedItem as NavigationViewItem;
+                }                
+            }
+            else
+            {
+                
+            }
+            return null;
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

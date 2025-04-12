@@ -7,7 +7,7 @@
     xmlns:local="using:Roster.App.Views.ShiftViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Roster.Models"
-    xmlns:vm="using:Roster.App.ViewModels"
+    xmlns:vm="using:Roster.App.ViewModels.Data"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 

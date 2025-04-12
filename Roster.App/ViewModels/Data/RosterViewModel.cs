@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Data
 {
     public partial class RosterViewModel:BaseViewModel
     {
@@ -43,6 +43,6 @@ namespace Roster.App.ViewModels
         private bool time22_23;
         private bool time23_0;
         */
-        private int staffId;
+        
     }
 }

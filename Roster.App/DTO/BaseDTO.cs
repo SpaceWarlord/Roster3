@@ -18,5 +18,15 @@ namespace Roster.App.DTO
         /*
         public abstract T ToDTO<T>() where T : BaseDTO;        
         */
+
+        public override string ToString()
+        {
+            return GetType().GetProperties()
+        .Select(info => (info.Name, Value: info.GetValue(this, null) ?? "(null)"))
+        .Aggregate(
+            new StringBuilder(),
+            (sb, pair) => sb.AppendLine($"{pair.Name}: {pair.Value}"),
+            sb => sb.ToString());
+        }
     }
 }

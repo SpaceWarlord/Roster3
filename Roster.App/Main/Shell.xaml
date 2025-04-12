@@ -49,7 +49,15 @@
                     </NavigationViewItem>
                     <NavigationViewItem
                         Content="Shift"
-                        Tag="{x:Bind x:String.Format('{0}ShiftPage', pagePath)}"
+                        Tag="{x:Bind x:String.Format('{0}ShiftViews.ShiftPage', pagePath)}"
+                        ToolTipService.ToolTip="Shift">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem
+                        Content="Shift Templates"
+                        Tag="{x:Bind x:String.Format('{0}ShiftTemplateViews.ShiftTemplatePage', pagePath)}"
                         ToolTipService.ToolTip="Shift">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />

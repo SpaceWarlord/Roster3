@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roster.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,17 @@ namespace Roster.App.DTO
             StreetName = streetName;
             StreetType = streetType;
             Suburb = suburb;
+        }
+
+        public AddressDTO(Address address) 
+        {
+            Id=address.Id;
+            Name = address.Name;
+            UnitNum = address.UnitNum;
+            StreetNum = address.StreetNum;
+            StreetName = address.StreetName;
+            StreetType = address.StreetType;
+            Suburb = "";
         }
     }
 }

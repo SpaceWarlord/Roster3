@@ -10,20 +10,73 @@ using CommunityToolkit.Mvvm.Input;
 using Roster.Models;
 using System.Collections.Specialized;
 using System.Drawing;
+using Roster.App.Services;
+using CommunityToolkit.WinUI;
+using Roster.App.ViewModels.Data;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Page
 {
     public partial class WorkerPageViewModel: BaseViewModel
-    {        
+    {
+        private WorkerService WorkerService { get; set; }
         public ObservableCollection<WorkerViewModel> Workers;
 
         public WorkerPageViewModel()
         {
+            Debug.WriteLine("-- WorkersPageViewModel Constructor--");
             Workers = new ObservableCollection<WorkerViewModel>();
+            WorkerService = new WorkerService(new RosterDBContext());
             //UpdateWorkers(context.Workers.ToList());
             //Workers.CollectionChanged += this.OnCollectionChanged;
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
         }
+
+        /// <summary>
+        /// Saves worker to database then clears fields 
+        /// </summary>
+        public async Task AddUpdateWorkerToDB(WorkerViewModel worker)
+        {
+            Debug.WriteLine("--AddWorkerToDb--");
+            await worker.AddUpdate(WorkerService);            
+        }
+
+        public async Task GetWorkersListAsync()
+        {
+            Debug.WriteLine("-- Get Worker List Async --");
+            //(CommunityToolkit.Helpers)
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                IsLoading = true;
+            });
+            var workers = await WorkerService.GetAll();
+           
+            Debug.WriteLine("Total workers: " + workers.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                Workers.Clear();
+
+                foreach (var c in workers)
+                {
+                    Debug.WriteLine("adding Id: + " + c.Id + " First Name: " + c.FirstName + " Last Name: " + c.LastName);
+                    AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    WorkerViewModel workerViewModel = new WorkerViewModel(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email, c.HighlightColor, aVM);
+                    if (workerViewModel.FirstName != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + workerViewModel.Id + " name: " + workerViewModel.FullName);
+                        Workers.Add(workerViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
+                }
+                Debug.WriteLine("Total workers after: " + workers.Count());
+                IsLoading = false;
+            });
+        }
+
         /*
         public void UpdateWorkers(List<WorkerViewModel> worker)
         {

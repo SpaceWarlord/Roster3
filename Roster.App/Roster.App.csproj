@@ -136,6 +136,7 @@
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\RosterPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\ShiftTemplateViews\ShiftTemplatePage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="UserControls\PersonDataGridControl.xaml">
@@ -149,6 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="UserControls\AddressControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftTemplateViews\ShiftTemplatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

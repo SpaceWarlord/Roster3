@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using Roster.App.ViewModels.Data;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Page
 {
     public partial class ShiftPageViewModel: BaseViewModel
     {        
-        public ObservableCollection<ShiftViewModel> Shift;
+        public ObservableCollection<ShiftViewModel> Shifts;
 
         public ShiftPageViewModel()
         {
-            Shift = new ObservableCollection<ShiftViewModel>();
+            Shifts = new ObservableCollection<ShiftViewModel>();
             
-            Debug.WriteLine("total shifts " + Shift.Count);
-            Shift.CollectionChanged += this.OnCollectionChanged;
+            Debug.WriteLine("total shifts " + Shifts.Count);
+            Shifts.CollectionChanged += this.OnCollectionChanged;
             //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
             Debug.WriteLine("hhahah");            
 

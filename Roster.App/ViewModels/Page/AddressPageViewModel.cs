@@ -9,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using Roster.App.ViewModels.Data;
 
-namespace Roster.App.ViewModels
+namespace Roster.App.ViewModels.Page
 {
     public partial class AddressPageViewModel: BaseViewModel
     {                

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="Roster.App.Views.ShiftTemplateViews.ShiftTemplatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dataGrid="using:Syncfusion.UI.Xaml.DataGrid"
+    xmlns:dataViewModels="using:Roster.App.ViewModels.Data"
+    xmlns:editors="using:Syncfusion.UI.Xaml.Editors"
+    xmlns:grid="using:Syncfusion.UI.Xaml.Grids"
+    xmlns:local="using:Roster.App.Views.ShiftTemplateViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Roster.Models"
+    xmlns:pageViewModels="using:Roster.App.ViewModels.Page"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="OnLoad"
+    mc:Ignorable="d">
+
+
+    <Page.DataContext>
+        <pageViewModels:ShiftTemplatePageViewModel />
+    </Page.DataContext>
+
+
+    <Grid x:Name="RootGrid" Margin="40,40,20,80">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <Button x:Name="ForwardBtn" Content="&lt;" />
+            <Button x:Name="BackBtn" Content="&gt;" />
+        </StackPanel>
+
+
+        <dataGrid:SfDataGrid
+            x:Name="shiftTemplatesDataGrid1"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            AddNewRowPosition="Top"
+            AllowEditing="True"
+            AutoGenerateColumns="False">
+            <dataGrid:SfDataGrid.Columns>
+                <dataGrid:GridTextColumn HeaderText="Shift Name" MappingName="Name" />
+
+                <dataGrid:GridTemplateColumn HeaderText="Worker" MappingName="Worker">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Worker.FirstName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FirstName"
+                                ItemsSource="{Binding DataContext.Workers, ElementName=RootGrid}"
+                                SelectedItem="{Binding Worker, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+            </dataGrid:SfDataGrid.Columns>
+        </dataGrid:SfDataGrid>
+
+        <!--
+        <dataGrid:SfDataGrid
+            x:Name="shiftTemplatesDataGrid"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            AddNewRowPosition="Top"
+            AllowEditing="True"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding ShiftTemplates}">
+            <dataGrid:SfDataGrid.Columns>
+                <dataGrid:GridTextColumn HeaderText="Name" MappingName="Name" />
+
+                <dataGrid:GridTemplateColumn MappingName="Worker.FullName">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Worker.FullName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <editors:SfAutoComplete
+                                    x:Name="autoComplete"
+                                    Width="250"
+                                    DisplayMemberPath="FullName"
+                                    ItemsSource="{Binding Workers, Source={StaticResource ViewModel}}"
+                                    TextMemberPath="FullName" />
+                            </Grid>
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+
+                <dataGrid:GridTextColumn HeaderText="Worker" MappingName="Worker">
+                    <dataGrid:GridTextColumn.CellTemplate>
+                        <DataTemplate />
+                    </dataGrid:GridTextColumn.CellTemplate>
+                </dataGrid:GridTextColumn>
+
+
+
+
+                <dataGrid:GridComboBoxColumn
+                    DisplayMemberPath="FullName"
+                    HeaderText="Worker"
+                    ItemsSource="{Binding ComboItems, Source={StaticResource ViewModel.Workers}}"
+                    MappingName="Id" />
+                <dataGrid:GridTextColumn HeaderText="Client" MappingName="Client" />
+
+            <dataGrid:GridComboBoxColumn
+                HeaderText="Gender"
+                ItemsSource="{Binding GenderTypes, Source={StaticResource ViewModel.Clients}}"
+                MappingName="Gender" />
+
+                <dataGrid:GridTextColumn HeaderText="Start Time" MappingName="StartTime">
+                    <dataGrid:GridTextColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <CalendarDatePicker PlaceholderText="Pick a date" />
+                            </Grid>
+                        </DataTemplate>
+                    </dataGrid:GridTextColumn.CellTemplate>
+                </dataGrid:GridTextColumn>
+                <dataGrid:GridTextColumn HeaderText="End Time" MappingName="EndTime">
+                    <dataGrid:GridTextColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <CalendarDatePicker PlaceholderText="Pick a date" />
+                            </Grid>
+                        </DataTemplate>
+                    </dataGrid:GridTextColumn.CellTemplate>
+                </dataGrid:GridTextColumn>
+            </dataGrid:SfDataGrid.Columns>
+            <dataGrid:SfDataGrid.StackedHeaderRows>
+                <grid:StackedHeaderRow>
+                    <grid:StackedHeaderRow.StackedColumns>
+                        <grid:StackedColumn ChildColumns="StartTime,EndTime" HeaderText="Time" />
+                    </grid:StackedHeaderRow.StackedColumns>
+                </grid:StackedHeaderRow>
+            </dataGrid:SfDataGrid.StackedHeaderRows>
+        </dataGrid:SfDataGrid>
+        -->
+        <StackPanel Grid.Row="4" Grid.Column="2">
+            <editors:SfAutoComplete
+                x:Name="autoComplete1"
+                Width="250"
+                DisplayMemberPath="FullName"
+                TextMemberPath="FullName" />
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="2">
+            <!--
+            <ComboBox
+                DataContext="ShiftTemplateViewModel"
+                DisplayMemberPath="Name"
+                IsEditable="True"
+                ItemsSource="{Binding Workers, Source={StaticResource viewModel}}"
+                SelectedValuePath="Name"
+                Text="{Binding ViewModel.Worker.FirstName}" />
+            <ComboBox
+                x:Name="Fred"
+                DataContext="ShiftTemplateViewModel"
+                DisplayMemberPath="Name"
+                IsEditable="True"
+                ItemsSource="{Binding Workers}"
+                SelectedValuePath="Name"
+                Text="{Binding FullName, Mode=TwoWay}" />
+            -->
+        </StackPanel>
+    </Grid>
+</Page>

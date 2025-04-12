@@ -16,15 +16,17 @@ namespace Roster.Models
     //public class Person: IEquatable<Person>
     public class Person
     {
-        public required string Id { get; set; }
+
+        //bug with using required. Don't use for now https://github.com/microsoft/microsoft-ui-xaml/issues/8723
+        public string Id { get; set; }
         
-        public required string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         public string? MiddleName { get; set; }
         
-        public required string LastName { get; set; }
+        public string? LastName { get; set; }
         
-        public required string Nickname { get; set; }
+        public string? Nickname { get; set; }
 
         [NotMapped]
         public string? FullName
@@ -37,7 +39,7 @@ namespace Roster.Models
         }
 
 
-        public required string Gender { get; set; }
+        public string? Gender { get; set; }
         
         public string? DateOfBirth { get; set; }
         
@@ -75,6 +77,16 @@ namespace Roster.Models
             return Equals(obj as Person);
         }
         */
+
+        public Person()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        public Person(string id)
+        {
+            Id = id;
+        }
         public override int GetHashCode()
         {
             throw new NotImplementedException();

@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
 using System.Diagnostics;
+using Roster.App.ViewModels.Page;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,7 +35,7 @@ namespace Roster.App.Views.ShiftViews
 
         }
 
-        private async void ShowDialog_Click(object sender, RoutedEventArgs e)
+        private void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
             /*
             AddShiftDialog dialog = new AddShiftDialog();

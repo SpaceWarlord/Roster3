@@ -15,7 +15,7 @@ namespace Roster.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; protected set; }
         
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
 #nullable enable
         public string? UnitNum { get; set; }
@@ -31,6 +31,16 @@ namespace Roster.Models
         
         public Suburb Suburb { get; set; }
         
-        public string City {  get; set; }                        
+        public string City {  get; set; }   
+        
+        public Address()
+        {
+            Id=Guid.NewGuid().ToString();
+        }
+
+        public Address(string id)
+        {
+            Id = id;
+        }
     }
 }
