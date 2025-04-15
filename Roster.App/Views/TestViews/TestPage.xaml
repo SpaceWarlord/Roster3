@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="Roster.App.Views.ShiftTemplateViews.ShiftTemplatePage"
+    x:Class="Roster.App.Views.TestViews.TestPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
@@ -19,7 +19,7 @@
 
 
     <Page.DataContext>
-        <pageViewModels:ShiftTemplatePageViewModel />
+        <pageViewModels:TestPageViewModel />
     </Page.DataContext>
 
 
@@ -46,7 +46,7 @@
 
 
         <dataGrid:SfDataGrid
-            x:Name="shiftTemplatesDataGrid1"
+            x:Name="TestDataGrid"
             Grid.Row="2"
             Grid.ColumnSpan="2"
             AddNewRowPosition="Top"
@@ -54,49 +54,27 @@
             AutoGenerateColumns="False">
             <dataGrid:SfDataGrid.Columns>
                 <dataGrid:GridTextColumn HeaderText="Shift Name" MappingName="Name" />
+
                 <dataGrid:GridDateColumn
+                    AllowNull="True"
+                    HeaderText="Start Date"
+                    MappingName="StartDate"
+                    PlaceholderText="Change the date" />
+                <dataGrid:GridDateColumn
+                    AllowNull="True"
+                    HeaderText="End Date"
+                    MappingName="EndDate"
+                    PlaceholderText="Change the date" />
+                <dataGrid:GridTimeColumn
                     AllowNull="True"
                     HeaderText="Start Time"
                     MappingName="StartTime"
-                    PlaceholderText="Change the date" />
-                <dataGrid:GridDateColumn
+                    PlaceholderText="Change the Time" />
+                <dataGrid:GridTimeColumn
                     AllowNull="True"
                     HeaderText="End Time"
                     MappingName="EndTime"
-                    PlaceholderText="Change the date" />
-
-                <dataGrid:GridTemplateColumn HeaderText="Worker" MappingName="Worker">
-                    <dataGrid:GridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Worker.FullName}" />
-                        </DataTemplate>
-                    </dataGrid:GridTemplateColumn.CellTemplate>
-
-                    <dataGrid:GridTemplateColumn.EditTemplate>
-                        <DataTemplate>
-                            <ComboBox
-                                DisplayMemberPath="FullName"
-                                ItemsSource="{Binding DataContext.Workers, ElementName=RootGrid}"
-                                SelectedItem="{Binding Worker, Mode=TwoWay}" />
-                        </DataTemplate>
-                    </dataGrid:GridTemplateColumn.EditTemplate>
-                </dataGrid:GridTemplateColumn>
-                <dataGrid:GridTemplateColumn HeaderText="Client" MappingName="Client">
-                    <dataGrid:GridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Client.FullName}" />
-                        </DataTemplate>
-                    </dataGrid:GridTemplateColumn.CellTemplate>
-
-                    <dataGrid:GridTemplateColumn.EditTemplate>
-                        <DataTemplate>
-                            <ComboBox
-                                DisplayMemberPath="FullName"
-                                ItemsSource="{Binding DataContext.Clients, ElementName=RootGrid}"
-                                SelectedItem="{Binding Client, Mode=TwoWay}" />
-                        </DataTemplate>
-                    </dataGrid:GridTemplateColumn.EditTemplate>
-                </dataGrid:GridTemplateColumn>
+                    PlaceholderText="Change the Time" />
             </dataGrid:SfDataGrid.Columns>
         </dataGrid:SfDataGrid>
 

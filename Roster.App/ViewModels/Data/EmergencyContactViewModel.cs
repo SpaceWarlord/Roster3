@@ -25,6 +25,11 @@ namespace Roster.App.ViewModels.Data
             throw new NotImplementedException();
         }
 
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
+        }
+
 
         //protected override Person _model => throw new NotImplementedException();
     }

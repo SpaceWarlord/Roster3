@@ -68,7 +68,7 @@ namespace Roster.App
             
         }
 
-        private static IServiceProvider ConfigureServices()
+        private static ServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
             //services.AddSingleton<IThemeService, ThemeService>();

@@ -22,10 +22,10 @@ namespace Roster.App.ViewModels.Data
         private string? _name;
 
         [ObservableProperty]
-        private WorkerViewModel _worker;
+        private WorkerViewModel? _worker;
 
         [ObservableProperty]
-        private ClientViewModel _client;
+        private ClientViewModel? _client;
 
         [ObservableProperty]
         private DateTime _startTime;
@@ -34,17 +34,17 @@ namespace Roster.App.ViewModels.Data
         private DateTime _endTime;
 
         [ObservableProperty]
-        private Brush _backgroundColor;
+        private Brush? _backgroundColor;
 
         [ObservableProperty]
-        private Brush _foregroundColor;
+        private Brush? _foregroundColor;
 
         public ShiftTemplateViewModel() //Needed for SyncFusion
         {
             Id = Guid.NewGuid().ToString();
         }
 
-        public ShiftTemplateViewModel(string id, string? name, WorkerViewModel worker, ClientViewModel client, DateTime startTime, DateTime endTime)
+        public ShiftTemplateViewModel(string id, string name, WorkerViewModel worker, ClientViewModel client, DateTime startTime, DateTime endTime)
         {
             Id = id;
             Name = name;
@@ -87,6 +87,11 @@ namespace Roster.App.ViewModels.Data
                 IsNew = false;
                 await shiftTemplateService.AddUpdate(ToDTO<ShiftTemplateDTO>());
             }
+        }
+
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

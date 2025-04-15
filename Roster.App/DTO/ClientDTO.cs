@@ -56,8 +56,15 @@ namespace Roster.App.DTO
             DateOfBirth = client.DateOfBirth;
             Phone = client.Phone;
             Email = client.Email;
-            HighlightColor = client.HighlightColor; 
-            Address = new AddressDTO(client.Address);
+            HighlightColor = client.HighlightColor;
+            if (client.Address!=null)
+            {
+                Address = new AddressDTO(client.Address);
+            }
+            else
+            {
+                Address = null;
+            }                
             NDISNumber = client.NDISNumber;
             RiskCategory = client.RiskCategory;
             GenderPreference = client.GenderPreference;

@@ -32,8 +32,7 @@ namespace Roster.App.Views.AddressViews
         //public Address Address { get; } = new();
 
         // public BaseViewModel
-
-        public Test a;
+        
         public AddressViewModel AddressVM { get; } = new();
 
         public List<Suburb> currentSuburbs = new List<Suburb> { };

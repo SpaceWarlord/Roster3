@@ -34,13 +34,36 @@ namespace Roster.App.ViewModels.Page
     {
         private ShiftTemplateService ShiftTemplateService { get; set; }
         private WorkerService WorkerService { get; set; }
+        private ClientService ClientService { get; set; }
 
         public ObservableCollection<Blah> Blahs { get; set; }
         public ObservableCollection<ShiftTemplateViewModel> ShiftTemplates { get; set; }
         public ObservableCollection<WorkerViewModel> Workers { get; set; }
         public ObservableCollection<ClientViewModel> Clients { get; set; }
 
+        /*
+        public async static ShiftTemplatePageViewModel Create()
+        {
+            ObservableCollection<ShiftTemplateViewModel> ShiftTemplates = new ObservableCollection<ShiftTemplateViewModel>();
+            ObservableCollection<WorkerViewModel>  Workers = new ObservableCollection<WorkerViewModel>();
+            ObservableCollection<ClientViewModel>  Clients = new ObservableCollection<ClientViewModel>();
+            GetShiftTemplatesListAsync();
+            GetWorkersListAsync();
+            GetClientsListAsync();
+            return new ShiftTemplatePageViewModel();
+        }
 
+        private ShiftTemplatePageViewModel()
+        {
+            Debug.WriteLine("-- ShiftTemplatePageViewModel Constructor--");
+            
+            ShiftTemplateService = new ShiftTemplateService(new RosterDBContext());
+            WorkerService = new WorkerService(new RosterDBContext());
+            ClientService = new ClientService(new RosterDBContext());           
+        }
+        */
+
+        
         public ShiftTemplatePageViewModel()
         {
             Debug.WriteLine("-- ShiftTemplatePageViewModel Constructor--");
@@ -49,12 +72,14 @@ namespace Roster.App.ViewModels.Page
             Clients = new ObservableCollection<ClientViewModel>();
             ShiftTemplateService = new ShiftTemplateService(new RosterDBContext());
             WorkerService = new WorkerService(new RosterDBContext());
+            ClientService = new ClientService(new RosterDBContext());
 
             GetShiftTemplatesListAsync();
             GetWorkersListAsync();
+            GetClientsListAsync();
 
         }
-
+        
         /// <summary>
         /// Saves shift template to database 
         /// </summary>
@@ -116,12 +141,12 @@ namespace Roster.App.ViewModels.Page
         public async Task GetWorkersListAsync()
         {
             Debug.WriteLine("-- Get Workers List Async --");
-            //(CommunityToolkit.Helpers)
+           
             await dispatcherQueue.EnqueueAsync(() =>
             {
                 IsLoading = true;
             });
-            var workers = await WorkerService.GetAll();
+            var workers = await WorkerService.GetAll(false);
 
             Debug.WriteLine("Total workers: " + workers.Count());
 
@@ -146,6 +171,44 @@ namespace Roster.App.ViewModels.Page
                     }
                 }
                 Debug.WriteLine("Total shift templates after: " + Workers.Count());
+                IsLoading = false;
+            });
+        }
+
+        public async Task GetClientsListAsync()
+        {
+            Debug.WriteLine("-- Get Clients List Async --");
+            //(CommunityToolkit.Helpers)
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                IsLoading = true;
+            });
+            var clients = await ClientService.GetAll();
+
+            Debug.WriteLine("Total clients: " + clients.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                Clients.Clear();
+
+                foreach (var c in clients)
+                {
+                    Debug.WriteLine("adding Id: + " + c.Id + " Name: " + c.FirstName);
+                    //AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    ClientViewModel clientViewModel = new ClientViewModel(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email, 
+                        c.HighlightColor, null, c.NDISNumber, c.RiskCategory, c.GenderPreference);
+                    if (clientViewModel.FirstName != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + clientViewModel.Id);
+                        Clients.Add(clientViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
+                }
+                Debug.WriteLine("Total shift templates after: " + Clients.Count());
                 IsLoading = false;
             });
         }

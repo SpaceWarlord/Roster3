@@ -14,8 +14,9 @@ namespace Roster.Models
     {
         [Key]
         public string Id { get; set; }       
-
         public string? Name { get; set; }
+        public string WorkerId { get; set; }
+        public string ClientId { get; set; }
 
         [ForeignKey("WorkerId")] // for a shadow property to the Address ID FK
         public virtual Worker? Worker { get; set; }
@@ -23,13 +24,8 @@ namespace Roster.Models
         [ForeignKey("ClientId")] // for a shadow property to the Address ID FK
         public virtual Client? Client { get; set; }
         public string? Day { get; set; }
-
-
         public string? StartTime { get; set; }
-
-
-        public string? EndTime { get; set; }
-        
+        public string? EndTime { get; set; }        
 
         /*
         [ForeignKey("StartAddressId")] // Shadow FK

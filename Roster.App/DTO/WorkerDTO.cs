@@ -49,7 +49,15 @@ namespace Roster.App.DTO
             Phone = worker.Phone;
             Email = worker.Email;
             HighlightColor = worker.HighlightColor;
-            Address = new AddressDTO(worker.Address.Id, worker.Address.Name, worker.Address.UnitNum, worker.Address.StreetNum, worker.Address.StreetName, worker.Address.StreetType, "");
+            if (worker.Address!=null)
+            {
+                Address = new AddressDTO(worker.Address.Id, worker.Address.Name, worker.Address.UnitNum, worker.Address.StreetNum, worker.Address.StreetName, worker.Address.StreetType, "");
+            }
+            else
+            {
+                Address = null;
+            }
+            
         }
     }
 }

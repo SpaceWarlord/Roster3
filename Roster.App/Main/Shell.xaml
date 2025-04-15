@@ -112,6 +112,14 @@
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem
+                        Content="Test"
+                        Tag="{x:Bind x:String.Format('{0}TestViews.TestPage', pagePath)}"
+                        ToolTipService.ToolTip="Test">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem
                         Content="Settings"
                         Tag="{x:Bind x:String.Format('{0}SettingsPage', pagePath)}"
                         ToolTipService.ToolTip="Settings">

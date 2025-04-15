@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.UI.Xaml.Controls;
 using Roster.App.DTO;
 using Roster.Models;
 using System;
@@ -18,13 +20,24 @@ namespace Roster.App.Services
             _db = db;
         }
 
-        public async Task<List<WorkerDTO>> GetAll()
+        public async Task<List<WorkerDTO>> GetAll(bool tracking=true)
         {
-            return await _db.Workers.Select(w => new WorkerDTO(w.Id, w.FirstName, w.MiddleName, w.LastName, w.Nickname, w.Gender, w.DateOfBirth, w.Phone, w.Email, w.HighlightColor,
+            Debug.WriteLine("--Worker GetAll --");
+            if (tracking)
+            {
+                Debug.WriteLine("Tracking");
+                return await _db.Workers.Select(w => new WorkerDTO(w.Id, w.FirstName, w.MiddleName, w.LastName, w.Nickname, w.Gender, w.DateOfBirth, w.Phone, w.Email, w.HighlightColor,
                 new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.SuburbId))).ToListAsync();
+            }
+            else
+            {
+                Debug.WriteLine("No Tracking");
+                return await _db.Workers.AsNoTracking().Select(w => new WorkerDTO(w.Id, w.FirstName, w.MiddleName, w.LastName, w.Nickname, w.Gender, w.DateOfBirth, w.Phone, w.Email, w.HighlightColor,
+                new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.SuburbId))).ToListAsync();
+            }            
         }
 
-        public async Task<bool> AddUpdate(WorkerDTO worker)
+        public async Task<bool> AddUpdate(WorkerDTO worker, bool tracking = true)
         {
             Debug.WriteLine("-- AddUpdate --");
             Debug.WriteLine(worker.ToString());
@@ -55,8 +68,16 @@ namespace Roster.App.Services
             }
             else
             {
-                Debug.WriteLine("Existing worker");
-                var nicknameExists = await _db.Workers.FirstOrDefaultAsync(x => x.Nickname == worker.Nickname && x.Id != worker.Id);
+                Debug.WriteLine("Existing worker");               
+                Worker? nicknameExists = null;
+                if (tracking)
+                {
+                    nicknameExists = await _db.Workers.FirstOrDefaultAsync(x => x.Nickname == worker.Nickname && x.Id != worker.Id);
+                }
+                else
+                {
+                    nicknameExists= await _db.Workers.AsNoTracking().FirstOrDefaultAsync(x => x.Nickname == worker.Nickname && x.Id != worker.Id);
+                }
                 if (nicknameExists is null)
                 {
                     Debug.WriteLine("Updating existing worker");

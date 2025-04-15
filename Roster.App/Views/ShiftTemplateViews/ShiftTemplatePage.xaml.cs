@@ -90,7 +90,7 @@ namespace Roster.App.Views.ShiftTemplateViews
                     Debug.WriteLine("Shift Worker is " + shiftTemplate.Worker.FullName);
                 }
                
-                //await ViewModel.AddUpdateShiftTemplateToDB(shiftTemplate);
+                await ViewModel.AddUpdateShiftTemplateToDB(shiftTemplate);
             }
         }
 

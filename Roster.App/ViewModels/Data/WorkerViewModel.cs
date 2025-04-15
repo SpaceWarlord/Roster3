@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Graphics.Display;
 
 namespace Roster.App.ViewModels.Data
 {
@@ -61,6 +62,55 @@ namespace Roster.App.ViewModels.Data
             Debug.WriteLine("worker id is " + Id);
             
             return (T)Convert.ChangeType(new WorkerDTO(Id, FirstName, MiddleName, LastName, Nickname, Gender, DateOfBirth, Phone, Email, HighlightColor, aDTO), typeof(T));
+        }
+
+        public override T ToModel<T>()
+        {
+            AddressDTO aDTO = null;
+            if (Address == null)
+            {
+                Debug.WriteLine("Address is null");
+            }
+            else
+            {
+                aDTO = Address.ToDTO<AddressDTO>();
+            }
+            Debug.WriteLine("worker id is " + Id);
+            Worker w = new Worker()
+            {
+                Id = Id,
+                FirstName = FirstName,
+                MiddleName = MiddleName,
+                LastName = LastName,
+                Nickname = Nickname,
+                Gender = Gender,
+                DateOfBirth = DateOfBirth,
+                Phone = Phone,
+                Email = Email,
+                HighlightColor = HighlightColor,
+                Address = null,
+            };
+            return (T)Convert.ChangeType(w, typeof(T));
+        }
+
+        
+        public static Worker ModelFromDTO(WorkerDTO dto)
+        {
+            Worker worker = new Worker()
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                MiddleName = dto.MiddleName,
+                LastName = dto.LastName,
+                Nickname = dto.Nickname,
+                Gender = dto.Gender,
+                DateOfBirth = dto.DateOfBirth,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                HighlightColor = dto.HighlightColor,
+                Address = null,
+            };
+            return worker;
         }
 
         public async Task AddUpdate(WorkerService workerService)

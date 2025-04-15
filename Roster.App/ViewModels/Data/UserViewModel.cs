@@ -87,6 +87,11 @@ namespace Roster.App.ViewModels.Data
             return (T)Convert.ChangeType(new UserDTO(Id, Username), typeof(T));
         }
 
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
+        }
+
         /*
         public void UpdateUsers(List<User> users)
         {

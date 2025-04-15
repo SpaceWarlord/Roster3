@@ -147,6 +147,28 @@ namespace Roster.App.ViewModels.Data
             return new ClientViewModel(dto.Id, dto.FirstName, dto.MiddleName, dto.LastName, dto.Nickname, dto.Gender, dto.DateOfBirth, dto.Phone, dto.Email, dto.HighlightColor, AddressViewModel.Create(dto.Address),
                 dto.NDISNumber, dto.RiskCategory, dto.GenderPreference);
         }
+
+        public static Client ModelFromDTO(ClientDTO dto)
+        {
+            Client client = new Client()
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                MiddleName = dto.MiddleName,
+                LastName = dto.LastName,
+                Nickname = dto.Nickname,
+                Gender = dto.Gender,
+                DateOfBirth = dto.DateOfBirth,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                HighlightColor = dto.HighlightColor,
+                Address = null,
+                NDISNumber = dto.NDISNumber,
+                RiskCategory = dto.RiskCategory,
+                GenderPreference = dto.GenderPreference,
+            };
+            return client;
+        }
         /*
         public ClientViewModel(Client model):base(model.FirstName, model.LastName, model.Nickname, model.Gender)
         {
@@ -253,6 +275,11 @@ namespace Roster.App.ViewModels.Data
             //return new ClientDTO(Id, FirstName, LastName, Nickname, Gender, Dob, Phone, Email, HighlightColor, aDTO, RiskCategory, GenderPreference);
             //return (T) Convert.ChangeType(PlayerStats[type], typeof(T));
             return (T)Convert.ChangeType(new ClientDTO(Id, FirstName, MiddleName, LastName, Nickname, Gender, DateOfBirth, Phone, Email, HighlightColor, aDTO, NDISNumber, RiskCategory, GenderPreference), typeof(T));
+        }
+
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
         }
 
         //public static Client CreateClient(string firstName, string lastName, string nickname, string gender, string dob, string email, string phone, Color highlightColor, IAddress address, byte riskCategory, string genderPreference) => new(firstName, lastName, nickname, gender, dob, email, phone, highlightColor, address, riskCategory, genderPreference);

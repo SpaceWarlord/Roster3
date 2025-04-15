@@ -76,7 +76,16 @@ namespace Roster.App.ViewModels.Data
 
         public static AddressViewModel Create(AddressDTO dto)
         {
-            return new AddressViewModel(dto.Name, dto.UnitNum, dto.StreetNum, dto.StreetName, dto.StreetType, dto.Suburb, "Adelaide");
+            if (dto != null)
+            {
+                return new AddressViewModel(dto.Name, dto.UnitNum, dto.StreetNum, dto.StreetName, dto.StreetType, dto.Suburb, "Adelaide");
+            }
+            return null;
+        }
+
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }
