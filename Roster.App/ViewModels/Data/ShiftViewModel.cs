@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media;
+using Roster.App.DTO;
+using Roster.App.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -12,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Roster.App.ViewModels.Data
 {
-    public partial class ShiftViewModel: BaseViewModel
+    public partial class ShiftViewModel: DataViewModel
     {
         [ObservableProperty]
         [Required]
@@ -22,10 +25,25 @@ namespace Roster.App.ViewModels.Data
         private string _name;
 
         [ObservableProperty]
-        private DateTime _startTime;
+        private string _description;
 
         [ObservableProperty]
-        private DateTime _endTime;
+        private DateTimeOffset _startDate;
+
+        [ObservableProperty]
+        private DateTimeOffset _endDate;
+
+        [ObservableProperty]
+        private DateTimeOffset _startTime;
+
+        [ObservableProperty]
+        private DateTimeOffset _endTime;
+
+        [ObservableProperty]
+        private WorkerViewModel _worker;
+
+        [ObservableProperty]
+        private ClientViewModel _client;
 
         [ObservableProperty]
         private bool _isAllDay;
@@ -40,11 +58,7 @@ namespace Roster.App.ViewModels.Data
         private string _startTimeZone;
 
         [ObservableProperty]
-        private string _endTimeZone;
-
-        
-        [ObservableProperty]        
-        private ClientViewModel _client;
+        private string _endTimeZone;                
         
 
         [ObservableProperty]
@@ -86,21 +100,51 @@ namespace Roster.App.ViewModels.Data
         }
 
 
-        public ShiftViewModel(string id, string name, DateTime startTime, DateTime endTime, byte travelTime, short maxTravelDistance, AddressViewModel startLocation, AddressViewModel endLocation, char shiftType, bool reocurring, ClientViewModel client)
+        public ShiftViewModel(string id, string name, string description, DateTimeOffset startDate, DateTimeOffset endDate, DateTimeOffset startTime, DateTimeOffset endTime, 
+            WorkerViewModel worker, ClientViewModel client, byte travelTime, short maxTravelDistance, AddressViewModel startLocation, AddressViewModel endLocation, 
+            char shiftType, bool reocurring, bool caseNoteCompleted)
         {
             Id = id;
             Name = name;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
             StartTime = startTime;
             EndTime = endTime;
+            Worker = worker;
+            Client = client;
             TravelTime = travelTime;
             MaxTravelDistance = maxTravelDistance;
             StartLocation = startLocation;
             EndLocation = endLocation;
             ShiftType = shiftType;
             Reoccuring = reocurring;
-            Client = client;
+            CaseNoteCompleted = caseNoteCompleted;
+            
             //Location = location;
             //CaseNoteCompleted = caseNoteCompleted;            
+        }
+
+        public async Task AddUpdate(ShiftService shiftService)
+        {
+            Debug.WriteLine("Called Save Async");
+            IsModified = false;
+            if (IsNew)
+            {
+                Debug.WriteLine("its new");
+                IsNew = false;
+                await shiftService.AddUpdate(ToDTO<ShiftDTO>());
+            }
+        }
+
+        public override T ToDTO<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override T ToModel<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

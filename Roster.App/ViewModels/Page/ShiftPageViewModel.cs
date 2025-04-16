@@ -10,114 +10,193 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using Roster.App.ViewModels.Data;
+using CommunityToolkit.WinUI;
+using Roster.App.Services;
 
 namespace Roster.App.ViewModels.Page
 {
     public partial class ShiftPageViewModel: BaseViewModel
-    {        
-        public ObservableCollection<ShiftViewModel> Shifts;
+    {
+        private ShiftService ShiftService { get; set; }
+        private WorkerService WorkerService { get; set; }
+        private ClientService ClientService { get; set; }
+
+        
+        public ObservableCollection<ShiftViewModel> Shifts { get; set; }
+        public ObservableCollection<WorkerViewModel> Workers { get; set; }
+        public ObservableCollection<ClientViewModel> Clients { get; set; }
+
+        /*
+        public async static ShiftTemplatePageViewModel Create()
+        {
+            ObservableCollection<ShiftTemplateViewModel> ShiftTemplates = new ObservableCollection<ShiftTemplateViewModel>();
+            ObservableCollection<WorkerViewModel>  Workers = new ObservableCollection<WorkerViewModel>();
+            ObservableCollection<ClientViewModel>  Clients = new ObservableCollection<ClientViewModel>();
+            GetShiftTemplatesListAsync();
+            GetWorkersListAsync();
+            GetClientsListAsync();
+            return new ShiftTemplatePageViewModel();
+        }
+
+        private ShiftTemplatePageViewModel()
+        {
+            Debug.WriteLine("-- ShiftTemplatePageViewModel Constructor--");
+            
+            ShiftTemplateService = new ShiftTemplateService(new RosterDBContext());
+            WorkerService = new WorkerService(new RosterDBContext());
+            ClientService = new ClientService(new RosterDBContext());           
+        }
+        */
+
 
         public ShiftPageViewModel()
         {
+            Debug.WriteLine("-- ShiftPageViewModel Constructor--");
             Shifts = new ObservableCollection<ShiftViewModel>();
-            
-            Debug.WriteLine("total shifts " + Shifts.Count);
-            Shifts.CollectionChanged += this.OnCollectionChanged;
-            //Categories = context.IngredientCategories.Where(p => p.ParentId != null).ToList();
-            Debug.WriteLine("hhahah");            
+            Workers = new ObservableCollection<WorkerViewModel>();
+            Clients = new ObservableCollection<ClientViewModel>();
+            ShiftService = new ShiftService(new RosterDBContext());
+            WorkerService = new WorkerService(new RosterDBContext());
+            ClientService = new ClientService(new RosterDBContext());
+
+            GetShiftsListAsync();
+            GetWorkersListAsync();
+            GetClientsListAsync();
 
         }
 
-        public void Loaded()
+        /// <summary>
+        /// Saves shift template to database 
+        /// </summary>
+        public async Task AddUpdateShiftToDB(ShiftViewModel shift)
         {
-            //UpdateShifts(context.Shifts.ToList());
+            Debug.WriteLine("--AddUpdateShiftTemplateToDb--");
+            await shift.AddUpdate(ShiftService);
         }
 
-        /*
-        public void UpdateShifts(List<Shift> shift)
+        public async Task GetShiftsListAsync()
         {
-            Shift.Clear();
-            //Debug.WriteLine("TTotal users: " + users.Count);
-            foreach (Shift c in shift)
+            Debug.WriteLine("-- Get Shifts List Async --");
+            //(CommunityToolkit.Helpers)
+            await dispatcherQueue.EnqueueAsync(() =>
             {
-                //Debug.WriteLine("Shift: " + c.FirstName + " " + c.LastName);
-                Shift.Add(c);
-            }
-        }
-        */
+                IsLoading = true;
+            });
+            var shifts = await ShiftService.GetAll();
 
-        void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            Debug.WriteLine("modified collection");
-            //e.Action = NotifyCollectionChangedAction.
-            if (e.NewItems != null)
+            Debug.WriteLine("Total shifts: " + shifts.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
             {
-                Debug.WriteLine("New items to add");
-                foreach (Shift newItem in e.NewItems)
+                Shifts.Clear();
+
+                foreach (var s in shifts)
                 {
-                    //Debug.WriteLine("New User: Id: " + newItem.Id + " First Name " + newItem.FirstName);
-                    //ModifiedItems.Add(newItem);
-                    //Debug.WriteLine("zzzoop " + context.Shifts.Count());
-                    //Add listener for each item on PropertyChanged event
-                    //context.Shifts.Add(newItem);
-                    //newItem.PropertyChanged += this.OnItemPropertyChanged;
-                }
-                //context.SaveChanges();
-            }
+                    Debug.WriteLine("adding Id: + " + s.Id + " Name: " + s.Name);
+                    //AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    //AddressViewModel WorkerAddress = new AddressViewModel(c.Worker.Address.Name, c.Worker.Address.UnitNum, c.Worker.Address.StreetNum, c.Worker.Address.StreetName, c.Worker.Address.StreetType, "", "Adelaide");
+                    //AddressViewModel ClientAddress = new AddressViewModel(c.Worker.Address.Name, c.Worker.Address.UnitNum, c.Worker.Address.StreetNum, c.Worker.Address.StreetName, c.Worker.Address.StreetType, "", "Adelaide");
 
-            if (e.OldItems != null)
-            {
-                foreach (Shift oldItem in e.OldItems)
-                {
-                    //ModifiedItems.Add(oldItem);
+                    /*WorkerViewModel worker = new WorkerViewModel(c.Worker.Id, c.Worker.FirstName, c.Worker.MiddleName, c.Worker.LastName, c.Worker.Nickname,
+                        c.Worker.Gender, c.Worker.DateOfBirth, c.Worker.Phone, c.Worker.Email, c.Worker.HighlightColor, WorkerAddress);
+                    */
 
-                    //context.Shifts.Remove(oldItem);
-                    Debug.WriteLine("Deleted from db");
-                    //oldItem.PropertyChanged -= this.OnItemPropertyChanged;
+                    WorkerViewModel worker = WorkerViewModel.Create(s.Worker);
+
+                    /*ClientViewModel client = new ClientViewModel(c.Client.Id, c.Client.FirstName, c.Client.MiddleName, c.Client.LastName, c.Client.Nickname, c.Client.Gender,
+                        c.Client.DateOfBirth, c.Client.Phone, c.Client.Email, c.Client.HighlightColor, ClientAddress, c.Client.NDISNumber, c.Client.RiskCategory, c.Client.GenderPreference);*/
+                    ClientViewModel client = ClientViewModel.Create(s.Client);
+                    ShiftViewModel shiftViewModel = new ShiftViewModel(s.Id, s.Name, s.Description, s.StartDate, s.EndDate, s.StartTime, s.EndTime, worker, client, s.TravelTime, 
+                        s.MaxTravelDistance, s.StartLocation, s.EndLocation, s.ShiftType, s.Reoccuring, s.CaseNoteCompleted);
+                    if (shiftViewModel.Name != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + shiftViewModel.Id);
+                        Shifts.Add(shiftViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
                 }
-            }
-            //context.SaveChanges();
+                Debug.WriteLine("Total shift templates after: " + shifts.Count());
+                IsLoading = false;
+            });
         }
 
-        /*
-        public static Shift CreateShift(string startDate, string endDate, string startTime, string endTime, int travelTime, Staff staff, Client client, Location location, bool caseNoteCompleted) 
-            => new(startDate, endDate, startTime, endTime, travelTime, staff, client, location, caseNoteCompleted);
-        */
-
-        /*
-        public static Shift CreateShift(string startTime, string endTime, byte travelTime, short maxTravelDistance, ShiftAddress startLocation, ShiftAddress endLocation, char shiftType, bool reoccuring, Client client)
-            => new(startTime, endTime, travelTime, maxTravelDistance, startLocation, endLocation, shiftType,  reoccuring, client);*/
-
-        [RelayCommand]
-        public void AddShift(Shift shift)
+        public async Task GetWorkersListAsync()
         {
-            Debug.WriteLine("Called Add Shift");
-            //Debug.WriteLine("name is " + client.Name);
-            if (shift != null)
+            Debug.WriteLine("-- Get Workers List Async --");
+
+            await dispatcherQueue.EnqueueAsync(() =>
             {
-                /*
-                Shift i = new Shift()
-                {                    
-                    StartTime = shift.StartTime,
-                    EndTime = shift.EndTime,
-                    TravelTime = shift.TravelTime,
-                    MaxTravelDistance = shift.MaxTravelDistance,
-                    StartLocation = shift.StartLocation,
-                    EndLocation = shift.EndLocation,
-                    ShiftType = shift.ShiftType,
-                    //ShiftWorker = shift.ShiftWorker,
-                    Client = shift.Client,
-                    //Location = shift.Location,
-                    //CaseNoteCompleted = shift.CaseNoteCompleted,                   
-                };
-                Debug.WriteLine("id is " + i.Client.Id + " name " + i.Client.FullName);
-                Shift.Add(i);                
-                */
-            }
-            else
+                IsLoading = true;
+            });
+            var workers = await WorkerService.GetAll(false);
+
+            Debug.WriteLine("Total workers: " + workers.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
             {
-                Debug.WriteLine("Error: Shift was null");
-            }
+                Workers.Clear();
+
+                foreach (var c in workers)
+                {
+                    Debug.WriteLine("adding Id: + " + c.Id + " Name: " + c.FirstName);
+                    //AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    WorkerViewModel workerViewModel = new WorkerViewModel(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email, c.HighlightColor, null);
+                    if (workerViewModel.FirstName != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + workerViewModel.Id);
+                        Workers.Add(workerViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
+                }
+                Debug.WriteLine("Total shift templates after: " + Workers.Count());
+                IsLoading = false;
+            });
+        }
+
+        public async Task GetClientsListAsync()
+        {
+            Debug.WriteLine("-- Get Clients List Async --");
+            //(CommunityToolkit.Helpers)
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                IsLoading = true;
+            });
+            var clients = await ClientService.GetAll();
+
+            Debug.WriteLine("Total clients: " + clients.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                Clients.Clear();
+
+                foreach (var c in clients)
+                {
+                    Debug.WriteLine("adding Id: + " + c.Id + " Name: " + c.FirstName);
+                    //AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    ClientViewModel clientViewModel = new ClientViewModel(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email,
+                        c.HighlightColor, null, c.NDISNumber, c.RiskCategory, c.GenderPreference);
+                    if (clientViewModel.FirstName != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + clientViewModel.Id);
+                        Clients.Add(clientViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
+                }
+                Debug.WriteLine("Total shift templates after: " + Clients.Count());
+                IsLoading = false;
+            });
         }
     }
 }

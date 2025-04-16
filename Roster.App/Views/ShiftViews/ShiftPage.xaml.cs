@@ -15,6 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 using Roster.App.ViewModels;
 using System.Diagnostics;
 using Roster.App.ViewModels.Page;
+using Roster.App.ViewModels.Data;
+using Syncfusion.UI.Xaml.DataGrid;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,8 +33,72 @@ namespace Roster.App.Views.ShiftViews
         {
             this.InitializeComponent();
             ViewModel = new ShiftPageViewModel();
-            Debug.WriteLine("After the viewmodel");
+            this.DataContext = new ShiftPageViewModel();
+            ShiftsDataGrid.RowValidated += SfDataGrid_RowValidated;
+            //shiftTemplatesDataGrid1.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
+            ShiftsDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
 
+        }               
+
+        public async void OnLoad(object sender, RoutedEventArgs e)
+        {
+            //await ViewModel.GetShiftTemplatesListAsync();
+            //await ViewModel.GetWorkersListAsync();            
+            //this.DataContext = ViewModel;
+            //shiftTemplatesDataGrid.DataContext= new ShiftTemplatePageViewModel();
+            //shiftTemplatesDataGrid.ItemsSource = ViewModel.ShiftTemplates;            
+            Debug.WriteLine("Total shift templates: " + ViewModel.Shifts.Count);            
+            ShiftsDataGrid.ItemsSource = ViewModel.Shifts;            
+        }
+
+        private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)
+        {
+            Debug.WriteLine("Valid row");
+            if (e.RowData == null)
+            {
+                Debug.WriteLine("Row Data was null");
+            }
+            ShiftViewModel? shift = e.RowData as ShiftViewModel;
+            if (shift != null)
+            {
+                Debug.WriteLine("zz " + shift.Name);
+                if (shift.Worker != null)
+                {
+                    Debug.WriteLine("Shift Worker is " + shift.Worker.FullName);
+                }
+
+                await ViewModel.AddUpdateShiftToDB(shift);
+            }
+        }
+
+        private void SfDataGrid_AddNewRowInitiating(object? sender, AddNewRowInitiatingEventArgs e)
+        {
+
+            var shift = e.NewObject as ShiftViewModel;
+            if (shift != null)
+            {
+                Debug.WriteLine("name is " + shift.Worker.FirstName);
+                /*
+                var firstName = e.NewObject.GetType().GetProperty("Worker.FirstName").GetValue(e.NewObject);
+                var lastName = e.NewObject.GetType().GetProperty("Worker.LastName").GetValue(e.NewObject);
+                var nickname = e.NewObject.GetType().GetProperty("Worker.Nickname").GetValue(e.NewObject);
+
+                if (string.IsNullOrWhiteSpace(nickname.ToString()))
+                {
+                    Debug.WriteLine("Error adding - nickname was blank");
+                }
+                else
+                {
+                    Debug.WriteLine("Adding. Nickname is " + nickname);
+                }
+                Debug.WriteLine("name is " + shiftTemplate.Worker.FirstName);
+                //await ViewModel.AddClientToDB();
+                */
+            }
+            else
+            {
+                Debug.WriteLine("worker was null");
+            }
         }
 
         private void ShowDialog_Click(object sender, RoutedEventArgs e)

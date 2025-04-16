@@ -13,15 +13,24 @@ namespace Roster.Models
     public class Shift
     {
         [Key]
-        public string Id { get; set; }     
+        public string Id { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset EndTime { get; set; }
+
+        public string WorkerId { get; set; }
+        public string ClientId { get; set; }
+
+        [ForeignKey("WorkerId")] // for a shadow property to the Address ID FK
+        public Worker Worker { get; set; }
+
+        [ForeignKey("ClientId")] // for a shadow property to the Address ID FK        
+        public Client? Client { get; set; }
+
         
-        public string Name { get; set; }
-        
-        public string? Day {  get; set; }
-        
-        public string? StartTime {  get; set; }
-        
-        public string? EndTime {  get; set; }
 
         /*
         [ForeignKey("StartAddressId")] // Shadow FK
@@ -46,14 +55,14 @@ namespace Roster.Models
         
         public bool CaseNoteCompleted {  get; set; }
         
-        public List<ShiftWorker>? ShiftWorkers { get; set; }
+        //public List<ShiftWorker>? ShiftWorkers { get; set; }
 
         /*
         public int ClientId { get; set; } //1 client per shift
         public Client Client { get; set; } = null;
         */
 
-        public Client? Client { get; set; }
+        
         public string? BackgroundColor { get; set; }
         public string? ForegroundColor { get; set; }
 
@@ -61,18 +70,20 @@ namespace Roster.Models
 
         public Shift()
         {
-            Id = Guid.NewGuid().ToString();
-            Name = "";
-            StartTime = "";
-            EndTime = "";
+            Id = Guid.NewGuid().ToString();            
         }
 
-        public Shift(string id, string name, string startTime, string endTime)
+        public Shift(string id, string name, string description, DateTimeOffset startDate, DateTimeOffset endDate, DateTimeOffset startTime, DateTimeOffset endTime, Client client, Worker worker)
         {
             Id= id;
             Name= name;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
             StartTime= startTime;
             EndTime= endTime;
+            Client = client;
+            Worker = worker;
         }
 
         /*
