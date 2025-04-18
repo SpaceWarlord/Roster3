@@ -10,19 +10,17 @@ namespace Roster.App.DTO
     {
         public string Id { get; set; }
         public string Name { get; set; }
-
         public string Description { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
         public DateTimeOffset StartTime { get; set; }
         public DateTimeOffset EndTime { get; set; }
-
         public WorkerDTO Worker { get; set; }
-
         public ClientDTO Client { get; set; }
-
         public byte TravelTime;
         public short MaxTravelDistance;
+        public AddressDTO StartLocation { get; set; }
+        public AddressDTO EndLocation { get; set; }
         public char ShiftType;
         public bool Reoccuring;
         public bool CaseNoteCompleted;
@@ -41,6 +39,8 @@ namespace Roster.App.DTO
             Client = client;
             TravelTime = travelTime;
             MaxTravelDistance = maxTravelDistance;
+            StartLocation = startLocation;
+            EndLocation = endLocation;
             ShiftType = shiftType;
             Reoccuring = reoccuring;
             CaseNoteCompleted = caseNoteCompleted;

@@ -27,13 +27,13 @@ namespace Roster.App.Services
             {
                 Debug.WriteLine("Tracking");
                 return await _db.Workers.Select(w => new WorkerDTO(w.Id, w.FirstName, w.MiddleName, w.LastName, w.Nickname, w.Gender, w.DateOfBirth, w.Phone, w.Email, w.HighlightColor,
-                new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.SuburbId))).ToListAsync();
+                new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.Suburb, w.Address.City))).ToListAsync();
             }
             else
             {
                 Debug.WriteLine("No Tracking");
                 return await _db.Workers.AsNoTracking().Select(w => new WorkerDTO(w.Id, w.FirstName, w.MiddleName, w.LastName, w.Nickname, w.Gender, w.DateOfBirth, w.Phone, w.Email, w.HighlightColor,
-                new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.SuburbId))).ToListAsync();
+                new AddressDTO(w.Address.Id, w.Address.Name, w.Address.UnitNum, w.Address.StreetNum, w.Address.StreetName, w.Address.StreetType, w.Address.Suburb, w.Address.City))).ToListAsync();
             }            
         }
 

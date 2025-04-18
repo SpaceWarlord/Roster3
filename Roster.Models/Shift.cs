@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -21,11 +23,11 @@ namespace Roster.Models
         public DateTimeOffset StartTime { get; set; }
         public DateTimeOffset EndTime { get; set; }
 
-        public string WorkerId { get; set; }
-        public string ClientId { get; set; }
+        public string? WorkerId { get; set; }
+        public string? ClientId { get; set; }
 
         [ForeignKey("WorkerId")] // for a shadow property to the Address ID FK
-        public Worker Worker { get; set; }
+        public Worker? Worker { get; set; }
 
         [ForeignKey("ClientId")] // for a shadow property to the Address ID FK        
         public Client? Client { get; set; }
@@ -70,6 +72,7 @@ namespace Roster.Models
 
         public Shift()
         {
+            Debug.WriteLine("CALLED BASIC CTOR");
             Id = Guid.NewGuid().ToString();            
         }
 

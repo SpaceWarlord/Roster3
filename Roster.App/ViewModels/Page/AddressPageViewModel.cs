@@ -70,7 +70,8 @@ namespace Roster.App.ViewModels.Page
             //context.SaveChanges();
         }
 
-        public static AddressViewModel CreateAddress(string name, string unitNum, string streetNum, string streetName, string streetType, string suburb, string city) => new(name, unitNum, streetNum, streetName, streetType, suburb, city);
+        public static AddressViewModel CreateAddress(string id, string name, string unitNum, string streetNum, string streetName, string streetType, Suburb suburb, string city) => 
+            new(id, name, unitNum, streetNum, streetName, streetType, suburb, city);
 
         [RelayCommand]
         public void AddAddress(Address address)

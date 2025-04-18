@@ -113,7 +113,7 @@ namespace Roster.App.ViewModels.Page
                 foreach (var c in clients)
                 {
                     Debug.WriteLine("adding Id: + " + c.Id + " First Name: " + c.FirstName + " Last Name: " + c.LastName);
-                    AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    AddressViewModel aVM = new AddressViewModel(c.Address.Id, c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
                     ClientViewModel clientViewModel = new ClientViewModel(c.Id, c.FirstName, c.MiddleName, c.LastName, c.Nickname, c.Gender, c.DateOfBirth, c.Phone, c.Email, c.HighlightColor, aVM, c.NDISNumber, c.RiskCategory, c.GenderPreference);
                     if (clientViewModel.FirstName != null)
                     {

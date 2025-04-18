@@ -20,11 +20,13 @@ namespace Roster.App.ViewModels.Page
         private ShiftService ShiftService { get; set; }
         private WorkerService WorkerService { get; set; }
         private ClientService ClientService { get; set; }
+        private AddressService AddressService { get; set; }
 
-        
+
         public ObservableCollection<ShiftViewModel> Shifts { get; set; }
         public ObservableCollection<WorkerViewModel> Workers { get; set; }
         public ObservableCollection<ClientViewModel> Clients { get; set; }
+        public ObservableCollection<AddressViewModel> Addresses { get; set; }
 
         /*
         public async static ShiftTemplatePageViewModel Create()
@@ -55,22 +57,25 @@ namespace Roster.App.ViewModels.Page
             Shifts = new ObservableCollection<ShiftViewModel>();
             Workers = new ObservableCollection<WorkerViewModel>();
             Clients = new ObservableCollection<ClientViewModel>();
+            Addresses = new ObservableCollection<AddressViewModel>();
             ShiftService = new ShiftService(new RosterDBContext());
             WorkerService = new WorkerService(new RosterDBContext());
             ClientService = new ClientService(new RosterDBContext());
-
+            AddressService = new AddressService(new RosterDBContext());
+            
             GetShiftsListAsync();
             GetWorkersListAsync();
             GetClientsListAsync();
+            GetAddressesListAsync();
 
         }
 
         /// <summary>
-        /// Saves shift template to database 
+        /// Saves shift to database 
         /// </summary>
         public async Task AddUpdateShiftToDB(ShiftViewModel shift)
         {
-            Debug.WriteLine("--AddUpdateShiftTemplateToDb--");
+            Debug.WriteLine("--AddUpdateShiftToDb--");
             await shift.AddUpdate(ShiftService);
         }
 
@@ -102,12 +107,14 @@ namespace Roster.App.ViewModels.Page
                     */
 
                     WorkerViewModel worker = WorkerViewModel.Create(s.Worker);
+                    AddressViewModel startLocation = AddressViewModel.Create(s.StartLocation);
+                    AddressViewModel endLocation = AddressViewModel.Create(s.EndLocation);
 
                     /*ClientViewModel client = new ClientViewModel(c.Client.Id, c.Client.FirstName, c.Client.MiddleName, c.Client.LastName, c.Client.Nickname, c.Client.Gender,
                         c.Client.DateOfBirth, c.Client.Phone, c.Client.Email, c.Client.HighlightColor, ClientAddress, c.Client.NDISNumber, c.Client.RiskCategory, c.Client.GenderPreference);*/
                     ClientViewModel client = ClientViewModel.Create(s.Client);
                     ShiftViewModel shiftViewModel = new ShiftViewModel(s.Id, s.Name, s.Description, s.StartDate, s.EndDate, s.StartTime, s.EndTime, worker, client, s.TravelTime, 
-                        s.MaxTravelDistance, s.StartLocation, s.EndLocation, s.ShiftType, s.Reoccuring, s.CaseNoteCompleted);
+                        s.MaxTravelDistance, startLocation, endLocation, s.ShiftType, s.Reoccuring, s.CaseNoteCompleted);
                     if (shiftViewModel.Name != null)
                     {
                         Debug.WriteLine("Not null: Id" + shiftViewModel.Id);
@@ -156,7 +163,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + Workers.Count());
+                Debug.WriteLine("Total workers after: " + Workers.Count());
                 IsLoading = false;
             });
         }
@@ -194,7 +201,44 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + Clients.Count());
+                Debug.WriteLine("Total clients after: " + Clients.Count());
+                IsLoading = false;
+            });
+        }
+
+        public async Task GetAddressesListAsync()
+        {
+            Debug.WriteLine("-- Get Addresses List Async --");
+            //(CommunityToolkit.Helpers)
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                IsLoading = true;
+            });
+            var addresses = await AddressService.GetAll();
+
+            Debug.WriteLine("Total addresses: " + addresses.Count());
+
+            await dispatcherQueue.EnqueueAsync(() =>
+            {
+                Addresses.Clear();
+
+                foreach (var a in addresses)
+                {
+                    Debug.WriteLine("adding Id: + " + a.Id + " Name: " + a.Name);
+                    //AddressViewModel aVM = new AddressViewModel(c.Address.Name, c.Address.UnitNum, c.Address.StreetNum, c.Address.StreetName, c.Address.StreetType, c.Address.Suburb, "Paris");
+                    AddressViewModel addressViewModel = new AddressViewModel(a.Id, a.Name, a.UnitNum, a.StreetNum, a.StreetName, a.StreetType, a.Suburb, a.City);
+                    if (addressViewModel.Name != null)
+                    {
+                        Debug.WriteLine("Not null: Id" + addressViewModel.Id);
+                        Addresses.Add(addressViewModel);
+                        //People.Add(userViewModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Was null");
+                    }
+                }
+                Debug.WriteLine("Total addresses after: " + Addresses.Count());
                 IsLoading = false;
             });
         }

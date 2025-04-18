@@ -1,7 +1,9 @@
-﻿using Roster.Models;
+﻿using Roster.App.ViewModels.Data;
+using Roster.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,25 +41,61 @@ namespace Roster.App.DTO
         
         public WorkerDTO(Worker worker)
         {
-            Id=worker.Id;
-            FirstName = worker.FirstName;
-            MiddleName = worker.MiddleName;
-            LastName = worker.LastName;
-            Nickname = worker.Nickname;
-            Gender = worker.Gender;
-            DateOfBirth = worker.DateOfBirth;
-            Phone = worker.Phone;
-            Email = worker.Email;
-            HighlightColor = worker.HighlightColor;
-            if (worker.Address!=null)
+            if (worker != null)
             {
-                Address = new AddressDTO(worker.Address.Id, worker.Address.Name, worker.Address.UnitNum, worker.Address.StreetNum, worker.Address.StreetName, worker.Address.StreetType, "");
+                Id = worker.Id;
+                FirstName = worker.FirstName;
+                MiddleName = worker.MiddleName;
+                LastName = worker.LastName;
+                Nickname = worker.Nickname;
+                Gender = worker.Gender;
+                DateOfBirth = worker.DateOfBirth;
+                Phone = worker.Phone;
+                Email = worker.Email;
+                HighlightColor = worker.HighlightColor;
+                if (worker.Address != null)
+                {
+                    Address = new AddressDTO(worker.Address.Id, worker.Address.Name, worker.Address.UnitNum, worker.Address.StreetNum, worker.Address.StreetName, worker.Address.StreetType, worker.Address.Suburb, worker.Address.City);
+                }
+                else
+                {
+                    Address = null;
+                }
             }
             else
             {
-                Address = null;
+                Debug.WriteLine("Worker was null");
+            }       
+        }
+
+        public WorkerDTO(WorkerViewModel worker)
+        {
+            if (worker != null)
+            {
+                Id = worker.Id;
+                FirstName = worker.FirstName;
+                MiddleName = worker.MiddleName;
+                LastName = worker.LastName;
+                Nickname = worker.Nickname;
+                Gender = worker.Gender;
+                DateOfBirth = worker.DateOfBirth;
+                Phone = worker.Phone;
+                Email = worker.Email;
+                HighlightColor = worker.HighlightColor;
+                if (worker.Address != null)
+                {
+                    Address = new AddressDTO(worker.Address.Id, worker.Address.Name, worker.Address.UnitNum, worker.Address.StreetNum, worker.Address.StreetName, worker.Address.StreetType, worker.Address.Suburb, worker.Address.City);
+                }
+                else
+                {
+                    Address = null;
+                }
             }
-            
+            else
+            {
+                Debug.WriteLine("WorkerViewModel was null");
+            }
+
         }
     }
 }

@@ -130,6 +130,7 @@
     <None Remove="UserControls\PersonDataGridControl.xaml" />
     <None Remove="Views\AddressViews\AddAddressDialog.xaml" />
     <None Remove="Views\AddressViews\AddressPage.xaml" />
+    <None Remove="Views\CertificateViews\CertificatePage.xaml" />
     <None Remove="Views\ClientViews\AddClientDialog.xaml" />
     <None Remove="Views\ClientViews\ClientPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
@@ -161,6 +162,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Test\TestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CertificateViews\CertificatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

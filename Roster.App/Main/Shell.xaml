@@ -58,7 +58,7 @@
                     <NavigationViewItem
                         Content="Shift Templates"
                         Tag="{x:Bind x:String.Format('{0}ShiftTemplateViews.ShiftTemplatePage', pagePath)}"
-                        ToolTipService.ToolTip="Shift">
+                        ToolTipService.ToolTip="Shift Template">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
                         </NavigationViewItem.Icon>
@@ -89,7 +89,7 @@
                     </NavigationViewItem>
                     <NavigationViewItem
                         Content="Certificates"
-                        Tag="{x:Bind x:String.Format('{0}CertificatesPage', pagePath)}"
+                        Tag="{x:Bind x:String.Format('{0}CertificateViews.CertificatesPage', pagePath)}"
                         ToolTipService.ToolTip="Certificates">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />

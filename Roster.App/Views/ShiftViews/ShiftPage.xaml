@@ -75,6 +75,54 @@
                     HeaderText="End Time"
                     MappingName="EndTime"
                     PlaceholderText="Change the Time" />
+                <dataGrid:GridTemplateColumn HeaderText="Worker" MappingName="Worker">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Worker.FullName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding DataContext.Workers, ElementName=RootGrid}"
+                                SelectedItem="{Binding Worker, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+                <dataGrid:GridTemplateColumn HeaderText="Client" MappingName="Client">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Client.FullName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding DataContext.Clients, ElementName=RootGrid}"
+                                SelectedItem="{Binding Client, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+                <dataGrid:GridTemplateColumn HeaderText="Start Location" MappingName="StartLocation">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StartLocation.Name}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding DataContext.Addresses, ElementName=RootGrid}"
+                                SelectedItem="{Binding StartLocation, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
             </dataGrid:SfDataGrid.Columns>
         </dataGrid:SfDataGrid>
 

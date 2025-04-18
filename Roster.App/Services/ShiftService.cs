@@ -22,7 +22,7 @@ namespace Roster.App.Services
         public async Task<List<ShiftDTO>> GetAll()
         {
             return await _db.Shifts.Select(s => new ShiftDTO(s.Id, s.Name, s.Description, s.StartDate, s.EndDate, s.StartTime, s.EndTime, new WorkerDTO(s.Worker), new ClientDTO(s.Client)
-                , s.TravelTime, s.MaxTravelDistance, AddressViewModel.ToModel<AddressDTO>(s.StartLocation), AddressViewModel.ToModel(s.EndLocation), s.ShiftType, s.Reoccuring, s.CaseNoteCompleted)).ToListAsync();
+                , s.TravelTime, s.MaxTravelDistance, new AddressDTO(s.StartLocation), new AddressDTO(s.EndLocation), s.ShiftType, s.Reoccuring, s.CaseNoteCompleted)).ToListAsync();
         }
 
         public async Task<bool> AddUpdate(ShiftDTO shift)
@@ -62,6 +62,9 @@ namespace Roster.App.Services
                 found.EndDate = shift.EndDate;
                 found.StartTime = shift.StartTime;
                 found.EndTime = shift.EndTime;
+                found.WorkerId = shift.Worker.Id;
+                found.ClientId = shift.Client.Id;
+
 
                 return (await _db.SaveChangesAsync()) > 0;
             }

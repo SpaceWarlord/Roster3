@@ -13,9 +13,9 @@ namespace Roster.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; protected set; }
+        public string Id { get; set; }
         
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
 #nullable enable
         public string? UnitNum { get; set; }

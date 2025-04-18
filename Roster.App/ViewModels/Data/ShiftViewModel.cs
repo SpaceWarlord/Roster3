@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Media;
 using Roster.App.DTO;
 using Roster.App.Services;
+using Roster.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,8 +44,14 @@ namespace Roster.App.ViewModels.Data
         private WorkerViewModel _worker;
 
         [ObservableProperty]
-        private ClientViewModel _client;
+        private ClientViewModel _client;        
 
+        [ObservableProperty]
+        private AddressViewModel _startLocation;
+
+        [ObservableProperty]
+        private AddressViewModel _endLocation;
+        
         [ObservableProperty]
         private bool _isAllDay;
 
@@ -60,7 +67,6 @@ namespace Roster.App.ViewModels.Data
         [ObservableProperty]
         private string _endTimeZone;                
         
-
         [ObservableProperty]
         private byte _travelTime;
 
@@ -76,7 +82,7 @@ namespace Roster.App.ViewModels.Data
         [ObservableProperty]
         private bool _caseNoteCompleted;
 
-        
+        /*
 
         [ForeignKey("StartAddressId")] // Shadow FK
         public virtual AddressViewModel StartLocation { get; set; }
@@ -84,21 +90,15 @@ namespace Roster.App.ViewModels.Data
         [ForeignKey("EndAddressId")] // Shadow FK
         public virtual AddressViewModel EndLocation { get; set; }
 
+        */
         public ObservableCollection<RouteViewModel>? Routes { get; set; }
         
         
 
-        public ShiftViewModel()
+        public ShiftViewModel() //needed for syncfusion
         {
-            
-        }
-
-        
-        public ShiftViewModel(string id)
-        {
-            Id = id;
-        }
-
+            Id = Guid.NewGuid().ToString();
+        }               
 
         public ShiftViewModel(string id, string name, string description, DateTimeOffset startDate, DateTimeOffset endDate, DateTimeOffset startTime, DateTimeOffset endTime, 
             WorkerViewModel worker, ClientViewModel client, byte travelTime, short maxTravelDistance, AddressViewModel startLocation, AddressViewModel endLocation, 
@@ -139,12 +139,31 @@ namespace Roster.App.ViewModels.Data
 
         public override T ToDTO<T>()
         {
-            throw new NotImplementedException();
+            //StartLocation = new AddressViewModel();
+            AddressDTO startLocation = new AddressDTO(StartLocation);
+            AddressDTO endLocation = new AddressDTO(EndLocation);
+            WorkerDTO worker = new WorkerDTO(Worker);
+            ClientDTO client = new ClientDTO(Client);
+            return (T)Convert.ChangeType(new ShiftDTO(Id, Name, Description, StartDate, EndDate, StartTime, EndTime, 
+                worker, client, TravelTime, MaxTravelDistance, startLocation, endLocation, ShiftType, Reoccuring, CaseNoteCompleted), typeof(T));
         }
 
         public override T ToModel<T>()
         {
-            throw new NotImplementedException();
+            Shift s = new Shift()
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                StartDate = StartDate,
+                EndDate = EndDate,
+                StartTime = StartTime,
+                EndTime = EndTime,
+                ShiftType = ShiftType,
+                Reoccuring = Reoccuring,
+                CaseNoteCompleted = CaseNoteCompleted,
+            };
+            return (T)Convert.ChangeType(s, typeof(T));
         }
     }
 }

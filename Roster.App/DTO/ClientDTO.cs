@@ -1,7 +1,9 @@
-﻿using Roster.Models;
+﻿using Roster.App.ViewModels.Data;
+using Roster.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,27 +49,66 @@ namespace Roster.App.DTO
 
         public ClientDTO(Client client)
         {
-            Id = client.Id;
-            FirstName = client.FirstName;
-            MiddleName = client.MiddleName;
-            LastName = client.LastName;
-            Nickname = client.Nickname;
-            Gender = client.Gender;
-            DateOfBirth = client.DateOfBirth;
-            Phone = client.Phone;
-            Email = client.Email;
-            HighlightColor = client.HighlightColor;
-            if (client.Address!=null)
+            if (client != null)
             {
-                Address = new AddressDTO(client.Address);
+                Id = client.Id;
+                FirstName = client.FirstName;
+                MiddleName = client.MiddleName;
+                LastName = client.LastName;
+                Nickname = client.Nickname;
+                Gender = client.Gender;
+                DateOfBirth = client.DateOfBirth;
+                Phone = client.Phone;
+                Email = client.Email;
+                HighlightColor = client.HighlightColor;
+                if (client.Address != null)
+                {
+                    Address = new AddressDTO(client.Address);
+                }
+                else
+                {
+                    Address = null;
+                }
+                NDISNumber = client.NDISNumber;
+                RiskCategory = client.RiskCategory;
+                GenderPreference = client.GenderPreference;
             }
             else
             {
-                Address = null;
-            }                
-            NDISNumber = client.NDISNumber;
-            RiskCategory = client.RiskCategory;
-            GenderPreference = client.GenderPreference;
+                Debug.WriteLine("Client was null");
+            }
+        }
+
+        public ClientDTO(ClientViewModel client)
+        {
+            if (client!= null)
+            {
+                Id = client.Id;
+                FirstName = client.FirstName;
+                MiddleName = client.MiddleName;
+                LastName = client.LastName;
+                Nickname = client.Nickname;
+                Gender = client.Gender;
+                DateOfBirth = client.DateOfBirth;
+                Phone = client.Phone;
+                Email = client.Email;
+                HighlightColor = client.HighlightColor;
+                if (client.Address != null)
+                {
+                    Address = new AddressDTO(client.Address);
+                }
+                else
+                {
+                    Address = null;
+                }
+                NDISNumber = client.NDISNumber;
+                RiskCategory = client.RiskCategory;
+                GenderPreference = client.GenderPreference;
+            }
+            else
+            {
+                Debug.WriteLine("ClientViewModel was null");
+            }
         }
     }
 }
