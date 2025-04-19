@@ -89,7 +89,7 @@ namespace Roster.App.ViewModels.Page
             });
             var shifts = await ShiftService.GetAll();
 
-            Debug.WriteLine("Total shifts: " + shifts.Count());
+            Debug.WriteLine("Total shifts: " + shifts.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -126,7 +126,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + shifts.Count());
+                Debug.WriteLine("Total shift templates after: " + shifts.Count);
                 IsLoading = false;
             });
         }
@@ -141,7 +141,7 @@ namespace Roster.App.ViewModels.Page
             });
             var workers = await WorkerService.GetAll(false);
 
-            Debug.WriteLine("Total workers: " + workers.Count());
+            Debug.WriteLine("Total workers: " + workers.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -163,7 +163,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total workers after: " + Workers.Count());
+                Debug.WriteLine("Total workers after: " + Workers.Count);
                 IsLoading = false;
             });
         }
@@ -178,7 +178,7 @@ namespace Roster.App.ViewModels.Page
             });
             var clients = await ClientService.GetAll();
 
-            Debug.WriteLine("Total clients: " + clients.Count());
+            Debug.WriteLine("Total clients: " + clients.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -201,7 +201,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total clients after: " + Clients.Count());
+                Debug.WriteLine("Total clients after: " + Clients.Count);
                 IsLoading = false;
             });
         }
@@ -216,7 +216,7 @@ namespace Roster.App.ViewModels.Page
             });
             var addresses = await AddressService.GetAll();
 
-            Debug.WriteLine("Total addresses: " + addresses.Count());
+            Debug.WriteLine("Total addresses: " + addresses.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -238,7 +238,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total addresses after: " + Addresses.Count());
+                Debug.WriteLine("Total addresses after: " + Addresses.Count);
                 IsLoading = false;
             });
         }

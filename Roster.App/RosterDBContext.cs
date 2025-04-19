@@ -36,6 +36,8 @@ namespace Roster.App
         public DbSet<ShiftAddress> ShiftAddresseses { get; set; }
         public DbSet<Suburb> Suburbs { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
+
+        public DbSet<WorkerCertificate> WorkerCertificates { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Test> Tests { get; set; }
         
@@ -48,7 +50,7 @@ namespace Roster.App
         {
             
             optionsBuilder.UseExceptionProcessor();            
-            optionsBuilder.UseSqlite("Data Source=database48.db");
+            optionsBuilder.UseSqlite("Data Source=database52.db");
             optionsBuilder.EnableSensitiveDataLogging(true);
 
             //optionsBuilder.UseSqlite("Data Source=recipe.db");

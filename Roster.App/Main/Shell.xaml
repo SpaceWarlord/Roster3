@@ -81,7 +81,7 @@
                     </NavigationViewItem>
                     <NavigationViewItem
                         Content="Addresses"
-                        Tag="{x:Bind x:String.Format('{0}AddressesPage', pagePath)}"
+                        Tag="{x:Bind x:String.Format('{0}AddressViews.AddressPage', pagePath)}"
                         ToolTipService.ToolTip="Addresses">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
@@ -89,8 +89,16 @@
                     </NavigationViewItem>
                     <NavigationViewItem
                         Content="Certificates"
-                        Tag="{x:Bind x:String.Format('{0}CertificateViews.CertificatesPage', pagePath)}"
+                        Tag="{x:Bind x:String.Format('{0}CertificateViews.CertificatePage', pagePath)}"
                         ToolTipService.ToolTip="Certificates">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem
+                        Content="Worker Certificates"
+                        Tag="{x:Bind x:String.Format('{0}WorkerCertificateViews.WorkerCertificatePage', pagePath)}"
+                        ToolTipService.ToolTip="WorkerCertificates">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
                         </NavigationViewItem.Icon>

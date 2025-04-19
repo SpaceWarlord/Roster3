@@ -10,7 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Roster.Models
 {
-    public class ShiftTemplate
+    public class ShiftTemplate:BaseModel
     {
         [Key]
         public string Id { get; set; }       

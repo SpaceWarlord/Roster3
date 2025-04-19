@@ -50,7 +50,7 @@ namespace Roster.App.ViewModels.Page
             });
             var workers = await WorkerService.GetAll();
            
-            Debug.WriteLine("Total workers: " + workers.Count());
+            Debug.WriteLine("Total workers: " + workers.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -72,7 +72,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total workers after: " + workers.Count());
+                Debug.WriteLine("Total workers after: " + workers.Count);
                 IsLoading = false;
             });
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roster.Models
 {
-    public class Suburb
+    public class Suburb:BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

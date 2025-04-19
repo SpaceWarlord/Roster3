@@ -3,19 +3,22 @@
     x:Class="Roster.App.Views.CertificateViews.CertificatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dataGrid="using:Syncfusion.UI.Xaml.DataGrid"
     xmlns:dataViewModels="using:Roster.App.ViewModels.Data"
     xmlns:editors="using:Syncfusion.UI.Xaml.Editors"
+    xmlns:grid="using:Syncfusion.UI.Xaml.Grids"
     xmlns:local="using:Roster.App.Views.CertificateViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Roster.Models"
     xmlns:pageViewModels="using:Roster.App.ViewModels.Page"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="OnLoad"
     mc:Ignorable="d">
 
     <Page.DataContext>
-        <pageViewModels:TestPageViewModel />
+        <pageViewModels:CertificatePageViewModel />
     </Page.DataContext>
 
 
@@ -50,8 +53,9 @@
             <dataGrid:SfDataGrid.Columns>
                 <dataGrid:GridTextColumn HeaderText="Name" MappingName="Name" />
                 <dataGrid:GridTextColumn HeaderText="Description" MappingName="Description" />
-                <dataGrid:GridNumericColumn HeaderText="Certificate Length" MappingName="CertLength" />
+                <dataGrid:GridNumericColumn HeaderText="Duration" MappingName="Duration" />
                 <dataGrid:GridCheckBoxColumn HeaderText="Infinite" MappingName="Infinite" />
+                <dataGrid:GridCheckBoxColumn HeaderText="Required" MappingName="Required" />
             </dataGrid:SfDataGrid.Columns>
         </dataGrid:SfDataGrid>
     </Grid>

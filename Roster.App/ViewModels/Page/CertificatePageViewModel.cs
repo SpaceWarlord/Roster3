@@ -18,7 +18,7 @@ namespace Roster.App.ViewModels.Page
 
         public CertificatePageViewModel()
         {
-            Debug.WriteLine("-- ClientPageViewModel Constructor--");
+            Debug.WriteLine("-- CertificatePageViewModel Constructor--");
             Certificates = new ObservableCollection<CertificateViewModel>();            
             CertificateService = new CertificateService(new RosterDBContext());
 
@@ -33,7 +33,7 @@ namespace Roster.App.ViewModels.Page
 
         public async Task GetCertificatesListAsync()
         {
-            Debug.WriteLine("-- Get Shift Templates List Async --");
+            Debug.WriteLine("-- Get Certificates List Async --");
             //(CommunityToolkit.Helpers)
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -41,7 +41,7 @@ namespace Roster.App.ViewModels.Page
             });
             var certificates = await CertificateService.GetAll();
 
-            Debug.WriteLine("Total certificates: " + certificates.Count());
+            Debug.WriteLine("Total certificates: " + certificates.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -63,7 +63,7 @@ namespace Roster.App.ViewModels.Page
                     /*ClientViewModel client = new ClientViewModel(c.Client.Id, c.Client.FirstName, c.Client.MiddleName, c.Client.LastName, c.Client.Nickname, c.Client.Gender,
                         c.Client.DateOfBirth, c.Client.Phone, c.Client.Email, c.Client.HighlightColor, ClientAddress, c.Client.NDISNumber, c.Client.RiskCategory, c.Client.GenderPreference);*/
                     
-                    CertificateViewModel certificateViewModel = new CertificateViewModel(c.Id, c.Name, c.Description, c.CertLength, c.Infinite);
+                    CertificateViewModel certificateViewModel = new CertificateViewModel(c.Id, c.Name, c.Description, c.Duration, c.Infinite, c.Required);
                     if (certificateViewModel.Name != null)
                     {
                         Debug.WriteLine("Not null: Id" + certificateViewModel.Id);
@@ -75,7 +75,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total certificates after: " + certificates.Count());
+                Debug.WriteLine("Total certificates after: " + certificates.Count);
                 IsLoading = false;
             });
         }

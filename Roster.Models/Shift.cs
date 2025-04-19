@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Roster.Models
 {
-    public class Shift
+    public class Shift:BaseModel
     {
         [Key]
         public string Id { get; set; }

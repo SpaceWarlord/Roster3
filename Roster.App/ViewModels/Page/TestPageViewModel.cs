@@ -44,7 +44,7 @@ namespace Roster.App.ViewModels.Page
             });
             var tests = await TestService.GetAll();
 
-            Debug.WriteLine("Total tests: " + tests.Count());
+            Debug.WriteLine("Total tests: " + tests.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -67,7 +67,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total tests after: " + tests.Count());
+                Debug.WriteLine("Total tests after: " + tests.Count);
                 IsLoading = false;
             });
         }               

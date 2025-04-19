@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Roster.App.DTO;
 using Roster.App.ViewModels.Data;
 using Roster.Models;
@@ -21,7 +22,20 @@ namespace Roster.App.Services
 
         public async Task<List<CertificateDTO>> GetAll()
         {
-            return await _db.Certificates.Select(c => new CertificateDTO(c.Id, c.Name, c.Description, c.CertLength, c.Infinite)).ToListAsync();
+            try
+            {
+                return await _db.Certificates.Select(c => new CertificateDTO(c.Id, c.Name, c.Description, c.Duration, c.Infinite, c.Required)).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                SqliteException? e = ex as SqliteException;
+                if (e != null)
+                {
+                    Debug.WriteLine("exception " + e.Message + " error code " + e.SqliteExtendedErrorCode);
+                }
+                return new List<CertificateDTO>();
+            }
+            
         }
 
         public async Task<bool> AddUpdate(CertificateDTO certificate)
@@ -37,8 +51,9 @@ namespace Roster.App.Services
                     Id = certificate.Id,
                     Name = certificate.Name,
                     Description = certificate.Description,
-                    CertLength = certificate.CertLength,
+                    Duration = certificate.Duration,
                     Infinite = certificate.Infinite,
+                    Required = certificate.Required,
                 };
                 _db.Certificates.Add(c);
                 return (await _db.SaveChangesAsync()) > 0;
@@ -48,8 +63,9 @@ namespace Roster.App.Services
                 Debug.WriteLine("Existing certificate");
                 found.Name = certificate.Name;
                 found.Description = certificate.Description;
-                found.CertLength = certificate.CertLength;
+                found.Duration = certificate.Duration;
                 found.Infinite = certificate.Infinite;
+                found.Required = certificate.Required;
                 return (await _db.SaveChangesAsync()) > 0;
             }
         }

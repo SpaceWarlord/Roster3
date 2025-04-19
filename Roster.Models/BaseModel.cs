@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roster.Models
 {
-    public class WorkerSkills:BaseModel
+    public class BaseModel
     {
-
     }
 }

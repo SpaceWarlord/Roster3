@@ -20,22 +20,23 @@ using System.Diagnostics;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Roster.App.Views.CertificateViews
+namespace Roster.App.Views.WorkerCertificateViews
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CertificatePage : Page
+    public sealed partial class WorkerCertificatePage : Page
     {
-        public CertificatePageViewModel ViewModel { get; set; }
-        public CertificatePage()
+        public WorkerCertificatePageViewModel ViewModel { get; set; }
+        public WorkerCertificatePage()
         {
             this.InitializeComponent();
-            ViewModel = new CertificatePageViewModel();
-            this.DataContext = new CertificatePageViewModel();
-            CertificatesDataGrid.RowValidated += SfDataGrid_RowValidated;
+            ViewModel = new WorkerCertificatePageViewModel();
+            this.DataContext = new WorkerCertificatePageViewModel();
+            WorkerCertificatesDataGrid.RowValidated += SfDataGrid_RowValidated;
             //shiftTemplatesDataGrid1.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
-            CertificatesDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+            WorkerCertificatesDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+
         }
 
         public async void OnLoad(object sender, RoutedEventArgs e)
@@ -45,8 +46,8 @@ namespace Roster.App.Views.CertificateViews
             //this.DataContext = ViewModel;
             //shiftTemplatesDataGrid.DataContext= new ShiftTemplatePageViewModel();
             //shiftTemplatesDataGrid.ItemsSource = ViewModel.ShiftTemplates;            
-            Debug.WriteLine("Total certificates: " + ViewModel.Certificates.Count);
-            CertificatesDataGrid.ItemsSource = ViewModel.Certificates;
+            Debug.WriteLine("Total worker certificates: " + ViewModel.WorkerCertificates.Count);
+            WorkerCertificatesDataGrid.ItemsSource = ViewModel.WorkerCertificates;
         }
 
         private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)
@@ -56,25 +57,26 @@ namespace Roster.App.Views.CertificateViews
             {
                 Debug.WriteLine("Row Data was null");
             }
-            CertificateViewModel? certificate = e.RowData as CertificateViewModel;
-            if (certificate != null)
-            {                
-                if (certificate.Name != null)
+            WorkerCertificateViewModel? workerCertificate = e.RowData as WorkerCertificateViewModel;
+            if (workerCertificate != null)
+            {
+                Debug.WriteLine("zz " + workerCertificate.Certificate.Name);
+                if (workerCertificate.Worker != null)
                 {
-                    Debug.WriteLine("Certificate is " + certificate.Name);
+                    Debug.WriteLine("Certificate name is " + workerCertificate.Certificate.Name);
                 }
 
-                await ViewModel.AddUpdateCertificateToDB(certificate);
+                await ViewModel.AddUpdateWorkerCertificateToDB(workerCertificate);
             }
         }
 
         private void SfDataGrid_AddNewRowInitiating(object? sender, AddNewRowInitiatingEventArgs e)
         {
 
-            var certificate = e.NewObject as CertificateViewModel;
-            if (certificate != null)
+            var shift = e.NewObject as ShiftViewModel;
+            if (shift != null)
             {
-                Debug.WriteLine("name is " + certificate.Name);
+                Debug.WriteLine("name is " + shift.Worker.FirstName);
                 /*
                 var firstName = e.NewObject.GetType().GetProperty("Worker.FirstName").GetValue(e.NewObject);
                 var lastName = e.NewObject.GetType().GetProperty("Worker.LastName").GetValue(e.NewObject);
@@ -94,8 +96,8 @@ namespace Roster.App.Views.CertificateViews
             }
             else
             {
-                Debug.WriteLine("certificate was null");
+                Debug.WriteLine("worker was null");
             }
-        }
+        }                
     }
 }

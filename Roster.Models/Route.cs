@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Roster.Models
 {
-    public class Route
+    public class Route:BaseModel
     {
         [Key]
         public int RouteId { get; set; }

@@ -13,7 +13,7 @@ namespace Roster.App.ViewModels.Data
     {
         public abstract T ToDTO<T>() where T : BaseDTO;
 
-        public abstract T ToModel<T>() where T : BaseDTO;
+        public abstract T ToModel<T>() where T : BaseModel;
         /*
         public static T DTOToModel<T>(T dto) where T: BaseDTO 
         {

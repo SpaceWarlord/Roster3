@@ -296,7 +296,7 @@ namespace Roster.App.ViewModels.Page
                 Debug.WriteLine("users was null");
                 return;
             }
-            Debug.WriteLine("Total users:" + users.Count());
+            Debug.WriteLine("Total users:" + users.Count);
                        
             await dispatcherQueue.EnqueueAsync(() =>
             {

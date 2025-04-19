@@ -86,14 +86,14 @@ namespace Roster.App.ViewModels.Data
         /// </summary>
 
         [ObservableProperty]
-        private string? _gender;
+        private string _gender;
 
         /// <summary>
         /// Gets or sets the person's date of birth.
         /// </summary>
 
         [ObservableProperty]
-        private string? _dateOfBirth;
+        private DateTimeOffset? _dateOfBirth;
 
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace Roster.App.ViewModels.Data
             MiddleName = "";
             LastName = "";
             Nickname = "";
-            Gender = "M";
-            DateOfBirth = "";
+            Gender = "";
+            DateOfBirth = null;
         }        
 
         public PersonViewModel(PersonViewModel person):base()
@@ -157,12 +157,12 @@ namespace Roster.App.ViewModels.Data
                 MiddleName = "";
                 LastName = "";
                 Nickname = "";
-                Gender = "M";
-                DateOfBirth = "";
+                Gender = "";
+                DateOfBirth = null;
             }                        
         }
 
-        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string? gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
+        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
         {
             Debug.WriteLine("--PersonViewModel Constructor 1--");     
             Id = id;
@@ -178,7 +178,7 @@ namespace Roster.App.ViewModels.Data
             Address = address;
         }
 
-        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string? gender, string? dateOfBirth, string? phone, string? email, Color? highlightColor)
+        public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string? phone, string? email, Color? highlightColor)
         {
             Debug.WriteLine("--PersonViewModel Constructor 2--");
                   

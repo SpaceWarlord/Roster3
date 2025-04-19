@@ -99,7 +99,7 @@ namespace Roster.App.ViewModels.Page
             });
             var shiftTemplates = await ShiftTemplateService.GetAll();
 
-            Debug.WriteLine("Total shift templates: " + shiftTemplates.Count());
+            Debug.WriteLine("Total shift templates: " + shiftTemplates.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -133,7 +133,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + shiftTemplates.Count());
+                Debug.WriteLine("Total shift templates after: " + shiftTemplates.Count);
                 IsLoading = false;
             });
         }
@@ -148,7 +148,7 @@ namespace Roster.App.ViewModels.Page
             });
             var workers = await WorkerService.GetAll(false);
 
-            Debug.WriteLine("Total workers: " + workers.Count());
+            Debug.WriteLine("Total workers: " + workers.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -170,7 +170,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + Workers.Count());
+                Debug.WriteLine("Total shift templates after: " + Workers.Count);
                 IsLoading = false;
             });
         }
@@ -185,7 +185,7 @@ namespace Roster.App.ViewModels.Page
             });
             var clients = await ClientService.GetAll();
 
-            Debug.WriteLine("Total clients: " + clients.Count());
+            Debug.WriteLine("Total clients: " + clients.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -208,7 +208,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total shift templates after: " + Clients.Count());
+                Debug.WriteLine("Total shift templates after: " + Clients.Count);
                 IsLoading = false;
             });
         }

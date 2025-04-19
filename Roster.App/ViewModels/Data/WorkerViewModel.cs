@@ -42,8 +42,8 @@ namespace Roster.App.ViewModels.Data
 
         }
 
-        public WorkerViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string dateOfBirth, string phone, string email, string? highlightColor, AddressViewModel? address)
-            : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
+        public WorkerViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string phone, string email, 
+            string? highlightColor, AddressViewModel? address) : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
         {
             //Certificates = certificates;            
         }

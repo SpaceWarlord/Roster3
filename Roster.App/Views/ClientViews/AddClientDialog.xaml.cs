@@ -53,7 +53,7 @@ namespace Roster.App.Views.ClientViews
                     if (radioButton.Content != null)
                     {
                         Debug.WriteLine("Gender set to: " + radioButton.Content);
-                        ClientPageVM.NewClient.Gender = radioButton.Content.ToString();                                                
+                        //ClientPageVM.NewClient.Gender = radioButton.Content.ToString();                                                
                     }                    
                 }                
             }            

@@ -34,7 +34,7 @@ namespace Roster.App.ViewModels.Page
             Clients = new ObservableCollection<ClientViewModel>();
             Clients.CollectionChanged += Client_CollectionChanged;
             ClientService = new ClientService(new RosterDBContext());
-            NewClient = new ClientViewModel(Guid.NewGuid().ToString(), "", "", "", "", "", "", "", "", "", null, "", 0, "");
+            //NewClient = new ClientViewModel(Guid.NewGuid().ToString(), "", "", "", "", "", "", "", "", "", null, "", 0, "");
             
         }
 
@@ -76,7 +76,7 @@ namespace Roster.App.ViewModels.Page
             Debug.WriteLine("--AddClientToDb--");
             await client.AddUpdate(ClientService);
             //await NewClient.AddUpdate(ClientService);
-            NewClient = new ClientViewModel(Guid.NewGuid().ToString(), "", "", "", "", "", "", "", "", "", null, "",0, "");
+            NewClient = new ClientViewModel(Guid.NewGuid().ToString(), "", "", "", "", "M", null, "", "", "", null, "",0, "");
             //await GetClientsListAsync();
         }
 
@@ -104,7 +104,7 @@ namespace Roster.App.ViewModels.Page
                 return;
             }
             */
-            Debug.WriteLine("Total clients: " + clients.Count());
+            Debug.WriteLine("Total clients: " + clients.Count);
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
@@ -126,7 +126,7 @@ namespace Roster.App.ViewModels.Page
                         Debug.WriteLine("Was null");
                     }
                 }
-                Debug.WriteLine("Total clients after: " + clients.Count());
+                Debug.WriteLine("Total clients after: " + clients.Count);
                 IsLoading = false;
             });
         }

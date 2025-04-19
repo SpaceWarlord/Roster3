@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Roster.Models
 {
     [Table("Address", Schema = "TPT")]
-    public class Address
+    public class Address: BaseModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

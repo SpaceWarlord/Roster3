@@ -130,8 +130,8 @@ namespace Roster.App.ViewModels.Data
         {
 
         }
-        public ClientViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, string? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address, 
-            string? ndisNumber, byte riskCategory, string? genderPreference) 
+        public ClientViewModel(string id, string firstName, string middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string? phone, string? email, 
+            string? highlightColor, AddressViewModel? address, string? ndisNumber, byte riskCategory, string? genderPreference) 
             : base(id, firstName, middleName, lastName, nickname, gender, dateOfBirth, phone, email, highlightColor, address)
         {
             Debug.WriteLine("-- ClientViewModel Constructor--");
@@ -144,8 +144,8 @@ namespace Roster.App.ViewModels.Data
 
         public static ClientViewModel Create(ClientDTO dto)
         {
-            return new ClientViewModel(dto.Id, dto.FirstName, dto.MiddleName, dto.LastName, dto.Nickname, dto.Gender, dto.DateOfBirth, dto.Phone, dto.Email, dto.HighlightColor, AddressViewModel.Create(dto.Address),
-                dto.NDISNumber, dto.RiskCategory, dto.GenderPreference);
+            return new ClientViewModel(dto.Id, dto.FirstName, dto.MiddleName, dto.LastName, dto.Nickname, dto.Gender, dto.DateOfBirth, dto.Phone, dto.Email, dto.HighlightColor, 
+                AddressViewModel.Create(dto.Address), dto.NDISNumber, dto.RiskCategory, dto.GenderPreference);
         }
 
         public static Client ModelFromDTO(ClientDTO dto)

@@ -14,7 +14,7 @@ namespace Roster.Models
 {
     [Index(nameof(Nickname), IsUnique = true)]
     //public class Person: IEquatable<Person>
-    public class Person
+    public class Person:BaseModel
     {
 
         //bug with using required. Don't use for now https://github.com/microsoft/microsoft-ui-xaml/issues/8723
@@ -39,9 +39,9 @@ namespace Roster.Models
         }
 
 
-        public string? Gender { get; set; }
+        public string Gender { get; set; }
         
-        public string? DateOfBirth { get; set; }
+        public DateTimeOffset? DateOfBirth { get; set; }
         
         public string? Phone { get; set; }
         

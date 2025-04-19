@@ -83,7 +83,6 @@ namespace Roster.App.ViewModels.Data
             }
             return null;
         }
-
         public override T ToModel<T>()
         {
             Address w = new Address()

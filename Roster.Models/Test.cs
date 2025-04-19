@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roster.Models
 {
-    public class Test
+    public class Test:BaseModel
     {
         public string Id { get; set; }
         public string? Name { get; set; }

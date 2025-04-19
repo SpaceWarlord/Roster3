@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Roster.Models
 {
     [Index(nameof(Username), IsUnique = true)]
-    public class User
+    public class User:BaseModel
     {        
         public required string Id { get; set; }
 
