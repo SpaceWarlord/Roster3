@@ -88,7 +88,24 @@ namespace Roster.App.ViewModels.Data
             {
                 Debug.WriteLine("Certificate was null");
             }
-            return (T)Convert.ChangeType(new WorkerCertificateDTO(worker, certificate, DateObtained, ExpiryDate), typeof(T));
+            WorkerCertificateDTO dto = (T)Convert.ChangeType(new WorkerCertificateDTO(worker, certificate, DateObtained, ExpiryDate), typeof(T)) as WorkerCertificateDTO;
+            if (dto==null)
+            {
+                Debug.WriteLine("dto was null");
+            }
+            else
+            {
+                Debug.WriteLine("dto was not null");
+                if(dto.Worker == null)
+                {
+                    Debug.WriteLine("ttworker was null");
+                }
+                if (dto.Certificate == null)
+                {
+                    Debug.WriteLine("ttcertificate was null");
+                }
+            }
+                return (T)Convert.ChangeType(new WorkerCertificateDTO(worker, certificate, DateObtained, ExpiryDate), typeof(T));
         }
 
         public override T ToModel<T>()

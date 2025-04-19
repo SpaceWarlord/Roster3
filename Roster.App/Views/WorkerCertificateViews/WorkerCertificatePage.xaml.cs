@@ -59,11 +59,10 @@ namespace Roster.App.Views.WorkerCertificateViews
             }
             WorkerCertificateViewModel? workerCertificate = e.RowData as WorkerCertificateViewModel;
             if (workerCertificate != null)
-            {
-                Debug.WriteLine("zz " + workerCertificate.Certificate.Name);
+            {                
                 if (workerCertificate.Worker != null)
                 {
-                    Debug.WriteLine("Certificate name is " + workerCertificate.Certificate.Name);
+                    Debug.WriteLine("zz " + workerCertificate.Worker.FullName);
                 }
 
                 await ViewModel.AddUpdateWorkerCertificateToDB(workerCertificate);

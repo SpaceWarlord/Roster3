@@ -15,12 +15,12 @@ namespace Roster.Models
     public partial class WorkerCertificate:BaseModel
     {
         
-        [ForeignKey("WorkerId")] // for a shadow property to the Address ID FK
-        public Worker Worker;
+        [ForeignKey("WorkerId")] // for a shadow property to the Worker Id FK
+        public Worker? Worker { get; set; }
 
         
-        [ForeignKey("CertificateId")] // for a shadow property to the Address ID FK
-        public Certificate Certificate {  get; set; }
+        [ForeignKey("CertificateId")] // for a shadow property to the Certificate Id FK
+        public Certificate? Certificate {  get; set; }
 
         public string? WorkerId { get; set; }
         public string? CertificateId { get; set; }

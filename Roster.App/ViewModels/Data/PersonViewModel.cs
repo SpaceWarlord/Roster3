@@ -164,7 +164,7 @@ namespace Roster.App.ViewModels.Data
 
         public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string? phone, string? email, string? highlightColor, AddressViewModel? address):base()
         {
-            Debug.WriteLine("--PersonViewModel Constructor 1--");     
+            Debug.WriteLine("--PersonViewModel Constructor 1--");            
             Id = id;
             FirstName = firstName;
             MiddleName = middleName;
@@ -176,6 +176,7 @@ namespace Roster.App.ViewModels.Data
             Email = email;
             HighlightColor = highlightColor;
             Address = address;
+            Debug.WriteLine("FirstName " + firstName);
         }
 
         public PersonViewModel(string id, string firstName, string? middleName, string lastName, string nickname, string gender, DateTimeOffset? dateOfBirth, string? phone, string? email, Color? highlightColor)

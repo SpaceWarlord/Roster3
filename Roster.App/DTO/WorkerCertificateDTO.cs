@@ -13,8 +13,11 @@ namespace Roster.App.DTO
         public DateTimeOffset DateObtained { get; set; }
         public DateTimeOffset ExpiryDate { get; set; }
         public WorkerCertificateDTO(WorkerDTO worker, CertificateDTO certificate, DateTimeOffset dateObtained, DateTimeOffset expiryDate) 
-        { 
-
+        {
+            Worker = worker;
+            Certificate = certificate;
+            DateObtained = dateObtained;
+            ExpiryDate = expiryDate;
         }
     }
 }

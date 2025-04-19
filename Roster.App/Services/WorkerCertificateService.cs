@@ -21,7 +21,16 @@ namespace Roster.App.Services
 
         public async Task<List<WorkerCertificateDTO>> GetAll()
         {
-            return await _db.WorkerCertificates.Select(wc => new WorkerCertificateDTO(new WorkerDTO(wc.Worker), new CertificateDTO(wc.Certificate), wc.DateObtained, wc.ExpiryDate)).ToListAsync();
+            Debug.WriteLine("-- GetAll WorkerCertificateDTO --");
+            List <WorkerCertificateDTO> results = new List<WorkerCertificateDTO>();
+            results = await _db.WorkerCertificates.Select(wc => new WorkerCertificateDTO(new WorkerDTO(wc.Worker), new CertificateDTO(wc.Certificate), wc.DateObtained, wc.ExpiryDate)).ToListAsync();
+            Debug.WriteLine("Total results " + results.Count);
+            foreach (WorkerCertificateDTO dto in results)
+            {
+                Debug.WriteLine(dto.ToString());
+            }
+            return results;
+            //return await _db.WorkerCertificates.Select(wc => new WorkerCertificateDTO(new WorkerDTO(wc.Worker), new CertificateDTO(wc.Certificate), wc.DateObtained, wc.ExpiryDate)).ToListAsync();
         }
 
         public async Task<bool> AddUpdate(WorkerCertificateDTO workerCertificate)
@@ -32,17 +41,27 @@ namespace Roster.App.Services
             {
                 Debug.WriteLine("zworker was null");
             }
-            var found = await _db.WorkerCertificates.FirstOrDefaultAsync(x => x.Worker.Id == workerCertificate.Worker.Id && x.Certificate.Id == workerCertificate.Certificate.Id);
+            //var found = await _db.WorkerCertificates.FirstOrDefaultAsync(x => x.Worker.Id == workerCertificate.Worker.Id && x.Certificate.Id == workerCertificate.Certificate.Id);
+            var found = await _db.WorkerCertificates.FirstOrDefaultAsync(x => x.WorkerId == workerCertificate.Worker.Id && x.CertificateId == workerCertificate.Certificate.Id);
             if (found is null) // new worker certificate
             {
                 Debug.WriteLine("New worker certificate");                
                 Worker w = WorkerViewModel.ModelFromDTO(workerCertificate.Worker);
+                Debug.WriteLine("YYY ID " + w.Id + " fname " + w.FullName);
                 Certificate c = CertificateViewModel.ModelFromDTO(workerCertificate.Certificate);
                 Debug.WriteLine("zzgagg " + workerCertificate.Worker.ToString());
                 var wc = new WorkerCertificate()
-                {                    
+                {
+                    //Worker = w,
+                    //Certificate = c,
+                    //WorkerId = workerCertificate.Worker.Id,
+                    //CertificateId = workerCertificate.Certificate.Id,
                     WorkerId = w.Id,
-                    CertificateId = w.Id,
+                    CertificateId = c.Id,
+                    //Worker = w,
+                    //Certificate = c,                    
+                    DateObtained = workerCertificate.DateObtained,
+                    ExpiryDate = workerCertificate.ExpiryDate,
                 };
                 _db.WorkerCertificates.Add(wc);
 

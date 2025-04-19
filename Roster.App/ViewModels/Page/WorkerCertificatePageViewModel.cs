@@ -63,29 +63,45 @@ namespace Roster.App.ViewModels.Page
 
             await dispatcherQueue.EnqueueAsync(() =>
             {
-                Certificates.Clear();
+                WorkerCertificates.Clear();
 
                 foreach (var wc in workerCertificates)
                 {
-                    AddressViewModel workerAddress = new AddressViewModel(wc.Worker.Address.Id, wc.Worker.Address.Name, wc.Worker.Address.UnitNum, wc.Worker.Address.StreetNum, wc.Worker.Address.StreetName,
+                    AddressViewModel workerAddress = null;
+                    if (wc.Worker.Address != null)
+                    {
+                        workerAddress = new AddressViewModel(wc.Worker.Address.Id, wc.Worker.Address.Name, wc.Worker.Address.UnitNum, wc.Worker.Address.StreetNum, wc.Worker.Address.StreetName,
                         wc.Worker.Address.StreetType, wc.Worker.Address.Suburb, wc.Worker.Address.City);
-                    WorkerViewModel worker = new WorkerViewModel(wc.Worker.Id, wc.Worker.FirstName, wc.Worker.MiddleName, wc.Worker.LastName, wc.Worker.Nickname, wc.Worker.Gender, wc.Worker.DateOfBirth, 
+                    }
+                    Debug.WriteLine("wc id is " + wc.Worker.Id);
+
+                   WorkerViewModel worker = new WorkerViewModel(wc.Worker.Id, wc.Worker.FirstName, wc.Worker.MiddleName, wc.Worker.LastName, wc.Worker.Nickname, wc.Worker.Gender, wc.Worker.DateOfBirth, 
                         wc.Worker.Phone, wc.Worker.Email, wc.Worker.HighlightColor, workerAddress);
+                    Debug.WriteLine("worker id is " + worker.Id);
                     CertificateViewModel certificate = new CertificateViewModel(wc.Certificate.Id, wc.Certificate.Name, wc.Certificate.Description, 
                         wc.Certificate.Duration, wc.Certificate.Infinite, wc.Certificate.Required);
-                    
+                    Debug.WriteLine("cert name: " + certificate.Name);
 
                     /*ClientViewModel client = new ClientViewModel(c.Client.Id, c.Client.FirstName, c.Client.MiddleName, c.Client.LastName, c.Client.Nickname, c.Client.Gender,
-                        c.Client.DateOfBirth, c.Client.Phone, c.Client.Email, c.Client.HighlightColor, ClientAddress, c.Client.NDISNumber, c.Client.RiskCategory, c.Client.GenderPreference);*/                    
+                        c.Client.DateOfBirth, c.Client.Phone, c.Client.Email, c.Client.HighlightColor, ClientAddress, c.Client.NDISNumber, c.Client.RiskCategory, c.Client.GenderPreference);*/
                     WorkerCertificateViewModel workerCertificateViewModel = new WorkerCertificateViewModel(worker, certificate, wc.DateObtained, wc.ExpiryDate);
-                    if (workerCertificateViewModel.Certificate != null)
+                    if (worker != null) 
                     {
-                        Debug.WriteLine("Not null: Id" + workerCertificateViewModel.Certificate.Name);
+                        Debug.WriteLine("worker name " + workerCertificateViewModel.Worker.FirstName);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("worker was null");
+                    }
+
+                    if (workerCertificateViewModel.Certificate != null)
+                    { 
+                        Debug.WriteLine("Certificate Not null: Id " + workerCertificateViewModel.Certificate.Id + " name " + workerCertificateViewModel.Certificate.Name);
                         WorkerCertificates.Add(workerCertificateViewModel);                        
                     }
                     else
                     {
-                        Debug.WriteLine("Was null");
+                        Debug.WriteLine("Certificate Was null");
                     }
                 }
                 Debug.WriteLine("Total worker certificates after: " + workerCertificates.Count);
