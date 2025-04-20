@@ -33,6 +33,20 @@ namespace Roster.App.Services
             //return await _db.WorkerCertificates.Select(wc => new WorkerCertificateDTO(new WorkerDTO(wc.Worker), new CertificateDTO(wc.Certificate), wc.DateObtained, wc.ExpiryDate)).ToListAsync();
         }
 
+        public async Task<bool> CheckExists(WorkerCertificateDTO workerCertificate)
+        {
+            Debug.WriteLine("-- CheckExists --");
+            var found = await _db.WorkerCertificates.FirstOrDefaultAsync(x => x.WorkerId == workerCertificate.Worker.Id && x.CertificateId == workerCertificate.Certificate.Id);
+            if (found is null) // new worker certificate
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public async Task<bool> AddUpdate(WorkerCertificateDTO workerCertificate)
         {
             Debug.WriteLine("-- AddUpdate --");

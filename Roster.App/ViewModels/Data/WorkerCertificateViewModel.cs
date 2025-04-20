@@ -75,6 +75,12 @@ namespace Roster.App.ViewModels.Data
             }
         }
 
+        public async Task<bool> CheckExists(WorkerCertificateService workerCertificateService)
+        {
+            Debug.WriteLine("-- Check Exists --");
+            return await workerCertificateService.CheckExists(ToDTO<WorkerCertificateDTO>());
+        }
+
         public override T ToDTO<T>()
         {
             Debug.WriteLine("-- ToDTO --");

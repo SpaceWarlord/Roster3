@@ -16,6 +16,7 @@ using Roster.App.ViewModels.Data;
 using Roster.App.ViewModels.Page;
 using Syncfusion.UI.Xaml.DataGrid;
 using System.Diagnostics;
+using Roster.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +34,7 @@ namespace Roster.App.Views.WorkerCertificateViews
             this.InitializeComponent();
             ViewModel = new WorkerCertificatePageViewModel();
             this.DataContext = new WorkerCertificatePageViewModel();
+            WorkerCertificatesDataGrid.RowValidating += SfDataGrid_RowValidating;
             WorkerCertificatesDataGrid.RowValidated += SfDataGrid_RowValidated;
             //shiftTemplatesDataGrid1.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
             WorkerCertificatesDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
@@ -48,6 +50,25 @@ namespace Roster.App.Views.WorkerCertificateViews
             //shiftTemplatesDataGrid.ItemsSource = ViewModel.ShiftTemplates;            
             Debug.WriteLine("Total worker certificates: " + ViewModel.WorkerCertificates.Count);
             WorkerCertificatesDataGrid.ItemsSource = ViewModel.WorkerCertificates;
+        }
+
+        private async void SfDataGrid_RowValidating(object? sender, RowValidatingEventArgs e)
+        {
+            WorkerCertificateViewModel wc = e.RowData as WorkerCertificateViewModel;
+            //WorkerViewModel worker = e.RowData.GetType().GetProperty("Worker").GetValue(e.RowData) as WorkerViewModel;
+            //CertificateViewModel certificate = e.RowData.GetType().GetProperty("Certificate").GetValue(e.RowData) as CertificateViewModel;
+
+            bool exists =await ViewModel.WorkerCertificateExists(wc);
+            if (exists)
+            {
+                e.IsValid = false;
+                e.ErrorMessages.Add("Worker", "Cannot assign same worker and certificate twice");
+                e.ErrorMessages.Add("Certificate", "Cannot assign same worker and certificate twice");
+            }
+            else
+            {
+                Debug.WriteLine("ROW IS VALID");
+            }            
         }
 
         private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)

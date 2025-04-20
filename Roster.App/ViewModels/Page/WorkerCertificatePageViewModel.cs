@@ -45,8 +45,15 @@ namespace Roster.App.ViewModels.Page
         /// </summary>
         public async Task AddUpdateWorkerCertificateToDB(WorkerCertificateViewModel workerCertificate)
         {
-            Debug.WriteLine("--AddUpdateWorkerCertificateToDb--");
+            Debug.WriteLine("-- AddUpdateWorkerCertificateToDb --");
             await workerCertificate.AddUpdate(WorkerCertificateService);
+        }
+
+        public async Task<bool> WorkerCertificateExists(WorkerCertificateViewModel workerCertificate)
+        {
+            Debug.WriteLine("-- WorkerCertificateExists --");
+            await workerCertificate.CheckExists(WorkerCertificateService);
+            return true;
         }
 
         public async Task GetWorkerCertificatesListAsync()
