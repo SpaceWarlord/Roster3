@@ -44,13 +44,13 @@ namespace Roster.App
        
         public RosterDBContext()
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
             optionsBuilder.UseExceptionProcessor();            
-            optionsBuilder.UseSqlite("Data Source=database53.db");
+            optionsBuilder.UseSqlite("Data Source=database54.db");
             optionsBuilder.EnableSensitiveDataLogging(true);
 
             //optionsBuilder.UseSqlite("Data Source=recipe.db");

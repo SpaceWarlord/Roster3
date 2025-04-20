@@ -55,7 +55,6 @@ namespace Roster.App
 
         public IServiceProvider Services { get; }
 
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -66,11 +65,29 @@ namespace Roster.App
             Services = ConfigureServices();
             this.InitializeComponent();             
             
+        }        
+        
+        /// <summary>
+        /// Invoked when the application is launched.
+        /// </summary>
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        {
+            Debug.WriteLine("ON LAUNCHED CALLED");
+            Application.Current.DispatcherShutdownMode = DispatcherShutdownMode.OnLastWindowClose;
+
+            //string path = AppDomain.CurrentDomain.BaseDirectory;
+            UseSqlite();
+            CheckForFirstTimeRun();
+            LoginWindow = new LoginWindow();
+            LoginWindow.Activate();
+            //MainWindow = new Shell();
         }
 
         private static ServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
+            services.AddDbContext<RosterDBContext>();
             //services.AddSingleton<IThemeService, ThemeService>();
             //services.AddSingleton<IJsonNavigationService, JsonNavigationService>();
 
@@ -143,35 +160,23 @@ namespace Roster.App
         /// <summary>
         /// Configures the app to use the Sqlite data source. If no existing Sqlite database exists,         
         /// </summary>
-        public static void UseSqlite()
+        private void UseSqlite()
         {
             string demoDatabasePath = Package.Current.InstalledLocation.Path + @"\Data\Roster1.db";
             string databasePath = ApplicationData.Current.LocalFolder.Path + @"\Roster1.db";                        
-
             
             if (!File.Exists(databasePath))
             {
                 //File.Copy(demoDatabasePath, databasePath);
             }
             //var dbOptions = new DbContextOptionsBuilder<RosterContext>().UseSqlite("Data Source=" + databasePath);
-            var dbOptions = new DbContextOptionsBuilder<RosterDBContext>().UseSqlite("Data Source=" + "database28.db");             
-        }
+            //var dbOptions = new DbContextOptionsBuilder<RosterDBContext>().UseSqlite("Data Source=" + "database28.db");                        
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-        {
-            Application.Current.DispatcherShutdownMode = DispatcherShutdownMode.OnLastWindowClose;
-
-
-            //string path = AppDomain.CurrentDomain.BaseDirectory;
-            UseSqlite();
-            CheckForFirstTimeRun();
-            LoginWindow = new LoginWindow();
-            LoginWindow.Activate();
-            //MainWindow = new Shell();
-        }        
+            using (var scope = Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<RosterDBContext>();
+                dbContext.Database.Migrate();
+            }                
+        }                
     }
 }

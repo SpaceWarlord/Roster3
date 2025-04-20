@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 namespace Roster.App.Services
 {
     public class UserService:BaseService
-    {
-        
+    {        
         public UserService(RosterDBContext db)
         {
             _db = db;
@@ -78,10 +77,8 @@ namespace Roster.App.Services
                         }
                         return false;
                     }
-                }
-                    
-            }
-                
+                }                    
+            }                
         }
     }
 }
