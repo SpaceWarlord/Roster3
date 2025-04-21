@@ -9,7 +9,7 @@
     xmlns:dataViewModels="using:Roster.App.ViewModels.Data"
     xmlns:editors="using:Syncfusion.UI.Xaml.Editors"
     xmlns:grid="using:Syncfusion.UI.Xaml.Grids"
-    xmlns:local="using:Roster.App.Views.ShiftTemplateViews"
+    xmlns:local="using:Roster.App.Views.ShiftViews"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Roster.Models"
     xmlns:pageViewModels="using:Roster.App.ViewModels.Page"
@@ -19,7 +19,7 @@
 
 
     <Page.DataContext>
-        <pageViewModels:TestPageViewModel />
+        <pageViewModels:ShiftPageViewModel />
     </Page.DataContext>
 
 

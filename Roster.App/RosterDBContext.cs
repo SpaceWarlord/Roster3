@@ -36,8 +36,9 @@ namespace Roster.App
         public DbSet<ShiftAddress> ShiftAddresseses { get; set; }
         public DbSet<Suburb> Suburbs { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
-
         public DbSet<WorkerCertificate> WorkerCertificates { get; set; }
+
+        public DbSet<Objective> Objectives { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Test> Tests { get; set; }
         

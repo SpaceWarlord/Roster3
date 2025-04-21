@@ -40,6 +40,14 @@
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem
+                        Content="Objectives"
+                        Tag="{x:Bind x:String.Format('{0}ObjectiveViews.ObjectivePage', pagePath)}"
+                        ToolTipService.ToolTip="Objectives">
+                        <NavigationViewItem.Icon>
+                            <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem
                         Content="Roster"
                         Tag="{x:Bind x:String.Format('{0}RosterPage', pagePath)}"
                         ToolTipService.ToolTip="Roster">
@@ -50,7 +58,7 @@
                     <NavigationViewItem
                         Content="Shift"
                         Tag="{x:Bind x:String.Format('{0}ShiftViews.ShiftPage', pagePath)}"
-                        ToolTipService.ToolTip="Shift">
+                        ToolTipService.ToolTip="Shifts">
                         <NavigationViewItem.Icon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Galaxy.png" />
                         </NavigationViewItem.Icon>

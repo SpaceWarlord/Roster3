@@ -159,6 +159,8 @@ namespace Roster.App.ViewModels.Data
                 EndDate = EndDate,
                 StartTime = StartTime,
                 EndTime = EndTime,
+                Worker = Worker.ToModel<Worker>(),
+                Client = Client.ToModel<Client>(),
                 ShiftType = ShiftType,
                 Reoccuring = Reoccuring,
                 CaseNoteCompleted = CaseNoteCompleted,

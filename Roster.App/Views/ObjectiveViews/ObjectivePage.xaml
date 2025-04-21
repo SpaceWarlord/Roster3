@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="Roster.App.Views.ObjectiveViews.ObjectivePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dataGrid="using:Syncfusion.UI.Xaml.DataGrid"
+    xmlns:dataViewModels="using:Roster.App.ViewModels.Data"
+    xmlns:editors="using:Syncfusion.UI.Xaml.Editors"
+    xmlns:grid="using:Syncfusion.UI.Xaml.Grids"
+    xmlns:local="using:Roster.App.Views.ObjectiveViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Roster.Models"
+    xmlns:pageViewModels="using:Roster.App.ViewModels.Page"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="OnLoad"
+    mc:Ignorable="d">
+
+
+    <Page.DataContext>
+        <pageViewModels:ObjectivePageViewModel />
+    </Page.DataContext>
+
+
+    <Grid x:Name="RootGrid" Margin="40,40,20,80">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <Button x:Name="ForwardBtn" Content="&lt;" />
+            <Button x:Name="BackBtn" Content="&gt;" />
+        </StackPanel>
+
+
+        <dataGrid:SfDataGrid
+            x:Name="ObjectivesDataGrid"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            AddNewRowPosition="Top"
+            AllowEditing="True"
+            AutoGenerateColumns="False">
+            <dataGrid:SfDataGrid.Columns>
+                <dataGrid:GridTextColumn HeaderText="Name" MappingName="Name" />
+                <dataGrid:GridTextColumn HeaderText="Description" MappingName="Description" />
+                <dataGrid:GridTextColumn HeaderText="Priority Rating" MappingName="PriorityRating" />
+
+                <dataGrid:GridDateColumn
+                    AllowNull="True"
+                    HeaderText="Date Added"
+                    MappingName="DateAdded"
+                    PlaceholderText="Change the date" />
+                <dataGrid:GridDateColumn
+                    AllowNull="True"
+                    HeaderText="Complete By"
+                    MappingName="CompleteBy"
+                    PlaceholderText="Change the date" />
+                <dataGrid:GridCheckBoxColumn HeaderText="Completed" MappingName="Completed" />
+                <dataGrid:GridTemplateColumn HeaderText="Worker" MappingName="Worker">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Worker.FullName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding DataContext.Workers, ElementName=RootGrid}"
+                                SelectedItem="{Binding Worker, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+                <dataGrid:GridTemplateColumn HeaderText="Client" MappingName="Client">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Client.FullName}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding DataContext.Clients, ElementName=RootGrid}"
+                                SelectedItem="{Binding Client, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
+            </dataGrid:SfDataGrid.Columns>
+        </dataGrid:SfDataGrid>
+    </Grid>
+</Page>
+
