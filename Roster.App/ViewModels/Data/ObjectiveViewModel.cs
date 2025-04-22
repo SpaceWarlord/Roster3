@@ -29,7 +29,7 @@ namespace Roster.App.ViewModels.Data
         private string _description;
 
         [ObservableProperty]
-        private string priorityRating;
+        private Priority priorityRating;
 
         [ObservableProperty]
         private DateTimeOffset _dateAdded;
@@ -55,7 +55,7 @@ namespace Roster.App.ViewModels.Data
             Id = Guid.NewGuid().ToString();
         }
 
-        public ObjectiveViewModel(string id, string name, string description, string priorityRating, DateTimeOffset dateAdded, DateTimeOffset
+        public ObjectiveViewModel(string id, string name, string description, Priority priorityRating, DateTimeOffset dateAdded, DateTimeOffset
             completeBy, bool completed, WorkerViewModel worker, ClientViewModel client)
         {
             Id = id;

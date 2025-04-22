@@ -16,6 +16,7 @@ using Roster.App.ViewModels.Data;
 using Roster.App.ViewModels.Page;
 using Syncfusion.UI.Xaml.DataGrid;
 using System.Diagnostics;
+using Roster.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,12 +33,17 @@ namespace Roster.App.Views.TestViews
         {
             this.InitializeComponent();
             ViewModel = new TestPageViewModel();
-            this.DataContext = new TestPageViewModel();
+            DataContext = new TestPageViewModel();            
+            SfDataGrid TestDataGrid = new SfDataGrid();
             TestDataGrid.CurrentCellValidating += SfDataGrid_CurrentCellValidating;
             TestDataGrid.RowValidating += SfDataGrid_RowValidating;
             TestDataGrid.RowValidated += SfDataGrid_RowValidated;
             //shiftTemplatesDataGrid1.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
             TestDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+            TestDataGrid.DataContext = ViewModel.Tests;
+            TestDataGrid.Columns.Add(new GridComboBoxColumn() { MappingName = "PriorityRating", DisplayMemberPath="", ItemsSource = Enum.GetValues(typeof(Priority)) });
+            RootGrid.Children.Add(TestDataGrid);
+            //ComboBox1.ItemsSource = Enum.GetValues(typeof (Priority));
         }
 
         public async void OnLoad(object sender, RoutedEventArgs e)

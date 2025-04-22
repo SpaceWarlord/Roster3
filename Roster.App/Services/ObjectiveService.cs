@@ -32,11 +32,11 @@ namespace Roster.App.Services
             var found = await _db.Objectives.FirstOrDefaultAsync(x => x.Id == objective.Id);
             if (found is null) // new objective
             {
-                Debug.WriteLine("New shift");
+                Debug.WriteLine("New Objective");
                 Client c = ClientViewModel.ModelFromDTO(objective.Client);
                 Worker w = WorkerViewModel.ModelFromDTO(objective.Worker);
 
-                Debug.WriteLine("zzgagg " + objective.Worker.ToString());
+                Debug.WriteLine("zWorker= " + objective.Worker.ToString());
                 var o = new Objective()
                 {
                     Id = objective.Id,
@@ -46,8 +46,9 @@ namespace Roster.App.Services
                     DateAdded = objective.DateAdded,
                     CompleteBy = objective.CompleteBy,
                     Completed = objective.Completed,
-                    Worker = w,
-                    Client = c,
+                    WorkerId = w.Id,
+                    ClientId = c.Id,
+                    Category = "1",
                 };
                 _db.Objectives.Add(o);
 
@@ -55,7 +56,7 @@ namespace Roster.App.Services
             }
             else
             {
-                Debug.WriteLine("Existing shift");
+                Debug.WriteLine("Existing objective");
                 found.Name = objective.Name;
                 found.Description = objective.Description;
                 found.PriorityRating = objective.PriorityRating;
@@ -64,6 +65,7 @@ namespace Roster.App.Services
                 found.Completed = objective.Completed;
                 found.WorkerId = objective.Worker.Id;
                 found.ClientId = objective.Client.Id;
+                found.Category = "1";
                 return (await _db.SaveChangesAsync()) > 0;
             }
         }

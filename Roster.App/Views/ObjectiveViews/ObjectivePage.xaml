@@ -44,7 +44,7 @@
             <Button x:Name="BackBtn" Content="&gt;" />
         </StackPanel>
 
-
+        <!--
         <dataGrid:SfDataGrid
             x:Name="ObjectivesDataGrid"
             Grid.Row="2"
@@ -55,7 +55,24 @@
             <dataGrid:SfDataGrid.Columns>
                 <dataGrid:GridTextColumn HeaderText="Name" MappingName="Name" />
                 <dataGrid:GridTextColumn HeaderText="Description" MappingName="Description" />
-                <dataGrid:GridTextColumn HeaderText="Priority Rating" MappingName="PriorityRating" />
+                <dataGrid:GridComboBoxColumn HeaderText="Priority" MappingName="PriorityRating" />
+
+                <dataGrid:GridTemplateColumn HeaderText="Priority" MappingName="PriorityRating">
+                    <dataGrid:GridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PriorityRating}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.CellTemplate>
+
+                    <dataGrid:GridTemplateColumn.EditTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="FullName"
+                                ItemsSource="{Binding Priority, ElementName=RootGrid}"
+                                SelectedItem="{Binding PriorityRating, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dataGrid:GridTemplateColumn.EditTemplate>
+                </dataGrid:GridTemplateColumn>
 
                 <dataGrid:GridDateColumn
                     AllowNull="True"
@@ -102,6 +119,7 @@
                 </dataGrid:GridTemplateColumn>
             </dataGrid:SfDataGrid.Columns>
         </dataGrid:SfDataGrid>
+        -->
     </Grid>
 </Page>
 

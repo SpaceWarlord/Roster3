@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roster.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Roster.App.DTO
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string PriorityRating { get; set; }
+        public Priority PriorityRating { get; set; }
         public DateTimeOffset DateAdded { get; set; }
         public DateTimeOffset CompleteBy { get; set; }
         public bool Completed { get; set; } = false;
@@ -19,7 +20,7 @@ namespace Roster.App.DTO
         public WorkerDTO? Worker { get; set; }
         public ClientDTO? Client { get; set; }
 
-        public ObjectiveDTO(string id, string name, string description, string priorityRating, DateTimeOffset dateAdded, DateTimeOffset completedBy, bool completed, WorkerDTO? worker, ClientDTO? client)
+        public ObjectiveDTO(string id, string name, string description, Priority priorityRating, DateTimeOffset dateAdded, DateTimeOffset completedBy, bool completed, WorkerDTO? worker, ClientDTO? client)
         {
             Id= id;
             Name= name;

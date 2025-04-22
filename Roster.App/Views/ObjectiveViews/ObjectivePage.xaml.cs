@@ -34,22 +34,33 @@ namespace Roster.App.Views.ObjectiveViews
         {
             this.InitializeComponent();
             ViewModel = new ObjectivePageViewModel();
-            this.DataContext = new ObjectivePageViewModel();            
+            this.DataContext = new ObjectivePageViewModel();
+            SfDataGrid ObjectivesDataGrid = new SfDataGrid();
+            Grid.SetRow(ObjectivesDataGrid, 1);
+            Grid.SetColumnSpan(ObjectivesDataGrid, 2);
             ObjectivesDataGrid.RowValidated += SfDataGrid_RowValidated;
-            //shiftTemplatesDataGrid1.AddNewRowInitiating += SfDataGrid_AddNewRowInitiating;
-            ObjectivesDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;
+            ObjectivesDataGrid.AllowEditing = true;
+            ObjectivesDataGrid.AutoGenerateColumns = false;
+            ObjectivesDataGrid.AddNewRowPosition = AddNewRowPosition.Top;            
+            ObjectivesDataGrid.DataValidationMode = Syncfusion.UI.Xaml.Grids.GridValidationMode.InView;            
+            ObjectivesDataGrid.ItemsSource = ViewModel.Objectives;
+            ObjectivesDataGrid.DataContext = ViewModel.Objectives;
+            ObjectivesDataGrid.Columns.Add(new GridTextColumn() { HeaderText="Name", MappingName = "Name"});
+            ObjectivesDataGrid.Columns.Add(new GridTextColumn() { HeaderText = "Description", MappingName = "Description" });
+            ObjectivesDataGrid.Columns.Add(new GridComboBoxColumn() { HeaderText= "Priority", MappingName = "PriorityRating", ItemsSource = Enum.GetValues(typeof(Priority)) });
+            ObjectivesDataGrid.Columns.Add(new GridDateColumn() { HeaderText = "Date Added", MappingName = "DateAdded" });
+            ObjectivesDataGrid.Columns.Add(new GridDateColumn() { HeaderText = "Complete By", MappingName = "CompleteBy" });
+            ObjectivesDataGrid.Columns.Add(new GridComboBoxColumn() { HeaderText = "Worker", MappingName = "Worker", ItemsSource = ViewModel.Workers, DisplayMemberPath="FullName"});
+            ObjectivesDataGrid.Columns.Add(new GridComboBoxColumn() { HeaderText = "Client", MappingName = "Client", ItemsSource = ViewModel.Clients, DisplayMemberPath = "FullName"});
+            RootGrid.Children.Add(ObjectivesDataGrid);
 
         }
 
         public async void OnLoad(object sender, RoutedEventArgs e)
         {
-            //await ViewModel.GetShiftTemplatesListAsync();
-            //await ViewModel.GetWorkersListAsync();            
-            //this.DataContext = ViewModel;
-            //shiftTemplatesDataGrid.DataContext= new ShiftTemplatePageViewModel();
-            //shiftTemplatesDataGrid.ItemsSource = ViewModel.ShiftTemplates;            
+                        
             Debug.WriteLine("Total objectives: " + ViewModel.Objectives.Count);
-            ObjectivesDataGrid.ItemsSource = ViewModel.Objectives;
+            
         }
 
         private async void SfDataGrid_RowValidated(object? sender, RowValidatedEventArgs e)
@@ -75,10 +86,10 @@ namespace Roster.App.Views.ObjectiveViews
         private void SfDataGrid_AddNewRowInitiating(object? sender, AddNewRowInitiatingEventArgs e)
         {
 
-            var shift = e.NewObject as ShiftViewModel;
-            if (shift != null)
+            var objective = e.NewObject as ObjectiveViewModel;
+            if (objective != null)
             {
-                Debug.WriteLine("name is " + shift.Worker.FirstName);
+                Debug.WriteLine("name is " + objective.Worker.FirstName);
                 /*
                 var firstName = e.NewObject.GetType().GetProperty("Worker.FirstName").GetValue(e.NewObject);
                 var lastName = e.NewObject.GetType().GetProperty("Worker.LastName").GetValue(e.NewObject);
